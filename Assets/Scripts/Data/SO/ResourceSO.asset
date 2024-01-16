@@ -15,41 +15,41 @@ MonoBehaviour:
   marbles:
   - name: "\uADF8\uB808\uC774\uC2A4"
     id: TA01
-    prefab: {fileID: 8781098218509703054, guid: 5237a655644aec94886aa3513e440b44, type: 3}
-    sprite: {fileID: 21300000, guid: 3ab54f2ea11feb3458482115d377c60b, type: 3}
+    prefab: {fileID: 4241162178809715448, guid: b98a360c061e44743bb547bd2933b11b, type: 3}
+    sprite: {fileID: -2045517624, guid: 510712eaa3d39304c8d4edc2b8bb95ab, type: 3}
     explain: "\uC655\uAD6D\uC744 \uC218\uD638\uD558\uB294 \uD0F1\uCEE4"
   - name: "\uB8E8\uBE14"
     id: DD01
-    prefab: {fileID: 7545252287846276915, guid: 96e89db1c281a33409424ee41bb34244, type: 3}
-    sprite: {fileID: 21300000, guid: b3c3529a49757a64e9c11f6fa1821d3d, type: 3}
+    prefab: {fileID: 3275262004872291098, guid: 726ace350dbaf5a4dbbed2c07e7cfb69, type: 3}
+    sprite: {fileID: 1629943471, guid: e3355617d2b95414786179bcc7eb8c31, type: 3}
     explain: "\uC801\uC744 \uBB34\uCC0C\uB974\uB294 \uC6A9\uC0AC"
   - name: "\uB77C\uC774"
     id: AD01
-    prefab: {fileID: 6126454781163620671, guid: 6a09dee48f0d1744b9386f7460d74163, type: 3}
-    sprite: {fileID: 21300000, guid: 7dfe1d62a37ebf9429759ec01b800735, type: 3}
+    prefab: {fileID: 8525832655721951056, guid: 837ec560038a3794da51727d7883288d, type: 3}
+    sprite: {fileID: -1586174283, guid: 6df1a0d2058927e4697dac6f9505ca75, type: 3}
     explain: "\uBAA8\uB4E0\uAC78 \uB9DE\uCD94\uB294 \uAD81\uC218"
   - name: "\uB808\uC778"
     id: AP01
-    prefab: {fileID: 2617543462057671870, guid: 18c7023b02e7ca546a5b27548dbd26b7, type: 3}
-    sprite: {fileID: 21300000, guid: 11048d27e4b29cb44ae3a84d6844a7ff, type: 3}
+    prefab: {fileID: 6252532447357321500, guid: 2a398df35db36024cb6bcecadca83202, type: 3}
+    sprite: {fileID: 57743419, guid: b53178ff140f0ac43a946130a929a90b, type: 3}
     explain: "\uC801\uC744 \uC12C\uBA78\uD558\uB294 \uB9C8\uBC95\uC0AC"
   - name: "\uBE0C\uB85D"
     id: TA02
-    prefab: {fileID: 4077662362201736981, guid: efe8f156f0173f24083a8826446e5b22, type: 3}
-    sprite: {fileID: 21300000, guid: 7107eceb22a89e74f85969be98f8b337, type: 3}
+    prefab: {fileID: 135075877910080631, guid: dd275de86d4dc4f44a0dfaf83c1efa01, type: 3}
+    sprite: {fileID: 1604766118, guid: 64c8bbed78eff35418c6cee4586bed4b, type: 3}
     explain: "\uBD80\uC871\uC758 \uC655"
   - name: "\uB85C\uC774"
     id: DD02
-    prefab: {fileID: 7358691981605080899, guid: b1b237f914aec1442858d2313328d600, type: 3}
-    sprite: {fileID: 21300000, guid: 521eeafa4154e61429ed0ea1adb2d4de, type: 3}
+    prefab: {fileID: 310245065308777030, guid: 9caf54fa7217c8741976cacd5221038a, type: 3}
+    sprite: {fileID: -54983544, guid: ba35455452e2bab41a418bf370f79d31, type: 3}
     explain: "\uC6A9\uB9F9\uD55C \uC624\uD06C"
   - name: "\uB77C\uAD74\uB8E8\uC2A4"
     id: AD02
-    prefab: {fileID: 2744626331777722195, guid: bbd8a7903b727c54a8641300ade375ab, type: 3}
-    sprite: {fileID: 21300000, guid: d2180a0c93cc5d74a9b1ad0f010ff9d4, type: 3}
+    prefab: {fileID: 1719421834128767331, guid: 0245e9873eed0d04e994e240061930ec, type: 3}
+    sprite: {fileID: -2107209651, guid: 80a55d71c53974340b454b25afd3aa90, type: 3}
     explain: "\uB204\uAD6C\uBCF4\uB2E4 \uBE60\uB978 \uAD81\uC218"
   - name: "\uB85C\uC6E8\uC778"
     id: AP02
-    prefab: {fileID: 6861275352989128165, guid: 3d02a291e3b3b484e8b51162a572ef4b, type: 3}
-    sprite: {fileID: 21300000, guid: 779769ed29e916444a4683b518e79427, type: 3}
+    prefab: {fileID: 465667734200470732, guid: 2b9590a6d9a751e4791e723a2d991d26, type: 3}
+    sprite: {fileID: 107270149, guid: 78fa723054b48ca46a51539f260fe838, type: 3}
     explain: "\uC2E0\uC131\uD55C \uC218\uB140"

@@ -4,7 +4,7 @@ using UnityEngine;
 
 
 [System.Serializable]
-public class TestMarble {
+public class UserMarble {
     public string name;
     public string id;
     public GameObject prefab;
@@ -16,7 +16,7 @@ public class TestMarble {
 [CreateAssetMenu(fileName = "ResourceSO", menuName = "Scriptable Object/ResourceSO")]
 public class ResourceSO : ScriptableObject
 {
-    public List<TestMarble> marbles;
+    public List<UserMarble> marbles;
 }
 
 

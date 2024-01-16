@@ -44,7 +44,7 @@ public class SettingManager : MonoBehaviour
         } 
     }
 
-    [SerializeField] TestMarble marble;
+    [SerializeField] UserMarble marble;
 
 
 
@@ -76,8 +76,8 @@ public class SettingManager : MonoBehaviour
 
         // 데이타베이스와 유저 데이타 비교
         foreach (string id in userData.curMarblesId) {
-            TestMarble testMarble = resource.marbles.Find(x => x.id == id);
-            if (testMarble == null) {
+            UserMarble userMarble = resource.marbles.Find(x => x.id == id);
+            if (userMarble == null) {
                 print("해당 기물 데이타베이스에 존재하지 않음");
                 continue;
             }
@@ -87,11 +87,11 @@ public class SettingManager : MonoBehaviour
             Button btn = btnObj.GetComponent<Button>();
             Image image = btnObj.GetComponentsInChildren<Image>()[1];
             marbleBtns.Add(btnObj);
-            image.sprite = testMarble.sprite;
+            image.sprite = userMarble.sprite;
 
             // 버튼에 함수 등록
             btn.onClick.RemoveAllListeners();
-            btn.onClick.AddListener(() => SetMarbleSelect(testMarble));
+            btn.onClick.AddListener(() => SetMarbleSelect(userMarble));
         }
     }
 
@@ -122,7 +122,7 @@ public class SettingManager : MonoBehaviour
         posSelectUI.SetActive(false);
     }
 
-    private void SetMarbleSelect(TestMarble testMarble) {
+    private void SetMarbleSelect(UserMarble testMarble) {
         selectBtn.gameObject.SetActive(true);
         marbleImg.enabled = true;
         marbleImg.sprite = testMarble.sprite;
