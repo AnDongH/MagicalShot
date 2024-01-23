@@ -16,7 +16,7 @@ public class SettingData : Singleton<SettingData>
     // 선택한 룬들
     // TODO
 
-
+    // 옵션 데이타
     
 
 }

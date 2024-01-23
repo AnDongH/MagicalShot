@@ -11,6 +11,11 @@ public class TurnManager : MonoBehaviourPun {
 
     public static TurnManager Instance { get; private set; }
 
+    public GameObject timerBar;
+    public float defaultTurnTime = 120f;
+    [SerializeField] private float curTurnTime = 120f;
+    RectTransform timer;
+
 
     [Header("Develop")]
     [SerializeField][Tooltip("시작 전 턴 모드를 정합니다.")] ETurnMode eTurnMode;
@@ -18,6 +23,7 @@ public class TurnManager : MonoBehaviourPun {
     [field: SerializeField] public bool IsLoading { get; private set; }
     [field: SerializeField] public bool IsHostTurn { get; private set; }
 
+    [SerializeField] private bool myTurn;
 
     [SerializeField] Text turnText;
 
@@ -32,6 +38,7 @@ public class TurnManager : MonoBehaviourPun {
 
     void Awake() {
         Instance = this;
+        timer = timerBar.GetComponentsInChildren<RectTransform>()[1];
     }
 
     private void Start() {
@@ -39,7 +46,17 @@ public class TurnManager : MonoBehaviourPun {
     }
 
     private void Update() {
-        
+        if (myTurn) {
+            curTurnTime -= Time.deltaTime;
+            if (curTurnTime <= 0) {
+                EndTurn();
+            }
+           
+        }
+    }
+
+    private void LateUpdate() {
+        timer.SetSizeWithCurrentAnchors(0, (curTurnTime / defaultTurnTime) * 120);
     }
 
     // 턴 동기화
@@ -79,8 +96,7 @@ public class TurnManager : MonoBehaviourPun {
     IEnumerator StartTurnCo() {
         IsLoading = true;
 
-        GameManager.Instance.UpdateCost(true);
-
+        GameManager.Instance.UpdateCost(true, 6);
         OnTurnChanged?.Invoke(IsHostTurn);
         turnText.gameObject.SetActive(true);
         if (IsHostTurn) {
@@ -92,6 +108,13 @@ public class TurnManager : MonoBehaviourPun {
         yield return delay20;
         turnText.gameObject.SetActive(false);
         IsLoading = false;
+
+        if (IsHostTurn) {
+            myTurn = PhotonNetwork.IsMasterClient ? true : false;
+        }
+        else {
+            myTurn = PhotonNetwork.IsMasterClient ? false : true;
+        }
     }
 
     public IEnumerator WinTheGameCo() {
@@ -119,6 +142,8 @@ public class TurnManager : MonoBehaviourPun {
     }
 
     public void EndTurn() {
+        myTurn = false;
+        curTurnTime = defaultTurnTime;
         photonView.RPC("TurnChange", RpcTarget.All);
     }
 

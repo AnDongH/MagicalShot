@@ -14,9 +14,7 @@ public class SettingManager : MonoBehaviour
 
     [Header("기본 기물 UI 그룹")]
     [SerializeField] GameObject marbleSelectUI;
-    [SerializeField] GameObject posSelectUI;
     [SerializeField] Image marbleImg;
-    [SerializeField] Button selectBtn;
     [SerializeField] Text explain;
 
 
@@ -30,6 +28,7 @@ public class SettingManager : MonoBehaviour
     [SerializeField] Button[] posBtns;
     [SerializeField] Button setBtn;
     [SerializeField] Button delBtn;
+    [SerializeField] Dropdown marbleOption;
 
     [Header("선택 기물, 데이타")]
     public UserDataSO userData;
@@ -70,13 +69,47 @@ public class SettingManager : MonoBehaviour
 
     }
 
+    private void Update() {
+        if (Input.GetKeyDown(KeyCode.A)) {
+            selectedMarbles[0] = resource.marbles.Find(x => x.id == "TA01").prefab;
+            selectedMarbles[1] = resource.marbles.Find(x => x.id == "TA02").prefab;
+            selectedMarbles[2] = resource.marbles.Find(x => x.id == "DD01").prefab;
+            selectedMarbles[3] = resource.marbles.Find(x => x.id == "DD02").prefab;
+        }
+    }
+
     // UI 조작 함수
     public void EnterMarbleGRP() {
         marbleSelectUI.SetActive(true);
+        marbleOption.value = 0;
+
+        SetMarbleButton();
+    }
+
+    // 최적화가 필요할수도...
+
+    public void SetMarbleButton() {
+
+        // 생성했던 버튼들 제거
+        for (int i = 0; i < marbleBtns.Count; i++) {
+            marbleBtns[i].GetComponent<Button>().onClick.RemoveAllListeners();
+            Destroy(marbleBtns[i]);
+        }
+        marbleBtns.Clear();
+
+        // 기본 UI 정보들 초기화
+        marbleImg.sprite = null;
+        marbleImg.enabled = false;
+        explain.text = "";
+        marble = null;
+
 
         // 데이타베이스와 유저 데이타 비교
         foreach (string id in userData.curMarblesId) {
             UserMarble userMarble = resource.marbles.Find(x => x.id == id);
+
+            if (marbleOption.value != 0 && (int)userMarble.Type + 1 != marbleOption.value) continue;
+
             if (userMarble == null) {
                 print("해당 기물 데이타베이스에 존재하지 않음");
                 continue;
@@ -90,48 +123,32 @@ public class SettingManager : MonoBehaviour
             image.sprite = userMarble.sprite;
 
             // 버튼에 함수 등록
-            btn.onClick.RemoveAllListeners();
             btn.onClick.AddListener(() => SetMarbleSelect(userMarble));
         }
     }
 
-    public void ExitMarbleGRP() {
 
+
+    public void ExitMarbleGRP() {
         // 선택 UI off
         marbleSelectUI.SetActive(false);
-
-        // 생성했던 버튼들 제거
-        for (int i = 0; i < marbleBtns.Count; i++) {
-            Destroy(marbleBtns[i]);
-        }
-        marbleBtns.Clear();
-
-        // 기본 UI 정보들 초기화
-        marbleImg.sprite = null;
-        marbleImg.enabled = false;
-        explain.text = "";
-        selectBtn.gameObject.SetActive(false);
     }
 
-    public void EnterPosSelect() {
-        posSelectUI.SetActive(true);
-    }
-
-    public void ExitPosSelect() {
-        identifyUI.SetActive(false);
-        posSelectUI.SetActive(false);
-    }
-
-    private void SetMarbleSelect(UserMarble testMarble) {
-        selectBtn.gameObject.SetActive(true);
+    private void SetMarbleSelect(UserMarble userMarble) {
         marbleImg.enabled = true;
-        marbleImg.sprite = testMarble.sprite;
-        explain.text = testMarble.explain;
+        marbleImg.sprite = userMarble.sprite;
+        explain.text = userMarble.explain;
 
-        marble = testMarble;
+        marble = userMarble;
     }
 
     public void SetPos(int pos) {
+        if (marble.prefab == null) {
+            print("선택된 기물이 없습니다.");
+            IdentifyUIOff();
+            return;
+        }
+
         if (selectedMarbles[pos] != null) {
             print("기물이 이미 존재합니다.");
             IdentifyUIOff();

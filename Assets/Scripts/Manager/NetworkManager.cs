@@ -28,14 +28,22 @@ public class NetworkManager : MonoBehaviourPunCallbacks {
 
     [Header("대기 룸 정보")]
     [SerializeField] Button startBtn;
+    [SerializeField] Text readyText;
     [SerializeField] Text playerCnt;
+    [SerializeField] Text[] chatText;
+    [SerializeField] InputField chatInput;
+    [SerializeField] Text hostName;
+    [SerializeField] Text guestName;
+    [SerializeField] Text roomName;
+    [SerializeField] Text mapName;
 
     [Header("개인 정보")]
     [SerializeField] Text nickName;
-    [SerializeField] Text roomName;
 
     List<RoomInfo> myList = new List<RoomInfo>();
     int currentPage = 1, maxPage, multiple;
+
+    private bool isReady = false;
 
 
     void Awake() {
@@ -55,11 +63,18 @@ public class NetworkManager : MonoBehaviourPunCallbacks {
             MyListRenewal();
             PlayerPrefs.DeleteKey("mainScene");
         }
+
+
+
     }
 
     void Update() {
         StatusText.text = PhotonNetwork.NetworkClientState.ToString();
         lobbyInfoText.text = "로비 : " + (PhotonNetwork.CountOfPlayers - PhotonNetwork.CountOfPlayersInRooms) + "명 / 접속자 : " + PhotonNetwork.CountOfPlayers + "명";
+
+        if (PhotonNetwork.InRoom) {
+            if (Input.GetKeyDown(KeyCode.Return) && chatInput.text != "") Send();
+        }
     }
 
 
@@ -159,24 +174,61 @@ public class NetworkManager : MonoBehaviourPunCallbacks {
     public override void OnCreatedRoom() => print("방만들기완료");
 
     public override void OnJoinedRoom() {
+        isReady = false;
         print("방참가완료");
         roomName.text = PhotonNetwork.CurrentRoom.Name;
-        startBtn.interactable = false;
         lobbyPannel.SetActive(false);
         roomPannel.SetActive(true);
 
-
-        photonView.RPC("UpdateRoom", RpcTarget.All);
+        if (PhotonNetwork.IsMasterClient) {
+            hostName.text = PhotonNetwork.LocalPlayer.NickName; ;
+            guestName.text = "";
+            startBtn.interactable = false;
+            readyText.text = "Start";
+            startBtn.onClick.RemoveAllListeners();
+            startBtn.onClick.AddListener(() => GameStart());
+        }
+        else {
+            hostName.text = PhotonNetwork.MasterClient.NickName;
+            guestName.text = PhotonNetwork.LocalPlayer.NickName;
+            startBtn.interactable = true;
+            readyText.text = "Ready";
+            startBtn.onClick.RemoveAllListeners();
+            startBtn.onClick.AddListener(() => GetReady(isReady));
+        }
     }
 
     public override void OnLeftRoom() {
+        isReady = false;
         print("방에서 나감");
         roomPannel.SetActive(false);
         lobbyPannel.SetActive(true);
     }
 
     public override void OnPlayerLeftRoom(Player otherPlayer) {
-        UpdateRoom();
+
+        if (!PhotonNetwork.IsMasterClient) return;
+
+        isReady = false;
+        guestName.text = "";
+        startBtn.interactable = false;
+
+    }
+
+    public override void OnMasterClientSwitched(Player newMasterClient) {
+
+        if (PhotonNetwork.MasterClient != newMasterClient) return;
+
+        hostName.text = newMasterClient.NickName;
+        guestName.text = "";
+        startBtn.interactable = false;
+        readyText.text = "Start";
+        startBtn.onClick.RemoveAllListeners();
+        startBtn.onClick.AddListener(() => GameStart());
+    }
+
+    public override void OnPlayerEnteredRoom(Player newPlayer) {
+        guestName.text = newPlayer.NickName;
     }
 
     public override void OnCreateRoomFailed(short returnCode, string message) {
@@ -260,34 +312,62 @@ public class NetworkManager : MonoBehaviourPunCallbacks {
         MyListRenewal();
     }
 
-    [PunRPC]
-    void CheckGameStart() {
+    private void CheckGameStart() {
         if (!PhotonNetwork.InRoom) return;
 
         if (PhotonNetwork.CurrentRoom.PlayerCount == PhotonNetwork.CurrentRoom.MaxPlayers) {
            
-            if (PhotonNetwork.IsMasterClient) startBtn.interactable = true;
+            if (PhotonNetwork.IsMasterClient && isReady) startBtn.interactable = true;
+            else startBtn.interactable = false;
 
         }
-        else {
-            if (PhotonNetwork.IsMasterClient) startBtn.interactable = false;
-        }
+
+    }
+
+
+
+    private void GameStart() {
+        print("게임 스타트");
+        photonView.RPC("LevelLoadPRC", RpcTarget.All);
+    }
+
+    private void GetReady(bool flag) {
+        isReady = !flag;
+        readyText.text = isReady ? "Wait" : "Ready";
+        photonView.RPC("SetReadyInfo", RpcTarget.Others, isReady);
     }
 
     [PunRPC]
-    void UpdateRoom() {
-        playerCnt.text = PhotonNetwork.CurrentRoom.PlayerCount + " / " + PhotonNetwork.CurrentRoom.MaxPlayers;
+    private void SetReadyInfo(bool flag) {
+        isReady = flag;
         CheckGameStart();
-    } 
-
-    public void GameStart() {
-        print("게임 스타트");
-        photonView.RPC("LevelLoadPRC", RpcTarget.All);
     }
 
     [PunRPC]
     void LevelLoadPRC() {
         PhotonNetwork.LoadLevel(1);
+    }
+
+    // 룸 채팅
+    private void Send() {
+        photonView.RPC("ChatRPC", RpcTarget.All, PhotonNetwork.NickName + " : " + chatInput.text);
+        chatInput.text = "";
+    }
+
+    [PunRPC] // RPC는 플레이어가 속해있는 방 모든 인원에게 전달한다
+    void ChatRPC(string msg) {
+        bool isInput = false;
+        for (int i = 0; i < chatText.Length; i++)
+            if (chatText[i].text == "") {
+                isInput = true;
+                chatText[i].text = msg;
+                break;
+            }
+        if (!isInput) // 꽉차면 한칸씩 위로 올림
+        {
+            for (int i = 1; i < chatText.Length; i++) chatText[i - 1].text = chatText[i].text;
+            chatText[chatText.Length - 1].text = msg;
+        }
     }
 
 }

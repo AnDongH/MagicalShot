@@ -5,6 +5,12 @@ using UnityEngine;
 
 [System.Serializable]
 public class UserMarble {
+
+    public enum MarbleType {
+        TA, DD, AD, AP
+    }
+
+    public MarbleType Type;
     public string name;
     public string id;
     public GameObject prefab;

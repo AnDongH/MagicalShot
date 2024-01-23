@@ -57,6 +57,12 @@ MonoBehaviour:
   - SetArrowInfo
   - LoseTheGame
   - WinTheGame
+  - SendMyMarblesInfo
+  - CountReady
+  - InitMarbleList
+  - ChatRPC
+  - GetReady
+  - SetReadyInfo
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1

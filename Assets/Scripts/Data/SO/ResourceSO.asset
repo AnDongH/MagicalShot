@@ -13,43 +13,51 @@ MonoBehaviour:
   m_Name: ResourceSO
   m_EditorClassIdentifier: 
   marbles:
-  - name: "\uADF8\uB808\uC774\uC2A4"
+  - Type: 0
+    name: "\uADF8\uB808\uC774\uC2A4"
     id: TA01
     prefab: {fileID: 4241162178809715448, guid: b98a360c061e44743bb547bd2933b11b, type: 3}
-    sprite: {fileID: -2045517624, guid: 510712eaa3d39304c8d4edc2b8bb95ab, type: 3}
+    sprite: {fileID: 860266752, guid: 04a99b27afb61de43bda878f960d76bf, type: 3}
     explain: "\uC655\uAD6D\uC744 \uC218\uD638\uD558\uB294 \uD0F1\uCEE4"
-  - name: "\uB8E8\uBE14"
+  - Type: 1
+    name: "\uB8E8\uBE14"
     id: DD01
     prefab: {fileID: 3275262004872291098, guid: 726ace350dbaf5a4dbbed2c07e7cfb69, type: 3}
-    sprite: {fileID: 1629943471, guid: e3355617d2b95414786179bcc7eb8c31, type: 3}
+    sprite: {fileID: -859056146, guid: 1137a039b30ca384ab74041ff8c93ead, type: 3}
     explain: "\uC801\uC744 \uBB34\uCC0C\uB974\uB294 \uC6A9\uC0AC"
-  - name: "\uB77C\uC774"
+  - Type: 2
+    name: "\uB77C\uC774"
     id: AD01
     prefab: {fileID: 8525832655721951056, guid: 837ec560038a3794da51727d7883288d, type: 3}
-    sprite: {fileID: -1586174283, guid: 6df1a0d2058927e4697dac6f9505ca75, type: 3}
+    sprite: {fileID: 1571142857, guid: 5292a10ec9f74d14c91b0bbf3e3011f7, type: 3}
     explain: "\uBAA8\uB4E0\uAC78 \uB9DE\uCD94\uB294 \uAD81\uC218"
-  - name: "\uB808\uC778"
+  - Type: 3
+    name: "\uB808\uC778"
     id: AP01
     prefab: {fileID: 6252532447357321500, guid: 2a398df35db36024cb6bcecadca83202, type: 3}
-    sprite: {fileID: 57743419, guid: b53178ff140f0ac43a946130a929a90b, type: 3}
+    sprite: {fileID: -1446105670, guid: 5b9df7a68b7ecad478583a791c9a1444, type: 3}
     explain: "\uC801\uC744 \uC12C\uBA78\uD558\uB294 \uB9C8\uBC95\uC0AC"
-  - name: "\uBE0C\uB85D"
+  - Type: 0
+    name: "\uBE0C\uB85D"
     id: TA02
     prefab: {fileID: 135075877910080631, guid: dd275de86d4dc4f44a0dfaf83c1efa01, type: 3}
-    sprite: {fileID: 1604766118, guid: 64c8bbed78eff35418c6cee4586bed4b, type: 3}
+    sprite: {fileID: -1135563821, guid: 84caccf2611ad0a40a7ae23542f8cb47, type: 3}
     explain: "\uBD80\uC871\uC758 \uC655"
-  - name: "\uB85C\uC774"
+  - Type: 1
+    name: "\uB85C\uC774"
     id: DD02
     prefab: {fileID: 310245065308777030, guid: 9caf54fa7217c8741976cacd5221038a, type: 3}
-    sprite: {fileID: -54983544, guid: ba35455452e2bab41a418bf370f79d31, type: 3}
+    sprite: {fileID: 710805954, guid: 5a200e9cc3f711241acedca99bd727a9, type: 3}
     explain: "\uC6A9\uB9F9\uD55C \uC624\uD06C"
-  - name: "\uB77C\uAD74\uB8E8\uC2A4"
+  - Type: 2
+    name: "\uB77C\uAD74\uB8E8\uC2A4"
     id: AD02
     prefab: {fileID: 1719421834128767331, guid: 0245e9873eed0d04e994e240061930ec, type: 3}
-    sprite: {fileID: -2107209651, guid: 80a55d71c53974340b454b25afd3aa90, type: 3}
+    sprite: {fileID: 348453607, guid: 6e9265c0c3f39ab45b05ec116fb0f1df, type: 3}
     explain: "\uB204\uAD6C\uBCF4\uB2E4 \uBE60\uB978 \uAD81\uC218"
-  - name: "\uB85C\uC6E8\uC778"
+  - Type: 3
+    name: "\uB85C\uC6E8\uC778"
     id: AP02
     prefab: {fileID: 465667734200470732, guid: 2b9590a6d9a751e4791e723a2d991d26, type: 3}
-    sprite: {fileID: 107270149, guid: 78fa723054b48ca46a51539f260fe838, type: 3}
+    sprite: {fileID: 910799989, guid: 46b38756323e1c64f8ab17806d865326, type: 3}
     explain: "\uC2E0\uC131\uD55C \uC218\uB140"

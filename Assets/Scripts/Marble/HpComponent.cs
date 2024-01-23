@@ -5,8 +5,6 @@ using UnityEngine;
 
 public class HpComponent : MonoBehaviourPun, IHitable
 {
-    [SerializeField] GameObject hpPrefab;
-
     [SerializeField] float hp;
 
     GameObject hpObj;
@@ -19,7 +17,10 @@ public class HpComponent : MonoBehaviourPun, IHitable
 
     private void Start() {
 
-        hpObj = Instantiate(hpPrefab, transform.position, Quaternion.identity, GameObject.Find("Canvas").transform);
+        if (GameManager.Instance.IsHost == sync.IsHost)
+            hpObj = Instantiate(GameManager.Instance.hostHpPrefab, transform.position, Quaternion.identity, GameObject.Find("HpGRP").transform);
+        else
+            hpObj = Instantiate(GameManager.Instance.guestHpPrefab, transform.position, Quaternion.identity, GameObject.Find("HpGRP").transform);
 
     }
 

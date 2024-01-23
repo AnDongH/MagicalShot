@@ -8,13 +8,16 @@ public class AttackComponent : MonoBehaviourPun {
     [SerializeField] float dmg;
 
     OwnerSyncComponent sync;
+    Animator animator;
 
     private void Awake() {
         sync = GetComponent<OwnerSyncComponent>();
+        animator = GetComponentInChildren<Animator>();
     }
 
     private void Attack(float dmg, IHitable hitable) {
         hitable.OnHit(dmg);
+        animator.SetTrigger("Attack");
     }
 
     private void OnCollisionEnter2D(Collision2D collision) {

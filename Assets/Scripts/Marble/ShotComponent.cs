@@ -11,34 +11,55 @@ public class ShotComponent : MonoBehaviourPun
     [SerializeField] float speed = 0f;
     [SerializeField] Vector2 dir = Vector2.zero;
 
+    private Animator animator;
+    private Vector3 originFlip = new Vector3 (1, 1, 1);
+    private Vector3 revFlip = new Vector3 (-1, 1, 1);
+
     OwnerSyncComponent sync;
+
+    private bool ActCondition {
+        get {
+            if (TurnManager.Instance.IsLoading) return false;
+            if (GameManager.Instance.marbleMoving) return false;
+            if (GameManager.Instance.IsHost != sync.IsHost || !photonView.IsMine) return false;
+            if (GameManager.Instance.curCost < 1) return false;
+
+            return true;
+        }
+    }
 
     private void Awake() {
         rigid = GetComponent<Rigidbody2D>();
         sync = GetComponent<OwnerSyncComponent>();
+        animator = GetComponentInChildren<Animator>();
     }
 
     private void Update() {
-       
+
+        if (rigid.velocity.magnitude <= GameManager.Instance.constV) {
+            rigid.velocity = Vector2.zero;
+        }
+
+        if (rigid.velocity != Vector2.zero)
+            animator.SetFloat("RunState", 0.5f);
+        else
+            animator.SetFloat("RunState", 0);
+
+        if (rigid.velocity.x < 0) transform.localScale = originFlip;
+        if (rigid.velocity.x > 0) transform.localScale = revFlip;
 
     }
 
     private void OnMouseDown() {
 
-        if (TurnManager.Instance.IsLoading) return;
-        if (GameManager.Instance.marbleMoving) return;
-        if (GameManager.Instance.IsHost != sync.IsHost || !photonView.IsMine) return;
-        if (GameManager.Instance.curCost < 1) return;
+        if (!ActCondition) return;
 
         MarbleManager.Instance.MarbleMouseDown(this);
     }
 
     private void OnMouseUp() {
 
-        if (TurnManager.Instance.IsLoading) return;
-        if (GameManager.Instance.marbleMoving) return;
-        if (GameManager.Instance.IsHost != sync.IsHost || !photonView.IsMine) return;
-        if (GameManager.Instance.curCost < 1) return;
+        if (!ActCondition) return;
 
         MarbleManager.Instance.MarbleMouseUp(this);
 
@@ -51,29 +72,21 @@ public class ShotComponent : MonoBehaviourPun
 
     private void OnMouseOver() {
 
-        if (TurnManager.Instance.IsLoading) return;
-        if (GameManager.Instance.marbleMoving) return;
-        if (GameManager.Instance.IsHost != sync.IsHost || !photonView.IsMine) return;
-        if (GameManager.Instance.curCost < 1) return;
+        if (!ActCondition) return;
 
         MarbleManager.Instance.MarbleMouseOver();
     }
 
     private void OnMouseExit() {
 
-        if (TurnManager.Instance.IsLoading) return;
-        if (GameManager.Instance.marbleMoving) return;
-        if (GameManager.Instance.IsHost != sync.IsHost || !photonView.IsMine) return;
-        if (GameManager.Instance.curCost < 1) return;
+        if (!ActCondition) return;
 
         MarbleManager.Instance.MarbleMouseExit();
     }
 
     private void OnMouseDrag() {
-        if (TurnManager.Instance.IsLoading) return;
-        if (GameManager.Instance.marbleMoving) return;
-        if (GameManager.Instance.IsHost != sync.IsHost || !photonView.IsMine) return;
-        if (GameManager.Instance.curCost < 1) return;
+
+        if (!ActCondition) return;
         if (!MarbleManager.Instance.isMyMarbleDrag) return;
 
         // 기물 드래그
@@ -95,7 +108,7 @@ public class ShotComponent : MonoBehaviourPun
         rigid.velocity = Vector2.zero;
         rigid.AddForce(dir * speed, ForceMode2D.Impulse);
 
-        GameManager.Instance.UpdateCost(false);
+        GameManager.Instance.UpdateCost(false, 1);
     }
 
 }
