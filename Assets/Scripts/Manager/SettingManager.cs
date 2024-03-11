@@ -92,7 +92,7 @@ public class SettingManager : MonoBehaviour
 
         // 생성했던 버튼들 제거
         for (int i = 0; i < marbleBtns.Count; i++) {
-            marbleBtns[i].GetComponent<Button>().onClick.RemoveAllListeners();
+            marbleBtns[i].GetComponentInChildren<Button>().onClick.RemoveAllListeners();
             Destroy(marbleBtns[i]);
         }
         marbleBtns.Clear();
@@ -117,7 +117,7 @@ public class SettingManager : MonoBehaviour
 
             // 유저가 가지고 있는 캐릭터 선택 버튼들 활성화
             GameObject btnObj = Instantiate(btnPrefab, uiParent);
-            Button btn = btnObj.GetComponent<Button>();
+            Button btn = btnObj.GetComponentInChildren<Button>();
             Image image = btnObj.GetComponentsInChildren<Image>()[1];
             marbleBtns.Add(btnObj);
             image.sprite = userMarble.sprite;
@@ -143,7 +143,7 @@ public class SettingManager : MonoBehaviour
     }
 
     public void SetPos(int pos) {
-        if (marble.prefab == null) {
+        if (marble == null || marble.prefab == null) {
             print("선택된 기물이 없습니다.");
             IdentifyUIOff();
             return;

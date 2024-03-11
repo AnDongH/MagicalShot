@@ -56,7 +56,7 @@ public class TurnManager : MonoBehaviourPun {
     }
 
     private void LateUpdate() {
-        timer.SetSizeWithCurrentAnchors(0, (curTurnTime / defaultTurnTime) * 120);
+        timer.SetSizeWithCurrentAnchors(0, (curTurnTime / defaultTurnTime) * 240);
     }
 
     // 턴 동기화

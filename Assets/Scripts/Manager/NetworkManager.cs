@@ -20,8 +20,6 @@ public class NetworkManager : MonoBehaviourPunCallbacks {
     // room 관련
     [SerializeField] GameObject marbleSelectUI;
     [SerializeField] InputField roomInput;
-    [SerializeField] Text welcomeText;
-    [SerializeField] Text lobbyInfoText;
     [SerializeField] Button[] cellBtn;
     [SerializeField] Button previousBtn;
     [SerializeField] Button nextBtn;
@@ -29,7 +27,6 @@ public class NetworkManager : MonoBehaviourPunCallbacks {
     [Header("대기 룸 정보")]
     [SerializeField] Button startBtn;
     [SerializeField] Text readyText;
-    [SerializeField] Text playerCnt;
     [SerializeField] Text[] chatText;
     [SerializeField] InputField chatInput;
     [SerializeField] Text hostName;
@@ -47,7 +44,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks {
 
 
     void Awake() {
-        Screen.SetResolution(960, 540, false);
+        Screen.SetResolution(800, 450, false);
         mainPannel.SetActive(true);
         lobbyPannel.SetActive(false);
         roomPannel.SetActive(false);
@@ -70,7 +67,6 @@ public class NetworkManager : MonoBehaviourPunCallbacks {
 
     void Update() {
         StatusText.text = PhotonNetwork.NetworkClientState.ToString();
-        lobbyInfoText.text = "로비 : " + (PhotonNetwork.CountOfPlayers - PhotonNetwork.CountOfPlayersInRooms) + "명 / 접속자 : " + PhotonNetwork.CountOfPlayers + "명";
 
         if (PhotonNetwork.InRoom) {
             if (Input.GetKeyDown(KeyCode.Return) && chatInput.text != "") Send();
