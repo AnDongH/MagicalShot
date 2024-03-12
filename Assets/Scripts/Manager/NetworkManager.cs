@@ -44,7 +44,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks {
 
 
     void Awake() {
-        Screen.SetResolution(800, 450, false);
+        Screen.SetResolution(1600, 900, false);
         mainPannel.SetActive(true);
         lobbyPannel.SetActive(false);
         roomPannel.SetActive(false);

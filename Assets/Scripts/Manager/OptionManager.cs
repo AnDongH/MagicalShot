@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -12,7 +13,7 @@ public class OptionManager : MonoBehaviour
     public Toggle fullScreenBtn;
     
     FullScreenMode ScreenMode;
-    List<Resolution> resolutions = new List<Resolution>();
+    List<Tuple<int, int>> resolutions = new List<Tuple<int, int>>();
     public int resolutionNum;
 
 
@@ -24,25 +25,26 @@ public class OptionManager : MonoBehaviour
     }
 
     private void InitUI() {
-        for (int i = 0; i < Screen.resolutions.Length; i++) {
-            if ((int)Screen.resolutions[i].refreshRateRatio.value == 60) resolutions.Add(Screen.resolutions[i]);
-        }
-        resolutions.Reverse();
+
+        resolutions.Add(Tuple.Create(1920, 1080));
+        resolutions.Add(Tuple.Create(1600, 900));
+        resolutions.Add(Tuple.Create(1200, 675));
         resDrop.options.Clear();
 
         int optionNum = 0;
-        foreach (Resolution item in resolutions) {
+        foreach (Tuple<int, int> item in resolutions) {
             Dropdown.OptionData option = new Dropdown.OptionData();
-            option.text = item.width + "x" + item.height + " " + item.refreshRateRatio + "hz";
+            option.text = item.Item1 + "x" + item.Item2 + " " + "hz";
             resDrop.options.Add(option);
 
-            if (item.width == Screen.width && item.height == Screen.height)
+            if (item.Item1 == Screen.width && item.Item2 == Screen.height)
                 resDrop.value = optionNum;
             optionNum++;
         }
         resDrop.RefreshShownValue();
 
         fullScreenBtn.isOn = Screen.fullScreenMode.Equals(FullScreenMode.FullScreenWindow) ? true : false;
+        
     }
 
     public void DropboxOptionChange(int x) {
@@ -54,7 +56,7 @@ public class OptionManager : MonoBehaviour
     }
 
     public void OnBtnClick() {
-        Screen.SetResolution(resolutions[resolutionNum].width, resolutions[resolutionNum].height, ScreenMode);
+        Screen.SetResolution(resolutions[resolutionNum].Item1, resolutions[resolutionNum].Item2, ScreenMode);
     }
 
     public void EnterOptionGRP() {

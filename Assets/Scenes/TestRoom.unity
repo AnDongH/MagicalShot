@@ -4806,7 +4806,7 @@ MonoBehaviour:
       - m_Target: {fileID: 217715712}
         m_TargetAssemblyTypeName: OptionManager, Assembly-CSharp
         m_MethodName: DropboxOptionChange
-        m_Mode: 3
+        m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -6659,7 +6659,7 @@ MonoBehaviour:
       - m_Target: {fileID: 217715712}
         m_TargetAssemblyTypeName: OptionManager, Assembly-CSharp
         m_MethodName: FullScreenBtn
-        m_Mode: 6
+        m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
