@@ -9,7 +9,6 @@ public class NetworkManager : MonoBehaviourPunCallbacks {
 
     [Header("개인 정보")]
     [SerializeField] Text StatusText;
-    [SerializeField] InputField NickNameInput;
 
     [Header("서버,로비,방 UI")]
     [SerializeField] GameObject mainPannel;
@@ -54,7 +53,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks {
     void Start() {
         if (PlayerPrefs.HasKey("mainScene")) {
             LeaveRoom();
-            NickNameInput.text = PhotonNetwork.LocalPlayer.NickName;
+            //nickName.text = PhotonNetwork.LocalPlayer.NickName;
             mainPannel.SetActive(false);
             lobbyPannel.SetActive(true);
             MyListRenewal();
@@ -76,18 +75,12 @@ public class NetworkManager : MonoBehaviourPunCallbacks {
 
 
     public void Connect() {
-
-        if (NickNameInput.text == "") {
-            print("닉네임 입력해주세요");
-            return;
-        }
-
         PhotonNetwork.ConnectUsingSettings();
     }
 
     public override void OnConnectedToMaster() {
         print("서버접속완료");
-        PhotonNetwork.LocalPlayer.NickName = NickNameInput.text;
+        PhotonNetwork.LocalPlayer.NickName = GetComponent<LoginManager>().nickName;
         PhotonNetwork.JoinLobby();
         nickName.text = PhotonNetwork.LocalPlayer.NickName;
         mainPannel.SetActive(false);
