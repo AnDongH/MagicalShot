@@ -4,155 +4,191 @@ using UnityEngine;
 using Photon.Pun;
 using Photon.Realtime;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
-public class NetworkManager : MonoBehaviourPunCallbacks {
-
-    [Header("개인 정보")]
-    [SerializeField] Text StatusText;
-
-    [Header("서버,로비,방 UI")]
-    [SerializeField] GameObject mainPannel;
-    [SerializeField] GameObject lobbyPannel;
-    [SerializeField] GameObject roomPannel;
-
-    [Header("로비 정보")]
-    // room 관련
-    [SerializeField] GameObject marbleSelectUI;
-    [SerializeField] InputField roomInput;
-    [SerializeField] Button[] cellBtn;
-    [SerializeField] Button previousBtn;
-    [SerializeField] Button nextBtn;
-
-    [Header("대기 룸 정보")]
-    [SerializeField] Button startBtn;
-    [SerializeField] Text readyText;
-    [SerializeField] Text[] chatText;
-    [SerializeField] InputField chatInput;
-    [SerializeField] Text hostName;
-    [SerializeField] Text guestName;
-    [SerializeField] Text roomName;
-    [SerializeField] Text mapName;
+public class PhotonManager : MonoBehaviourPunCallbacks {
 
     [Header("개인 정보")]
     [SerializeField] Text nickName;
 
-    List<RoomInfo> myList = new List<RoomInfo>();
-    int currentPage = 1, maxPage, multiple;
+    public List<RoomInfo> myList { get; private set; } = new List<RoomInfo>();
 
-    private bool isReady = false;
+    public enum LobbyErrorCode {
+        NONE_ERROR,
+        NULL_MARBLE,
+        NULL_ROOM,
+        NULL_NAME_ROOM
+    }
+
+    // 포톤 매니져 전용 싱글톤
+    private static PhotonManager _instance;
+    public static PhotonManager Instance {
+        get {
+            if (_instance == null) {
+                _instance = FindObjectOfType<PhotonManager>();
+
+                if (_instance == null) {
+                    GameObject obj = new GameObject();
+                    obj.name = typeof(PhotonManager).Name;
+                    _instance = obj.AddComponent<PhotonManager>();
+                }
+            }
+
+            return _instance;
+        }
+    }
 
 
     void Awake() {
         Screen.SetResolution(1600, 900, false);
-        mainPannel.SetActive(true);
-        lobbyPannel.SetActive(false);
-        roomPannel.SetActive(false);
-        marbleSelectUI.SetActive(false);
+
+        if (_instance == null) {
+            _instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        else {
+            Destroy(gameObject);
+        }
     } 
 
     void Start() {
         if (PlayerPrefs.HasKey("mainScene")) {
             LeaveRoom();
             //nickName.text = PhotonNetwork.LocalPlayer.NickName;
-            mainPannel.SetActive(false);
-            lobbyPannel.SetActive(true);
-            MyListRenewal();
+           // MyListRenewal();
             PlayerPrefs.DeleteKey("mainScene");
         }
-
-
-
     }
 
     void Update() {
-        StatusText.text = PhotonNetwork.NetworkClientState.ToString();
-
         if (PhotonNetwork.InRoom) {
             if (Input.GetKeyDown(KeyCode.Return) && chatInput.text != "") Send();
         }
     }
 
 
-
+    /// <summary>
+    /// 접속
+    /// </summary>
     public void Connect() {
         PhotonNetwork.ConnectUsingSettings();
     }
 
     public override void OnConnectedToMaster() {
         print("서버접속완료");
-        PhotonNetwork.LocalPlayer.NickName = GetComponent<LoginManager>().nickName;
+        PhotonNetwork.LocalPlayer.NickName = GetComponent<PlayFabManager>().nickName;
         PhotonNetwork.JoinLobby();
-        nickName.text = PhotonNetwork.LocalPlayer.NickName;
-        mainPannel.SetActive(false);
-        lobbyPannel.SetActive(true);
-        MyListRenewal();
     }
 
 
-
+    /// <summary>
+    /// 접속 끊기
+    /// </summary>
     public void Disconnect() => PhotonNetwork.Disconnect();
 
     public override void OnDisconnected(DisconnectCause cause) {
         print("연결끊김");
-        lobbyPannel.SetActive(false);
-        mainPannel.SetActive(true);
     }
 
-    public void LeaveLobby() => PhotonNetwork.LeaveLobby();
-
     public override void OnJoinedLobby() {
+        SceneManager.LoadScene("02Lobby");
         print("로비접속완료");
-        mainPannel.SetActive(false); 
-        lobbyPannel.SetActive(true);
         myList.Clear();
     }
 
+    public override void OnLeftLobby() {
 
-    public void CreateRoom() {
+    }
+
+    public override void OnRoomListUpdate(List<RoomInfo> roomList) {
+        int roomCount = roomList.Count;
+        for (int i = 0; i < roomCount; i++) {
+            if (!roomList[i].RemovedFromList) {
+                if (!myList.Contains(roomList[i])) myList.Add(roomList[i]);
+                else myList[myList.IndexOf(roomList[i])] = roomList[i];
+            }
+            else if (myList.IndexOf(roomList[i]) != -1) myList.RemoveAt(myList.IndexOf(roomList[i]));
+        }
+    }
+
+    /// <summary>
+    /// 로비 나가기
+    /// </summary>
+    public void LeaveLobby() => PhotonNetwork.LeaveLobby();
+
+    /// <summary>
+    /// 해당 이름 방 만듦
+    /// </summary>
+    /// <param name="roomName"></param>
+    public LobbyErrorCode CreateRoom(string roomName) {
 
         if (SettingManager.Instance.SelectCount != 4) {
             print("기물을 4개 선택해야 방에 참가할 수 있습니다.");
-            return;
+            return LobbyErrorCode.NULL_MARBLE;
         }
         SettingManager.Instance.SendMarbleData();
 
-        PhotonNetwork.CreateRoom(roomInput.text == "" ? "Room" + Random.Range(0, 100) : roomInput.text, new RoomOptions { MaxPlayers = 2 });
+        PhotonNetwork.CreateRoom(roomName == "" ? "Room" + Random.Range(0, 100) : roomName, new RoomOptions { MaxPlayers = 2 });
+
+        return LobbyErrorCode.NONE_ERROR;
     }
 
-    public void JoinRoom() {
-
+    /// <summary>
+    /// 해당 이름 방 입장
+    /// </summary>
+    /// <param name="roomName"></param>
+    /// <returns></returns>
+    public LobbyErrorCode JoinRoom(string roomName) {
+        // 방 참가 실패에 따른 콜백 함수로 UI 처리 해줘야함
 
         if (SettingManager.Instance.SelectCount != 4) {
             print("기물을 4개 선택해야 방에 참가할 수 있습니다.");
-            return;
+            return LobbyErrorCode.NULL_MARBLE;
         }
         SettingManager.Instance.SendMarbleData();
 
-        PhotonNetwork.JoinRoom(roomInput.text);
+        if (!PhotonNetwork.JoinRoom(roomName)) return LobbyErrorCode.NULL_NAME_ROOM;
+
+        return LobbyErrorCode.NONE_ERROR;
     }
 
-    public void JoinOrCreateRoom() {
+    /// <summary>
+    /// 해당 이름 방 입장
+    /// 없으면 만듬
+    /// </summary>
+    /// <param name="roomName"></param>
+    public LobbyErrorCode JoinOrCreateRoom(string roomName) {
 
         if (SettingManager.Instance.SelectCount != 4) {
             print("기물을 4개 선택해야 방에 참가할 수 있습니다.");
-            return;
+            return LobbyErrorCode.NULL_MARBLE;
         }
         SettingManager.Instance.SendMarbleData();
 
-        PhotonNetwork.JoinOrCreateRoom(roomInput.text, new RoomOptions { MaxPlayers = 2 }, null);
+        PhotonNetwork.JoinOrCreateRoom(roomName, new RoomOptions { MaxPlayers = 2 }, null);
+
+        return LobbyErrorCode.NONE_ERROR;
     }
 
-    public void JoinRandomRoom() {
+    /// <summary>
+    /// 랜덤 방 입장
+    /// </summary>
+    public LobbyErrorCode JoinRandomRoom() {
 
         if (SettingManager.Instance.SelectCount != 4) {
             print("기물을 4개 선택해야 방에 참가할 수 있습니다.");
-            return;
+            return LobbyErrorCode.NULL_MARBLE;
         }
         SettingManager.Instance.SendMarbleData();
 
-        PhotonNetwork.JoinRandomRoom();
+        if (!PhotonNetwork.JoinRandomRoom()) return LobbyErrorCode.NULL_ROOM;
+
+        return LobbyErrorCode.NONE_ERROR;
     }
 
+    /// <summary>
+    /// 방 나가기
+    /// </summary>
     public void LeaveRoom() {
 
         SettingData.Instance.marbleDeck.Clear();
@@ -163,35 +199,13 @@ public class NetworkManager : MonoBehaviourPunCallbacks {
     public override void OnCreatedRoom() => print("방만들기완료");
 
     public override void OnJoinedRoom() {
-        isReady = false;
         print("방참가완료");
-        roomName.text = PhotonNetwork.CurrentRoom.Name;
-        lobbyPannel.SetActive(false);
-        roomPannel.SetActive(true);
-
-        if (PhotonNetwork.IsMasterClient) {
-            hostName.text = PhotonNetwork.LocalPlayer.NickName; ;
-            guestName.text = "";
-            startBtn.interactable = false;
-            readyText.text = "Start";
-            startBtn.onClick.RemoveAllListeners();
-            startBtn.onClick.AddListener(() => GameStart());
-        }
-        else {
-            hostName.text = PhotonNetwork.MasterClient.NickName;
-            guestName.text = PhotonNetwork.LocalPlayer.NickName;
-            startBtn.interactable = true;
-            readyText.text = "Ready";
-            startBtn.onClick.RemoveAllListeners();
-            startBtn.onClick.AddListener(() => GetReady(isReady));
-        }
+        SceneManager.LoadScene("03Room");
     }
 
     public override void OnLeftRoom() {
-        isReady = false;
         print("방에서 나감");
-        roomPannel.SetActive(false);
-        lobbyPannel.SetActive(true);
+        SceneManager.LoadScene("02Lobby");
     }
 
     public override void OnPlayerLeftRoom(Player otherPlayer) {
@@ -222,16 +236,14 @@ public class NetworkManager : MonoBehaviourPunCallbacks {
 
     public override void OnCreateRoomFailed(short returnCode, string message) {
         print("방만들기실패");
-        roomInput.text = "";
-        CreateRoom();
+        CreateRoom("");
     }
 
     public override void OnJoinRoomFailed(short returnCode, string message) => print("방참가실패");
 
     public override void OnJoinRandomFailed(short returnCode, string message) {
         print("방랜덤참가실패");
-        roomInput.text = "";
-        CreateRoom();
+        CreateRoom("");
     }
 
 
@@ -255,52 +267,6 @@ public class NetworkManager : MonoBehaviourPunCallbacks {
         }
     }
 
-    // ◀버튼 -2 , ▶버튼 -1 , 셀 숫자
-    public void MyListClick(int num) {
-        if (num == -2) --currentPage;
-        else if (num == -1) ++currentPage;
-        else {
-
-            if (SettingManager.Instance.SelectCount != 4) {
-                print("기물을 4개 선택해야 방에 참가할 수 있습니다.");
-                return;
-            }
-            SettingManager.Instance.SendMarbleData();
-
-            PhotonNetwork.JoinRoom(myList[multiple + num].Name);
-        }
-        MyListRenewal();
-    }
-
-    void MyListRenewal() {
-        // 최대페이지
-        maxPage = (myList.Count % cellBtn.Length == 0) ? myList.Count / cellBtn.Length : myList.Count / cellBtn.Length + 1;
-
-        // 이전, 다음버튼
-        previousBtn.interactable = (currentPage <= 1) ? false : true;
-        nextBtn.interactable = (currentPage >= maxPage) ? false : true;
-
-        // 페이지에 맞는 리스트 대입
-        multiple = (currentPage - 1) * cellBtn.Length;
-        for (int i = 0; i < cellBtn.Length; i++) {
-            cellBtn[i].interactable = (multiple + i < myList.Count) ? true : false;
-            cellBtn[i].transform.GetChild(0).GetComponent<Text>().text = (multiple + i < myList.Count) ? myList[multiple + i].Name : "";
-            cellBtn[i].transform.GetChild(1).GetComponent<Text>().text = (multiple + i < myList.Count) ? myList[multiple + i].PlayerCount + "/" + myList[multiple + i].MaxPlayers : "";
-        }
-    }
-
-    public override void OnRoomListUpdate(List<RoomInfo> roomList) {
-        int roomCount = roomList.Count;
-        for (int i = 0; i < roomCount; i++) {
-            if (!roomList[i].RemovedFromList) {
-                if (!myList.Contains(roomList[i])) myList.Add(roomList[i]);
-                else myList[myList.IndexOf(roomList[i])] = roomList[i];
-            }
-            else if (myList.IndexOf(roomList[i]) != -1) myList.RemoveAt(myList.IndexOf(roomList[i]));
-        }
-        MyListRenewal();
-    }
-
     private void CheckGameStart() {
         if (!PhotonNetwork.InRoom) return;
 
@@ -315,15 +281,16 @@ public class NetworkManager : MonoBehaviourPunCallbacks {
 
 
 
-    private void GameStart() {
+    public void GameStart() {
         print("게임 스타트");
         photonView.RPC("LevelLoadPRC", RpcTarget.All);
     }
 
-    private void GetReady(bool flag) {
-        isReady = !flag;
+    public bool GetReady(Text readyText, bool flag) {
+        bool isReady = !flag;
         readyText.text = isReady ? "Wait" : "Ready";
         photonView.RPC("SetReadyInfo", RpcTarget.Others, isReady);
+        return isReady;
     }
 
     [PunRPC]
