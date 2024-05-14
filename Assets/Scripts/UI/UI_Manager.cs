@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class UI_Manager : Singleton<UI_Manager>
+public class UI_Manager : NormalSingleton<UI_Manager>
 {
 
     private int _order = 10;

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using WebSocketSharp;
 
 public class MarbleUI : UI_PopUp
 {
@@ -21,7 +22,8 @@ public class MarbleUI : UI_PopUp
     }
 
     enum Texts {
-        ExplainText
+        ExplainText,
+        WarningText
     }
 
     enum Images {
@@ -33,7 +35,8 @@ public class MarbleUI : UI_PopUp
     }
 
     enum Objects {
-        Identify_UI
+        Identify_UI,
+        WarningGRP
     }
 
     [SerializeField] private GameObject btnPrefab;
@@ -61,6 +64,7 @@ public class MarbleUI : UI_PopUp
         GetDropdown((int)Dropdowns.MarbleDropdown).onValueChanged.AddListener(SetMarbleButton);
 
         GetObject((int)Objects.Identify_UI).gameObject.SetActive(false);
+        GetObject((int)Objects.WarningGRP).gameObject.SetActive(false);
     }
 
     private void Start() {
@@ -68,30 +72,42 @@ public class MarbleUI : UI_PopUp
 
         GetDropdown((int)Dropdowns.MarbleDropdown).value = 0;
         SetMarbleButton(0);
-    }
 
-    private void OnEnable() {
-
+        for (int i = 0; i < DataManager.Instance.userData.marbleDeck.Length; i++) {
+            if (!DataManager.Instance.userData.marbleDeck[i].IsNullOrEmpty())
+                SettingManager.Instance.PosImgSet(true, GetImage(i), DataManager.Instance.userData.marbleDeck[i]);
+        }
     }
 
     private void OnExitBtnClicked(PointerEventData data) {
         ClosePopUpUI();
+        DataManager.Instance.SaveData();
     }
 
     private void OnSelectPosBtnClicked(PointerEventData data, int pos) {
         GetObject((int)Objects.Identify_UI).SetActive(true);
-        SettingManager.Instance.selectedMarblePos = pos;
+        SettingManager.Instance.SelectedMarblePos = pos;    
     }
 
     private void OnSetBtnCliked(PointerEventData data) {
-        SettingManager.Instance.SetPos();
-        SettingManager.Instance.PosImgSet(true, GetImage(SettingManager.Instance.selectedMarblePos));
+        string text = SettingManager.Instance.SetPos(GetImage(SettingManager.Instance.SelectedMarblePos));
+
+        if (text != null) {
+            GetObject((int)Objects.WarningGRP).SetActive(true);
+            GetText((int)Texts.WarningText).text = text;
+        }
+
         GetObject((int)Objects.Identify_UI).SetActive(false);
     }
 
     private void OnDelBtnCliked(PointerEventData data) {
-        SettingManager.Instance.DelPos();
-        SettingManager.Instance.PosImgSet(false, GetImage(SettingManager.Instance.selectedMarblePos));
+        string text = SettingManager.Instance.DelPos(GetImage(SettingManager.Instance.SelectedMarblePos));
+
+        if (text != null) {
+            GetObject((int)Objects.WarningGRP).SetActive(true);
+            GetText((int)Texts.WarningText).text = text;
+        }
+
         GetObject((int)Objects.Identify_UI).SetActive(false);
     }
 
@@ -108,12 +124,12 @@ public class MarbleUI : UI_PopUp
         GetImage((int)Images.MarbleImg).sprite = null;
         GetImage((int)Images.MarbleImg).enabled = false;
         GetText((int)Texts.ExplainText).text = "";
-        SettingManager.Instance.marble = null;
+        SettingManager.Instance.Marble = null;
 
 
         // 데이타베이스와 유저 데이타 비교
-        foreach (string id in SettingManager.Instance.userData.curMarblesId) {
-            UserMarble userMarble = SettingManager.Instance.resource.marbles.Find(x => x.id == id);
+        foreach (string id in DataManager.Instance.userData.curMarblesId) {
+            MarbleData userMarble = DataManager.Instance.Resource.marbles.Find(x => x.id == id);
 
             if (value != 0 && (int)userMarble.Type + 1 != value) continue;
 
@@ -127,19 +143,21 @@ public class MarbleUI : UI_PopUp
             Button btn = btnObj.GetComponentInChildren<Button>();
             Image image = btnObj.GetComponentsInChildren<Image>()[1];
             marbleBtns.Add(btnObj);
-            image.sprite = userMarble.sprite;
+            image.sprite = DataManager.Instance.Resource.images.Find(x => x.name == id + "_image");
 
             // 버튼에 함수 등록
             btn.onClick.AddListener(() => SetMarbleSelect(userMarble, GetImage((int)Images.MarbleImg), GetText((int)Texts.ExplainText)));
         }
     }
 
-    private void SetMarbleSelect(UserMarble userMarble, Image marbleImg, Text explain) {
+    private void SetMarbleSelect(MarbleData userMarble, Image marbleImg, Text explain) {
         marbleImg.enabled = true;
-        marbleImg.sprite = userMarble.sprite;
+        marbleImg.sprite = DataManager.Instance.Resource.images.Find(x => x.name == userMarble.id + "_image");
         explain.text = userMarble.explain;
 
-        SettingManager.Instance.marble = userMarble;
+        GetObject((int)Objects.Identify_UI).SetActive(false);
+
+        SettingManager.Instance.Marble = userMarble;
     }
 
 }

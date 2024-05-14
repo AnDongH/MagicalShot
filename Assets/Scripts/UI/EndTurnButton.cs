@@ -27,12 +27,14 @@ public class EndTurnButton : MonoBehaviour
         // 빨리 턴 flag부분 개선해서 이 부분 바꾸자..
         if (PhotonNetwork.IsMasterClient) {
             if (TurnManager.Instance.IsHostTurn) {
-                button.interactable = !GameManager.Instance.marbleMoving;
+                button.interactable = !InGameManager.Instance.MarbleMoving;
+                button.gameObject.SetInteractable(button.interactable);
             }
         }
         else {
             if (!TurnManager.Instance.IsHostTurn) {
-                button.interactable = !GameManager.Instance.marbleMoving;
+                button.interactable = !InGameManager.Instance.MarbleMoving;
+                button.gameObject.SetInteractable(button.interactable);
             }
         }
     }
@@ -45,5 +47,6 @@ public class EndTurnButton : MonoBehaviour
         else {
             button.interactable = PhotonNetwork.IsMasterClient ? false : true;
         }
+        button.gameObject.SetInteractable(button.interactable);
     }
 }

@@ -8,7 +8,8 @@ public class OptionUI : UI_PopUp
 {
     enum Buttons {
         ExitBtn,
-        OkBtn
+        OkBtn,
+        ExitGameBtn
     }
 
     enum Dropdowns {
@@ -32,6 +33,7 @@ public class OptionUI : UI_PopUp
 
         GetButton((int)Buttons.ExitBtn).gameObject.BindEvent(OnExitBtnClicked);
         GetButton((int)Buttons.OkBtn).gameObject.BindEvent(OnOkBtnClicked);
+        GetButton((int)Buttons.ExitGameBtn).gameObject.BindEvent(OnExitGameBtnClicked);
 
         GetDropdown((int)Dropdowns.Resolution_Dropdown).onValueChanged.AddListener(OnResolution_DropdownChanged);
         GetToggle((int)Toggles.FullScreenToggle).onValueChanged.AddListener(OnFullScreenToggleChanged);
@@ -55,6 +57,10 @@ public class OptionUI : UI_PopUp
 
     private void OnFullScreenToggleChanged(bool flag) {
         OptionManager.Instance.FullScreenBtn(flag);
+    }
+
+    private void OnExitGameBtnClicked(PointerEventData data) {
+        GameManager.Instance.ExitGame();
     }
 
 }

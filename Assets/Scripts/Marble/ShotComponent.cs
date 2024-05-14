@@ -20,9 +20,9 @@ public class ShotComponent : MonoBehaviourPun
     private bool ActCondition {
         get {
             if (TurnManager.Instance.IsLoading) return false;
-            if (GameManager.Instance.marbleMoving) return false;
-            if (GameManager.Instance.IsHost != sync.IsHost || !photonView.IsMine) return false;
-            if (GameManager.Instance.curCost < 1) return false;
+            if (InGameManager.Instance.MarbleMoving) return false;
+            if (InGameManager.Instance.IsHost != sync.IsHost || !photonView.IsMine) return false;
+            if (InGameManager.Instance.curCost < 1) return false;
 
             return true;
         }
@@ -36,7 +36,7 @@ public class ShotComponent : MonoBehaviourPun
 
     private void Update() {
 
-        if (rigid.velocity.magnitude <= GameManager.Instance.constV) {
+        if (rigid.velocity.magnitude <= InGameManager.Instance.ConstV) {
             rigid.velocity = Vector2.zero;
         }
 
@@ -108,7 +108,7 @@ public class ShotComponent : MonoBehaviourPun
         rigid.velocity = Vector2.zero;
         rigid.AddForce(dir * speed, ForceMode2D.Impulse);
 
-        GameManager.Instance.UpdateCost(false, 1);
+        InGameManager.Instance.UpdateCost(false, 1);
     }
 
 }

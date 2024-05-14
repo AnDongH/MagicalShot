@@ -9,14 +9,14 @@ public class MarbleManager : MonoBehaviour
     public static MarbleManager Instance { get; private set; }
     void Awake() => Instance = this;
 
-    public GameObject arrowPrefab;
+    [SerializeField] private GameObject arrowPrefab;
     GameObject arrow;
 
-    [SerializeField] ShotComponent selectMarble;
-    public bool isMyMarbleDrag;
+    [SerializeField] private ShotComponent selectMarble;
+    public bool isMyMarbleDrag { get; private set; }
     [field: SerializeField] public float MaxDistance { get; private set; }
     [field: SerializeField] public float MinDistance { get; private set; }
-    [field: SerializeField] public float CurDistance { get; set; }
+    public float CurDistance { get; set; }
 
     public void MarbleMouseOver() {
         

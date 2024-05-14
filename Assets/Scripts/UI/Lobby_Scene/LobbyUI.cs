@@ -10,6 +10,8 @@ public class LobbyUI : UI_Scene
         SelectRunesBtn,
         SelectMarblesBtn,
         DisConnectBtn,
+        RankingBtn,
+        ShopBtn,
         EnterRoomBtn,
         PreviousBtn,
         NextBtn,
@@ -30,6 +32,8 @@ public class LobbyUI : UI_Scene
     enum Texts {
         RoomInput_Text,
         PlayerNameText,
+        WinLoseText,
+        ScoreText,
         WarningText
     }
 
@@ -41,6 +45,8 @@ public class LobbyUI : UI_Scene
     private int currentPage = 1;
     private int multiple;
     private Button[] cellBtns = new Button[4];
+
+    private PhotonLobbyManager lobbyManager;
 
     protected override void Init() {
         base.Init();
@@ -54,6 +60,7 @@ public class LobbyUI : UI_Scene
         GetButton((int)Buttons.SelectRunesBtn).gameObject.BindEvent(OnSelectRunesBtnClicked);
         GetButton((int)Buttons.SelectMarblesBtn).gameObject.BindEvent(OnSelectMarblesBtnClicked);
         GetButton((int)Buttons.DisConnectBtn).gameObject.BindEvent(OnDisConnectBtnClicked);
+        GetButton((int)Buttons.RankingBtn).gameObject.BindEvent(RankingBtnClicked);
         GetButton((int)Buttons.EnterRoomBtn).gameObject.BindEvent(OnEnterRoomBtnClicked);
         GetButton((int)Buttons.CreateRoomBtn).gameObject.BindEvent(OnCreateRoomBtnClicked);
         GetButton((int)Buttons.EnterRandomBtn).gameObject.BindEvent(OnEnterRandomBtnClicked);
@@ -76,10 +83,14 @@ public class LobbyUI : UI_Scene
     }
 
     private void Start() {
+        lobbyManager = PhotonLobbyManager.Instance;
+
         Init();
         
         // 이름 초기화
         GetText((int)Texts.PlayerNameText).text = PhotonNetwork.LocalPlayer.NickName;
+        GetText((int)Texts.ScoreText).text = "승점: " + DataManager.Instance.userData.winScore.ToString();
+        GetText((int)Texts.WinLoseText).text = "전적: " + DataManager.Instance.userData.winCnt.ToString() + "승 " + DataManager.Instance.userData.loseCnt.ToString() + "패";
         
         // 방 리스트 초기화
         MyListRenewal();
@@ -98,27 +109,32 @@ public class LobbyUI : UI_Scene
     }
 
     private void OnDisConnectBtnClicked(PointerEventData data) {
-        PhotonManager.Instance.Disconnect();
+        lobbyManager.Disconnect();
     }
 
     private void OnStoryModeBtnClicked(PointerEventData data) {
         //TODO
     }
 
+    private void RankingBtnClicked(PointerEventData data) {
+        UI_Manager.Instance.ShowPopupUI<UI_PopUp>("RankingUI");
+        PlayFabManager.Instance.GetLeaderboard();
+    }
+
     // 콜백 필요
     private void OnEnterRoomBtnClicked(PointerEventData data) {
-        PhotonManager.LobbyErrorCode code = PhotonManager.Instance.JoinRoom(GetInputField((int)InputFields.RoomInput).text);
+        PhotonLobbyManager.LobbyErrorCode code = lobbyManager.JoinRoom(GetInputField((int)InputFields.RoomInput).text);
         LobbyErrorExeption(code);
     }
 
     private void OnCreateRoomBtnClicked(PointerEventData data) {
-        PhotonManager.LobbyErrorCode code = PhotonManager.Instance.CreateRoom(GetInputField((int)InputFields.RoomInput).text);
+        PhotonLobbyManager.LobbyErrorCode code = lobbyManager.CreateRoom(GetInputField((int)InputFields.RoomInput).text);
         LobbyErrorExeption(code);
     }
 
     // 콜백 필요
     private void OnEnterRandomBtnClicked(PointerEventData data) {
-        PhotonManager.LobbyErrorCode code = PhotonManager.Instance.JoinRandomRoom();
+        PhotonLobbyManager.LobbyErrorCode code = lobbyManager.JoinRandomRoom();
         LobbyErrorExeption(code);
     }
 
@@ -150,7 +166,7 @@ public class LobbyUI : UI_Scene
         else if (i == -1) ++currentPage;
         else {
             // 여기에 방 들어가는거 실패했을 때 팝업 뜨도록
-            PhotonManager.LobbyErrorCode code = PhotonManager.Instance.JoinRoom(PhotonManager.Instance.myList[multiple + i].Name);
+            PhotonLobbyManager.LobbyErrorCode code = lobbyManager.JoinRoom(lobbyManager.myList[multiple + i].Name);
             LobbyErrorExeption(code);
         }
         MyListRenewal();
@@ -161,7 +177,7 @@ public class LobbyUI : UI_Scene
     /// </summary>
     private void MyListRenewal() {
         // 최대페이지
-        maxPage = (PhotonManager.Instance.myList.Count % cellBtns.Length == 0) ? PhotonManager.Instance.myList.Count / cellBtns.Length : PhotonManager.Instance.myList.Count / cellBtns.Length + 1;
+        maxPage = (lobbyManager.myList.Count % cellBtns.Length == 0) ? lobbyManager.myList.Count / cellBtns.Length : lobbyManager.myList.Count / cellBtns.Length + 1;
 
         // 이전, 다음버튼
         GetButton((int)Buttons.PreviousBtn).interactable = (currentPage <= 1) ? false : true;
@@ -170,30 +186,30 @@ public class LobbyUI : UI_Scene
         // 페이지에 맞는 리스트 대입
         multiple = (currentPage - 1) * cellBtns.Length;
         for (int i = 0; i < cellBtns.Length; i++) {
-            cellBtns[i].interactable = (multiple + i < PhotonManager.Instance.myList.Count) ? true : false;
+            cellBtns[i].interactable = (multiple + i < lobbyManager.myList.Count) ? true : false;
             cellBtns[i].gameObject.SetInteractable(cellBtns[i].interactable);
 
             cellBtns[i].transform.GetChild(0).GetComponent<Text>().text = 
-                (multiple + i < PhotonManager.Instance.myList.Count) ? 
-                 PhotonManager.Instance.myList[multiple + i].Name : "";
+                (multiple + i < lobbyManager.myList.Count) ? 
+                 lobbyManager.myList[multiple + i].Name : "";
 
             cellBtns[i].transform.GetChild(1).GetComponent<Text>().text = 
-                (multiple + i < PhotonManager.Instance.myList.Count) ? 
-                PhotonManager.Instance.myList[multiple + i].PlayerCount + "/" + PhotonManager.Instance.myList[multiple + i].MaxPlayers : "";
+                (multiple + i < lobbyManager.myList.Count) ? 
+                lobbyManager.myList[multiple + i].PlayerCount + "/" + lobbyManager.myList[multiple + i].MaxPlayers : "";
         }
     }
 
-    private void LobbyErrorExeption(PhotonManager.LobbyErrorCode code) {
+    private void LobbyErrorExeption(PhotonLobbyManager.LobbyErrorCode code) {
         switch (code) {
-            case PhotonManager.LobbyErrorCode.NONE_ERROR:
+            case PhotonLobbyManager.LobbyErrorCode.NONE_ERROR:
                 break;
-            case PhotonManager.LobbyErrorCode.NULL_MARBLE:
+            case PhotonLobbyManager.LobbyErrorCode.NULL_MARBLE:
                 WarningOn("기물을 4개 선택해주세요");
                 break;
-            case PhotonManager.LobbyErrorCode.NULL_ROOM:
+            case PhotonLobbyManager.LobbyErrorCode.NULL_ROOM:
                 WarningOn("서버에 방이 존재하지 않습니다.");
                 break;
-            case PhotonManager.LobbyErrorCode.NULL_NAME_ROOM:
+            case PhotonLobbyManager.LobbyErrorCode.NULL_NAME_ROOM:
                 WarningOn("해당 이름 방이 없습니다.");
                 break;
         }

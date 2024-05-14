@@ -17,15 +17,19 @@ public class HpComponent : MonoBehaviourPun, IHitable
 
     private void Start() {
 
-        if (GameManager.Instance.IsHost == sync.IsHost)
-            hpObj = Instantiate(GameManager.Instance.hostHpPrefab, transform.position, Quaternion.identity, GameObject.Find("HpGRP").transform);
+        if (InGameManager.Instance.IsHost == sync.IsHost)
+            hpObj = Instantiate(InGameManager.Instance.HostHpPrefab, transform.position, Quaternion.identity, GameObject.Find("HpGRP").transform);
         else
-            hpObj = Instantiate(GameManager.Instance.guestHpPrefab, transform.position, Quaternion.identity, GameObject.Find("HpGRP").transform);
+            hpObj = Instantiate(InGameManager.Instance.GuestHpPrefab, transform.position, Quaternion.identity, GameObject.Find("HpGRP").transform);
 
     }
 
     private void Update() {
         hpObj.transform.position = Camera.main.WorldToScreenPoint(transform.position + new Vector3(0, 0.8f, 0));
+    }
+
+    private void OnDestroy() {
+        if (hpObj != null) Destroy(hpObj);
     }
 
     public void OnHit(float dmg) {
@@ -49,14 +53,14 @@ public class HpComponent : MonoBehaviourPun, IHitable
 
         if (hp <= 0) {
             Dead();
-            GameManager.Instance.CheckGame();
+            InGameManager.Instance.CheckGame();
         }
 
     }
 
     private void Dead() {
         Destroy(hpObj);
-        if (GameManager.Instance.IsHost == sync.IsHost) GameManager.Instance.curMyMarbles.Remove(gameObject);
+        if (InGameManager.Instance.IsHost == sync.IsHost) InGameManager.Instance.CurMyMarbles.Remove(gameObject);
         Destroy(gameObject);
 
         

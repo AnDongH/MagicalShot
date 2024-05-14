@@ -22,9 +22,9 @@ public class OwnerSyncComponent : MonoBehaviourPun
     [PunRPC]
     private void Change(bool flag) {
         if (flag)
-            photonView.TransferOwnership(GameManager.Instance.hostID);
+            photonView.TransferOwnership(InGameManager.Instance.HostID);
         else
-            photonView.TransferOwnership(GameManager.Instance.guestID);
+            photonView.TransferOwnership(InGameManager.Instance.GuestID);
 
         /*
          * A클라에서 기물을 움직이고, B에서 턴 종료를 하면 안되고 무조건 A에서 종료를 해줘야 한다.

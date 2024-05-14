@@ -13,51 +13,63 @@ MonoBehaviour:
   m_Name: ResourceSO
   m_EditorClassIdentifier: 
   marbles:
-  - Type: 0
+  - id: TA01
     name: "\uADF8\uB808\uC774\uC2A4"
-    id: TA01
-    prefab: {fileID: 4241162178809715448, guid: b98a360c061e44743bb547bd2933b11b, type: 3}
-    sprite: {fileID: 860266752, guid: 04a99b27afb61de43bda878f960d76bf, type: 3}
+    Type: 0
     explain: "\uC655\uAD6D\uC744 \uC218\uD638\uD558\uB294 \uD0F1\uCEE4"
-  - Type: 1
+    hp: 100
+    damage: 10
+  - id: DD01
     name: "\uB8E8\uBE14"
-    id: DD01
-    prefab: {fileID: 3275262004872291098, guid: 726ace350dbaf5a4dbbed2c07e7cfb69, type: 3}
-    sprite: {fileID: -859056146, guid: 1137a039b30ca384ab74041ff8c93ead, type: 3}
+    Type: 1
     explain: "\uC801\uC744 \uBB34\uCC0C\uB974\uB294 \uC6A9\uC0AC"
-  - Type: 2
+    hp: 100
+    damage: 10
+  - id: AD01
     name: "\uB77C\uC774"
-    id: AD01
-    prefab: {fileID: 8525832655721951056, guid: 837ec560038a3794da51727d7883288d, type: 3}
-    sprite: {fileID: 1571142857, guid: 5292a10ec9f74d14c91b0bbf3e3011f7, type: 3}
+    Type: 2
     explain: "\uBAA8\uB4E0\uAC78 \uB9DE\uCD94\uB294 \uAD81\uC218"
-  - Type: 3
+    hp: 100
+    damage: 10
+  - id: AP01
     name: "\uB808\uC778"
-    id: AP01
-    prefab: {fileID: 6252532447357321500, guid: 2a398df35db36024cb6bcecadca83202, type: 3}
-    sprite: {fileID: -1446105670, guid: 5b9df7a68b7ecad478583a791c9a1444, type: 3}
-    explain: "\uC801\uC744 \uC12C\uBA78\uD558\uB294 \uB9C8\uBC95\uC0AC"
-  - Type: 0
+    Type: 3
+    explain: "\uC801\uC744 \uC12C\uBA78\uD558\uB294 \uB9C8\uBC95\uC0AC "
+    hp: 100
+    damage: 10
+  - id: TA02
     name: "\uBE0C\uB85D"
-    id: TA02
-    prefab: {fileID: 135075877910080631, guid: dd275de86d4dc4f44a0dfaf83c1efa01, type: 3}
-    sprite: {fileID: -1135563821, guid: 84caccf2611ad0a40a7ae23542f8cb47, type: 3}
-    explain: "\uBD80\uC871\uC758 \uC655"
-  - Type: 1
+    Type: 0
+    explain: "\uC624\uD06C \uBD80\uC871\uC758 \uC790\uB791\uC2A4\uB7EC\uC6B4 \uC655"
+    hp: 100
+    damage: 10
+  - id: DD02
     name: "\uB85C\uC774"
-    id: DD02
-    prefab: {fileID: 310245065308777030, guid: 9caf54fa7217c8741976cacd5221038a, type: 3}
-    sprite: {fileID: 710805954, guid: 5a200e9cc3f711241acedca99bd727a9, type: 3}
-    explain: "\uC6A9\uB9F9\uD55C \uC624\uD06C"
-  - Type: 2
+    Type: 1
+    explain: "\uC6A9\uB9F9\uD55C \uC624\uD06C \uBD80\uC871\uC758 \uC804\uC0AC"
+    hp: 100
+    damage: 10
+  - id: AD02
     name: "\uB77C\uAD74\uB8E8\uC2A4"
-    id: AD02
-    prefab: {fileID: 1719421834128767331, guid: 0245e9873eed0d04e994e240061930ec, type: 3}
-    sprite: {fileID: 348453607, guid: 6e9265c0c3f39ab45b05ec116fb0f1df, type: 3}
-    explain: "\uB204\uAD6C\uBCF4\uB2E4 \uBE60\uB978 \uAD81\uC218"
-  - Type: 3
+    Type: 2
+    explain: "\uB204\uAD6C\uBCF4\uB2E4 \uBE60\uB978 \uC0AC\uACA9 \uC19C\uC528\uB97C
+      \uAC00\uC9C4 \uAD81\uC218"
+    hp: 100
+    damage: 10
+  - id: AP02
     name: "\uB85C\uC6E8\uC778"
-    id: AP02
-    prefab: {fileID: 465667734200470732, guid: 2b9590a6d9a751e4791e723a2d991d26, type: 3}
-    sprite: {fileID: 910799989, guid: 46b38756323e1c64f8ab17806d865326, type: 3}
-    explain: "\uC2E0\uC131\uD55C \uC218\uB140"
+    Type: 3
+    explain: "\uC624\uD06C \uBD80\uC871\uC758 \uC2E0\uC131\uD55C \uC218\uB140. \uC2E0\uC758
+      \uC0AC\uC790\uB77C\uACE0\uB3C4 \uBD88\uB9AC\uC6B4\uB2E4."
+    hp: 100
+    damage: 10
+  runes: []
+  images:
+  - {fileID: -818304863, guid: 6a4d9e93f7fe83e418fde081aa79d9c2, type: 3}
+  - {fileID: -264728295, guid: 7dad5a5f4f990ab4885b2adab4af1153, type: 3}
+  - {fileID: 1566880218, guid: 3fadac0c52b3f2443a1e78008817f847, type: 3}
+  - {fileID: 916480230, guid: 56f9b9577e8132e4489e07e84cc7cdb6, type: 3}
+  - {fileID: -408623006, guid: 03dacb6188f507a428a05e99764a8313, type: 3}
+  - {fileID: 864354420, guid: 73fa762aca475214eaa63b5a7b639648, type: 3}
+  - {fileID: -602589291, guid: 798e27fd82f3fa043891cb1214733165, type: 3}
+  - {fileID: 1383425923, guid: 9d767c2865b36d54d89eb748e288d59e, type: 3}

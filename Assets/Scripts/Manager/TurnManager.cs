@@ -6,26 +6,21 @@ using UnityEngine;
 using UnityEngine.UI;
 using Random = UnityEngine.Random;
 
-public class TurnManager : MonoBehaviourPun {
+public class TurnManager : NormalSingletonPun<TurnManager> {
 
-
-    public static TurnManager Instance { get; private set; }
-
-    public GameObject timerBar;
-    public float defaultTurnTime = 120f;
-    [SerializeField] private float curTurnTime = 120f;
-    RectTransform timer;
+    public float defaultTurnTime { get; private set; } = 120f;
+    public float curTurnTime { get; private set; } = 120f;
 
 
     [Header("Develop")]
     [SerializeField][Tooltip("시작 전 턴 모드를 정합니다.")] ETurnMode eTurnMode;
 
-    [field: SerializeField] public bool IsLoading { get; private set; }
-    [field: SerializeField] public bool IsHostTurn { get; private set; }
+    public bool IsLoading { get; private set; }
+    public bool IsHostTurn { get; private set; }
 
-    [SerializeField] private bool myTurn;
+    private bool myTurn;
 
-    [SerializeField] Text turnText;
+    [SerializeField] private Text turnText;
 
 
     public static event Action<bool> OnTurnChanged;
@@ -35,11 +30,6 @@ public class TurnManager : MonoBehaviourPun {
     // 캐싱
     WaitForSeconds delay20 = new WaitForSeconds(2.0f);
     WaitForSeconds delay07 = new WaitForSeconds(0.7f);
-
-    void Awake() {
-        Instance = this;
-        timer = timerBar.GetComponentsInChildren<RectTransform>()[1];
-    }
 
     private void Start() {
 
@@ -53,10 +43,6 @@ public class TurnManager : MonoBehaviourPun {
             }
            
         }
-    }
-
-    private void LateUpdate() {
-        timer.SetSizeWithCurrentAnchors(0, (curTurnTime / defaultTurnTime) * 240);
     }
 
     // 턴 동기화
@@ -89,14 +75,14 @@ public class TurnManager : MonoBehaviourPun {
         turnText.gameObject.SetActive(true);
         turnText.text = "게임 시작. 기물 생성중..";
         yield return delay07;
-        GameManager.Instance.InitMarbles(IsHostTurn);
+        InGameManager.Instance.InitMarbles(IsHostTurn);
         StartCoroutine(StartTurnCo());
     }
 
     IEnumerator StartTurnCo() {
         IsLoading = true;
 
-        GameManager.Instance.UpdateCost(true, 6);
+        InGameManager.Instance.UpdateCost(true, 6);
         OnTurnChanged?.Invoke(IsHostTurn);
         turnText.gameObject.SetActive(true);
         if (IsHostTurn) {
@@ -122,8 +108,7 @@ public class TurnManager : MonoBehaviourPun {
         turnText.gameObject.SetActive(true);
         turnText.text = "이겼습니다!";
         yield return delay20;
-        PlayerPrefs.SetInt("mainScene", 1);
-        PhotonNetwork.LoadLevel(0);
+        PhotonInGameManager.Instance.LeaveRoom();
     }
 
     public IEnumerator LoseTheGameCo() {
@@ -131,13 +116,13 @@ public class TurnManager : MonoBehaviourPun {
         turnText.gameObject.SetActive(true);
         turnText.text = "졌습니다..";
         yield return delay20;
-        PlayerPrefs.SetInt("mainScene", 1);
-        PhotonNetwork.LoadLevel(0);
+        PhotonInGameManager.Instance.LeaveRoom();
     }
 
     [PunRPC]
     private void TurnChange() {
         IsHostTurn = !IsHostTurn;
+        Debug.Log(1);
         StartCoroutine(StartTurnCo());
     }
 

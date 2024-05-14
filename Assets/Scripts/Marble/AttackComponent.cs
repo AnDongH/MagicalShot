@@ -33,10 +33,10 @@ public class AttackComponent : MonoBehaviourPun {
             }
 
             if (PhotonNetwork.IsMasterClient) {
-                if (TurnManager.Instance.IsHostTurn && GameManager.Instance.IsHost == sync.IsHost) Attack(dmg, hitable);
+                if (TurnManager.Instance.IsHostTurn && InGameManager.Instance.IsHost == sync.IsHost) Attack(dmg, hitable);
             }
             else {
-                if (!TurnManager.Instance.IsHostTurn && GameManager.Instance.IsHost == sync.IsHost) Attack(dmg, hitable);
+                if (!TurnManager.Instance.IsHostTurn && InGameManager.Instance.IsHost == sync.IsHost) Attack(dmg, hitable);
             }
         }
     }

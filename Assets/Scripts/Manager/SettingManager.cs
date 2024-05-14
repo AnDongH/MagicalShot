@@ -1,95 +1,69 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
+using WebSocketSharp;
 
-public class SettingManager : MonoBehaviour
+public class SettingManager : DontDestroySingleton<SettingManager>
 {
-    public static SettingManager Instance { get; private set; }
-    
 
-    [field: SerializeField, Header("리소스 데이타베이스")]
-    public ResourceSO resource { get; private set; }
+    public string envPath = "SPUM/SPUM_Units/";
+    public string prefab_envPath = "Prefab/";
 
     [field: SerializeField, Header("선택 기물, 데이타")]
-    public UserDataSO userData { get; private set; }
-    public List<GameObject> selectedMarbles { get; private set; }
-    public int selectedMarblePos { get; set; } = -1;
+    public int SelectedMarblePos { get; set; } = -1;
 
-    public int SelectCount { 
-        get {
-            int tem = 0;
-            foreach (var item in selectedMarbles) {
-                if (item != null) tem++;
-            }
-            return tem;
-        } 
-    }
-
-    public UserMarble marble { get; set; }
-
-
-
-    private void Awake() {
-        Instance = this;
-
-        
-        selectedMarbles = new List<GameObject>();
-        for (int i = 0; i < 4; i++) { 
-            selectedMarbles.Add(null);
-        }
-
-    }
+    public MarbleData Marble { get; set; } = null;
 
     private void Update() {
         if (Input.GetKeyDown(KeyCode.A)) {
-            selectedMarbles[0] = resource.marbles.Find(x => x.id == "TA01").prefab;
-            selectedMarbles[1] = resource.marbles.Find(x => x.id == "TA02").prefab;
-            selectedMarbles[2] = resource.marbles.Find(x => x.id == "DD01").prefab;
-            selectedMarbles[3] = resource.marbles.Find(x => x.id == "DD02").prefab;
+            DataManager.Instance.userData.marbleDeck[0] = DataManager.Instance.Resource.marbles.Find(x => x.id == "TA01").id;
+            DataManager.Instance.userData.marbleDeck[1] = DataManager.Instance.Resource.marbles.Find(x => x.id == "TA02").id;
+            DataManager.Instance.userData.marbleDeck[2] = DataManager.Instance.Resource.marbles.Find(x => x.id == "DD01").id;
+            DataManager.Instance.userData.marbleDeck[3] = DataManager.Instance.Resource.marbles.Find(x => x.id == "DD02").id;
         }
     }
 
 
-    public void SetPos() {
-        if (marble == null || marble.prefab == null) {
+    public string SetPos(Image image) {
+        if (Marble == null || Marble.id.IsNullOrEmpty()) {
             print("선택된 기물이 없습니다.");
-            return;
+            return "선택된 기물이 없습니다.";
         }
 
-        if (selectedMarbles[selectedMarblePos] != null) {
+        if (!DataManager.Instance.userData.marbleDeck[SelectedMarblePos].IsNullOrEmpty()) {
             print("기물이 이미 존재합니다.");
-            return;
+            return "기물이 이미 존재합니다.";
         }
 
-        if (selectedMarbles.Find(x => x == marble.prefab)) {
+        if (!Array.Find(DataManager.Instance.userData.marbleDeck, x => x == Marble.id).IsNullOrEmpty()) {
             print("이미 해당 유닛이 존재합니다.");
-            return;
+            return "이미 해당 유닛이 존재합니다.";
         }
 
-        selectedMarbles[selectedMarblePos] = marble.prefab;
+        DataManager.Instance.userData.marbleDeck[SelectedMarblePos] = Marble.id;
+        PosImgSet(true, image, Marble.id);
+        return null;
     }
 
-    public void DelPos() {
-        if (selectedMarblePos == -1 || selectedMarbles[selectedMarblePos] == null) {
+    public string DelPos(Image image) {
+        if (SelectedMarblePos == -1 || DataManager.Instance.userData.marbleDeck[SelectedMarblePos].IsNullOrEmpty()) {
             print("제거할 기물이 없습니다.");
-            return;
+            return "제거할 기물이 없습니다.";
         }
-        selectedMarbles[selectedMarblePos] = null;
+        DataManager.Instance.userData.marbleDeck[SelectedMarblePos] = null;
+        PosImgSet(false, image);
+        return null;
     }
 
-    public void PosImgSet(bool flag, Image posImg) {
+    public void PosImgSet(bool flag, Image posImg, string id = null) {
         posImg.enabled = flag;
-        if (flag) posImg.sprite = marble.sprite;
-        else posImg.sprite = null;
-    }
-
-    public void SendMarbleData() {
-        // 이부분 버그 날 수도 있으니 잘 보자.
-        foreach (GameObject obj in selectedMarbles) {
-            if (obj != null && !SettingData.Instance.marbleDeck.Contains(obj)) SettingData.Instance.marbleDeck.Add(obj);
+        if (flag) {
+            Sprite sprite = DataManager.Instance.Resource.images.Find(x => x.name == id + "_image");
+            posImg.sprite = sprite;
         }
+        else posImg.sprite = null;
     }
 
 

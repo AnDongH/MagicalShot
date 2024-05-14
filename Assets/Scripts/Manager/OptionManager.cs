@@ -4,12 +4,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class OptionManager : Singleton<OptionManager>
+public class OptionManager : NormalSingleton<OptionManager>
 {
     
     FullScreenMode ScreenMode;
     List<Tuple<int, int>> resolutions = new List<Tuple<int, int>>();
-    public int resolutionNum;
+    private int resolutionNum;
 
     public void InitUI(Dropdown dropdown, Toggle toggle) {
 
@@ -31,7 +31,7 @@ public class OptionManager : Singleton<OptionManager>
         dropdown.RefreshShownValue();
 
         toggle.isOn = Screen.fullScreenMode.Equals(FullScreenMode.FullScreenWindow) ? true : false;
-        
+        ScreenMode = Screen.fullScreenMode;
     }
 
     public void DropboxOptionChange(int x) {
