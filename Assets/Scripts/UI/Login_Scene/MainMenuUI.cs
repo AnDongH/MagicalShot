@@ -24,6 +24,7 @@ public class MainMenuUI : UI_Scene
     }
 
     private void OnExitGameBtnClicked(PointerEventData data) {
+        SoundManager.Instance.PlaySFXSound("ButtonClick");
         GameManager.Instance.ExitGame();
     }
 }

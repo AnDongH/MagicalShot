@@ -20,7 +20,7 @@ public class TurnManager : NormalSingletonPun<TurnManager> {
 
     private bool myTurn;
 
-    [SerializeField] private Text turnText;
+    [SerializeField] private NotificationPanel notificationPanel;
 
 
     public static event Action<bool> OnTurnChanged;
@@ -30,10 +30,6 @@ public class TurnManager : NormalSingletonPun<TurnManager> {
     // 캐싱
     WaitForSeconds delay20 = new WaitForSeconds(2.0f);
     WaitForSeconds delay07 = new WaitForSeconds(0.7f);
-
-    private void Start() {
-
-    }
 
     private void Update() {
         if (myTurn) {
@@ -72,8 +68,6 @@ public class TurnManager : NormalSingletonPun<TurnManager> {
         GameSetUp();
         IsLoading = true;
 
-        turnText.gameObject.SetActive(true);
-        turnText.text = "게임 시작. 기물 생성중..";
         yield return delay07;
         InGameManager.Instance.InitMarbles(IsHostTurn);
         StartCoroutine(StartTurnCo());
@@ -84,15 +78,13 @@ public class TurnManager : NormalSingletonPun<TurnManager> {
 
         InGameManager.Instance.UpdateCost(true, 6);
         OnTurnChanged?.Invoke(IsHostTurn);
-        turnText.gameObject.SetActive(true);
         if (IsHostTurn) {
-            turnText.text = PhotonNetwork.IsMasterClient ? "나의 턴!" : "상대의 턴!";
+            notificationPanel.TurnShow(PhotonNetwork.IsMasterClient ? "나의 턴!" : "상대의 턴!");
         }
         else {
-            turnText.text = PhotonNetwork.IsMasterClient ? "상대의 턴!" : "나의 턴!";
+            notificationPanel.TurnShow(PhotonNetwork.IsMasterClient ? "상대의 턴!" : "나의 턴!");
         }
         yield return delay20;
-        turnText.gameObject.SetActive(false);
         IsLoading = false;
 
         if (IsHostTurn) {
@@ -105,16 +97,14 @@ public class TurnManager : NormalSingletonPun<TurnManager> {
 
     public IEnumerator WinTheGameCo() {
         IsLoading = true;
-        turnText.gameObject.SetActive(true);
-        turnText.text = "이겼습니다!";
+        notificationPanel.TurnShow("승리!");
         yield return delay20;
         PhotonInGameManager.Instance.LeaveRoom();
     }
 
     public IEnumerator LoseTheGameCo() {
         IsLoading = true;
-        turnText.gameObject.SetActive(true);
-        turnText.text = "졌습니다..";
+        notificationPanel.TurnShow("패배");
         yield return delay20;
         PhotonInGameManager.Instance.LeaveRoom();
     }
@@ -122,7 +112,6 @@ public class TurnManager : NormalSingletonPun<TurnManager> {
     [PunRPC]
     private void TurnChange() {
         IsHostTurn = !IsHostTurn;
-        Debug.Log(1);
         StartCoroutine(StartTurnCo());
     }
 

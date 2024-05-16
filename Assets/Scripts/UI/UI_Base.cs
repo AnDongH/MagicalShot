@@ -64,5 +64,5 @@ public class UI_Base : MonoBehaviour
     protected Dropdown GetDropdown(int idx) { return Get<Dropdown>(idx); }
     protected Toggle GetToggle(int idx) { return Get<Toggle>(idx); }
 
-
+    protected Slider GetSlider(int idx) { return Get<Slider>(idx); }
 }

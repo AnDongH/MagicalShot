@@ -17,13 +17,10 @@ public class InGameUI : UI_Scene
         TimerIMG
     }
 
-    enum Texts {
-        TurnText
-    }
-
     enum Objects {
         TimerBar,
-        CostList
+        CostList,
+        NotificationPanel
     }
 
     private Transform[] costList;
@@ -34,7 +31,6 @@ public class InGameUI : UI_Scene
 
         Bind<Button>(typeof(Buttons));
         Bind<Image>(typeof(Images));
-        Bind<Text>(typeof(Texts));
         Bind<GameObject>(typeof(Objects));
 
         GetButton((int)Buttons.TurnBtn).gameObject.BindEvent(OnTurnBtnClicked);
@@ -43,8 +39,6 @@ public class InGameUI : UI_Scene
 
     private void Start() {
         Init();
-
-        GetText((int)Texts.TurnText).gameObject.SetActive(false);
 
         timer = GetObject((int)Objects.TimerBar).GetComponentsInChildren<RectTransform>()[1];
 
@@ -65,10 +59,12 @@ public class InGameUI : UI_Scene
     }
 
     private void OnTurnBtnClicked(PointerEventData data) {
+        SoundManager.Instance.PlaySFXSound("TurnChange");
         TurnManager.Instance.EndTurn();
     }
 
     private void OnMenuBtnClicked(PointerEventData data) {
+        SoundManager.Instance.PlaySFXSound("ButtonClick");
         UI_Manager.Instance.ShowPopupUI<UI_PopUp>("MenuPanelUI");
     }
 

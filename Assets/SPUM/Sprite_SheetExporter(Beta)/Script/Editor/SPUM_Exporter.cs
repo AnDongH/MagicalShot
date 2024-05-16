@@ -156,7 +156,7 @@ public class SPUM_ExporterEditor : Editor
         EditorGUILayout.HelpBox("Adavnced settings only for more options (not recommended)",MessageType.Info);
         if(!SPB._advanced)
         {
-            EditorGUILayout.PropertyField(_advanced, new GUIContent("Advanced Settings Show"));
+            EditorGUILayout.PropertyField(_advanced, new GUIContent("Advanced Settings TurnShow"));
         }
         else
         {

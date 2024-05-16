@@ -1,4 +1,5 @@
 using Photon.Pun;
+using Photon.Realtime;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -17,6 +18,10 @@ public class PhotonInGameManager : NormalSingletonPunCallbacks<PhotonInGameManag
         print("방에서 나감");
     }
 
+    public override void OnPlayerLeftRoom(Player otherPlayer) {
+        InGameManager.Instance.OtherPlayerEscape();
+    }
+
     public override void OnConnectedToMaster() {
         print("서버접속완료");
         PhotonNetwork.LocalPlayer.NickName = PlayFabManager.Instance.NickName;
@@ -26,5 +31,13 @@ public class PhotonInGameManager : NormalSingletonPunCallbacks<PhotonInGameManag
     public override void OnJoinedLobby() {
         SceneManager.LoadScene("02Lobby");
         print("로비접속완료");
+    }
+
+    protected override void OnApplicationQuit() {
+        DataManager.Instance.userData.loseCnt++;
+        DataManager.Instance.userData.winScore = (DataManager.Instance.userData.winScore - 5) >= 0 ? DataManager.Instance.userData.winScore - 5 : 0;
+        DataManager.Instance.userData.money += 20;
+        DataManager.Instance.LocalSaveData();
+        base.OnApplicationQuit();
     }
 }

@@ -31,6 +31,7 @@ public class NickNameUI : UI_PopUp
     }
 
     private void OnOkBtnClicked(PointerEventData data) {
+        SoundManager.Instance.PlaySFXSound("ButtonClick");
         PlayFabManager.Instance.UpdateDisplayName(GetInputField((int)InputFields.NickName_Input));
     }
 

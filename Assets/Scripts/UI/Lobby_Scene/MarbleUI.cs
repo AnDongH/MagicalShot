@@ -14,7 +14,8 @@ public class MarbleUI : UI_PopUp
         AP_SelectPosBtn = 3,
         ExitBtn,
         Set_Btn,
-        Del_Btn
+        Del_Btn,
+        WarningOkBtn
     }
 
     enum Dropdowns {
@@ -60,6 +61,7 @@ public class MarbleUI : UI_PopUp
         GetButton((int)Buttons.AP_SelectPosBtn).gameObject.BindEvent((data) => OnSelectPosBtnClicked(data, (int)Buttons.AP_SelectPosBtn));
         GetButton((int)Buttons.Set_Btn).gameObject.BindEvent(OnSetBtnCliked);
         GetButton((int)Buttons.Del_Btn).gameObject.BindEvent(OnDelBtnCliked);
+        GetButton((int)Buttons.WarningOkBtn).gameObject.BindEvent(OnWarningOkBtnClicked);
 
         GetDropdown((int)Dropdowns.MarbleDropdown).onValueChanged.AddListener(SetMarbleButton);
 
@@ -80,11 +82,13 @@ public class MarbleUI : UI_PopUp
     }
 
     private void OnExitBtnClicked(PointerEventData data) {
+        SoundManager.Instance.PlaySFXSound("ButtonClick");
         ClosePopUpUI();
         DataManager.Instance.SaveData();
     }
 
     private void OnSelectPosBtnClicked(PointerEventData data, int pos) {
+        SoundManager.Instance.PlaySFXSound("ButtonClick");
         GetObject((int)Objects.Identify_UI).SetActive(true);
         SettingManager.Instance.SelectedMarblePos = pos;    
     }
@@ -109,6 +113,11 @@ public class MarbleUI : UI_PopUp
         }
 
         GetObject((int)Objects.Identify_UI).SetActive(false);
+    }
+
+    private void OnWarningOkBtnClicked(PointerEventData data) {
+        SoundManager.Instance.PlaySFXSound("ButtonClick");
+        GetObject((int)Objects.WarningGRP).gameObject.SetActive(false);
     }
 
     private void SetMarbleButton(int value) {
@@ -151,6 +160,7 @@ public class MarbleUI : UI_PopUp
     }
 
     private void SetMarbleSelect(MarbleData userMarble, Image marbleImg, Text explain) {
+        SoundManager.Instance.PlaySFXSound("ButtonClick");
         marbleImg.enabled = true;
         marbleImg.sprite = DataManager.Instance.Resource.images.Find(x => x.name == userMarble.id + "_image");
         explain.text = userMarble.explain;

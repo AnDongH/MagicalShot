@@ -134,7 +134,7 @@ GameObject:
   - component: {fileID: -1195642328644067463}
   - component: {fileID: 1634687229014325488}
   - component: {fileID: -7506471045976274678}
-  m_Layer: 5
+  m_Layer: 8
   m_Name: TA02
   m_TagString: Marble
   m_Icon: {fileID: 0}
@@ -155,7 +155,7 @@ RectTransform:
   m_Children:
   - {fileID: 4045523010896660478}
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 1, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -4068,8 +4068,8 @@ SortingGroup:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 9032885195523133900}
   m_Enabled: 1
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: -879884895
+  m_SortingLayer: 2
   m_SortingOrder: 5
   m_SortAtRoot: 0
 --- !u!95 &8888754864246583392

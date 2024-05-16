@@ -1,3 +1,4 @@
+using JetBrains.Annotations;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -28,12 +29,19 @@ public class RuneData {
     
 }
 
+[System.Serializable]
+public class MapData {
+    public string mapName;
+    public Sprite mapImage;
+}
+
 
 [CreateAssetMenu(fileName = "ResourceSO", menuName = "Scriptable Object/ResourceSO")]
 public class ResourceSO : ScriptableObject
 {
     public List<MarbleData> marbles;
     public List<RuneData> runes;
+    public List<MapData> maps;
     public List<Sprite> images;
 }
 

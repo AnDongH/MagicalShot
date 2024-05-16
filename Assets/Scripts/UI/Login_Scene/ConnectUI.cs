@@ -29,6 +29,7 @@ public class ConnectUI : UI_PopUp
     }
 
     private void OnSrvConnectBtnClicked(PointerEventData data) {
+        SoundManager.Instance.PlaySFXSound("Connect");
         loginManager.Connect();
     }
 }

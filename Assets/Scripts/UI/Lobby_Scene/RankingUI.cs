@@ -52,6 +52,7 @@ public class RankingUI : UI_PopUp
     }
 
     private void OnExitBtnClicked(PointerEventData data) {
+        SoundManager.Instance.PlaySFXSound("ButtonClick");
         ClosePopUpUI();
     }
 }

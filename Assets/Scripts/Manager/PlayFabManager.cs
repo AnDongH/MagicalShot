@@ -3,7 +3,7 @@ using PlayFab;
 using UnityEngine;
 using UnityEngine.UI;
 using System.Collections.Generic;
-
+using System;
 
 public class PlayFabManager : DontDestroySingleton<PlayFabManager> {
 
@@ -115,7 +115,7 @@ public class PlayFabManager : DontDestroySingleton<PlayFabManager> {
         OnRankGet?.Invoke(result.Leaderboard);
     }
 
-    public void SetUserData(Dictionary<string, string> data) {
+    public void SetUserData(Dictionary<string, string> data, Action<UpdateUserDataResult> result = null) {
 
         if (!PlayFabClientAPI.IsClientLoggedIn()) return;
 
@@ -123,7 +123,7 @@ public class PlayFabManager : DontDestroySingleton<PlayFabManager> {
             Data = data, 
             Permission = UserDataPermission.Public
         };
-        PlayFabClientAPI.UpdateUserData(request, result => { }, OnGetOrSetUserDataFailed);
+        PlayFabClientAPI.UpdateUserData(request, result, OnGetOrSetUserDataFailed);
     }
 
     public void GetUserData(string playfabId) {

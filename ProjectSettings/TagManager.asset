@@ -12,10 +12,10 @@ TagManager:
   - 
   - Water
   - UI
-  - 
-  - 
-  - 
-  - 
+  - Map
+  - Obstacle
+  - Marble
+  - Rune
   - 
   - 
   - 
@@ -41,4 +41,13 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: Map
+    uniqueID: 164874529
+    locked: 0
+  - name: Unit
+    uniqueID: 3415082401
+    locked: 0
+  - name: Rune
+    uniqueID: 629177787
     locked: 0

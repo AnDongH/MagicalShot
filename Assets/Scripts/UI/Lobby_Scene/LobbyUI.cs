@@ -94,22 +94,28 @@ public class LobbyUI : UI_Scene
         
         // 방 리스트 초기화
         MyListRenewal();
+
+        SoundManager.Instance.PlayBackGroundSound("MainTheme");
     }
 
     private void OnOptionBtnClicked(PointerEventData data) {
+        SoundManager.Instance.PlaySFXSound("MenuBar");
         UI_Manager.Instance.ShowPopupUI<UI_PopUp>("OptionCanvas");
     }
 
     private void OnSelectRunesBtnClicked(PointerEventData data) {
+        SoundManager.Instance.PlaySFXSound("MenuBar");
         UI_Manager.Instance.ShowPopupUI<UI_PopUp>("RuneCanvas");
     }
 
     private void OnSelectMarblesBtnClicked(PointerEventData data) {
+        SoundManager.Instance.PlaySFXSound("MenuBar");
         UI_Manager.Instance.ShowPopupUI<UI_PopUp>("MarbleCanvas");
     }
 
     private void OnDisConnectBtnClicked(PointerEventData data) {
-        lobbyManager.Disconnect();
+        SoundManager.Instance.PlaySFXSound("MenuBar");
+        UI_Manager.Instance.ShowPopupUI<UI_PopUp>("ExitPanelUI");
     }
 
     private void OnStoryModeBtnClicked(PointerEventData data) {
@@ -117,6 +123,7 @@ public class LobbyUI : UI_Scene
     }
 
     private void RankingBtnClicked(PointerEventData data) {
+        SoundManager.Instance.PlaySFXSound("MenuBar");
         UI_Manager.Instance.ShowPopupUI<UI_PopUp>("RankingUI");
         PlayFabManager.Instance.GetLeaderboard();
     }
@@ -143,15 +150,18 @@ public class LobbyUI : UI_Scene
     }
 
     private void OnUpdateRoomBtnClicked(PointerEventData data) {
+        SoundManager.Instance.PlaySFXSound("ButtonClick");
         MyListRenewal();
     }
 
     private void OnWarningOkBtnClicked(PointerEventData data) {
+        SoundManager.Instance.PlaySFXSound("ButtonClick");
         GetObject((int)Objects.WarningGRP).gameObject.SetActive(false);
         MyListRenewal();
     }
 
     private void WarningOn(string error) {
+        SoundManager.Instance.PlaySFXSound("Warning");
         GetText((int)Texts.WarningText).text = error;
         GetObject((int)Objects.WarningGRP).gameObject.SetActive(true);
     }
@@ -162,8 +172,14 @@ public class LobbyUI : UI_Scene
     /// </summary>
     /// <param name="i"></param>
     public void MyCellClick(int i) {
-        if (i == -2) --currentPage;
-        else if (i == -1) ++currentPage;
+        if (i == -2) {
+            --currentPage;
+            SoundManager.Instance.PlaySFXSound("ButtonClick");
+        }
+        else if (i == -1) {
+            ++currentPage;
+            SoundManager.Instance.PlaySFXSound("ButtonClick");
+        }
         else {
             // 여기에 방 들어가는거 실패했을 때 팝업 뜨도록
             PhotonLobbyManager.LobbyErrorCode code = lobbyManager.JoinRoom(lobbyManager.myList[multiple + i].Name);
@@ -202,6 +218,7 @@ public class LobbyUI : UI_Scene
     private void LobbyErrorExeption(PhotonLobbyManager.LobbyErrorCode code) {
         switch (code) {
             case PhotonLobbyManager.LobbyErrorCode.NONE_ERROR:
+                SoundManager.Instance.PlaySFXSound("EnterRoom");
                 break;
             case PhotonLobbyManager.LobbyErrorCode.NULL_MARBLE:
                 WarningOn("기물을 4개 선택해주세요");

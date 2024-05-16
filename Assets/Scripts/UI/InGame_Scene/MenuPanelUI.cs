@@ -26,6 +26,7 @@ public class MenuPanelUI : UI_PopUp {
     }
 
     private void OnOptionBtnCliked(PointerEventData data) {
+        SoundManager.Instance.PlaySFXSound("ButtonClick");
         UI_Manager.Instance.ShowPopupUI<UI_PopUp>("OptionCanvas");
     }
 
@@ -35,6 +36,7 @@ public class MenuPanelUI : UI_PopUp {
     }
 
     private void OnExitBtnClicked(PointerEventData data) {
+        SoundManager.Instance.PlaySFXSound("ButtonClick");
         ClosePopUpUI();
     }
 }

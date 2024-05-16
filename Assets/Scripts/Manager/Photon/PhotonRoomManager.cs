@@ -91,4 +91,11 @@ public class PhotonRoomManager : NormalSingletonPunCallbacks<PhotonRoomManager> 
     private void ChatRPC(string msg) {
         OnChatSended.Invoke(msg);
     }
+
+
+
+    protected override void OnApplicationQuit() {
+        DataManager.Instance.LocalSaveData();
+        base.OnApplicationQuit();
+    }
 }

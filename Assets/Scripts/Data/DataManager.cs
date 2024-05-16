@@ -1,7 +1,9 @@
+using PlayFab.ClientModels;
 using PlayFab.EconomyModels;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using System.Reflection;
 using UnityEngine;
 using UnityEngine.Networking;
@@ -17,6 +19,9 @@ public class DataManager : DontDestroySingleton<DataManager> {
     #endregion
 
     public UserData userData;
+    public int mapIndex { get; set; }
+
+    private string cryptoFilePath;
 
     [field: SerializeField] public ResourceSO Resource { get; private set; }
 
@@ -47,6 +52,9 @@ public class DataManager : DontDestroySingleton<DataManager> {
         StartCoroutine(GetSheetData());
 
         userData = new UserData();
+
+        cryptoFilePath = Application.persistentDataPath;
+        Debug.Log(cryptoFilePath);
     }
 
     private IEnumerator GetSheetData() {
@@ -143,19 +151,45 @@ public class DataManager : DontDestroySingleton<DataManager> {
         }
     }
 
-    public void SaveData() {
+    public void SaveData(Action<UpdateUserDataResult> result = null) {
         Dictionary<string, string> dataDic = new Dictionary<string, string>();
         dataDic.Add("UserData", JsonUtility.ToJson(userData, true));
-        PlayFabManager.Instance.SetUserData(dataDic);
+        PlayFabManager.Instance.SetUserData(dataDic, result);
     }
 
     public void LoadData(string playfabId) {
-        PlayFabManager.Instance.GetUserData(playfabId);
+        if (File.Exists(Path.Combine(cryptoFilePath, playfabId + "Local.json"))) LocalLoadData();
+        else PlayFabManager.Instance.GetUserData(playfabId);
     }
 
-    protected override void OnApplicationQuit() {
+    public void LocalSaveData() {
+
+        jsonData = JsonUtility.ToJson(userData, true);
+        byte[] bytes = System.Text.Encoding.UTF8.GetBytes(jsonData);
+        byte[] encryptBytes = AES.Cipher(bytes, "1234", AES.mode.ENCRYPT);
+        File.WriteAllBytes(Path.Combine(cryptoFilePath , PlayFabManager.Instance.PlayFabID + "Local.json"), encryptBytes);
+
+    }
+
+    public void LocalLoadData() {
+
+        if (!File.Exists(Path.Combine(cryptoFilePath, PlayFabManager.Instance.PlayFabID + "Local.json"))) {
+            Debug.Log("경로가 없습니다.");
+            return;
+        }
+
+        byte[] bytes = File.ReadAllBytes(Path.Combine(cryptoFilePath, PlayFabManager.Instance.PlayFabID + "Local.json"));
+        byte[] DecryptBytes = AES.Cipher(bytes, "1234", AES.mode.DECRYPT);
+        jsonData = System.Text.Encoding.UTF8.GetString(DecryptBytes);
+
+        //// 오브젝트 디시리얼라이즈
+        UserData data = JsonUtility.FromJson<UserData>(jsonData);
+        userData = data;
+
         SaveData();
-        base.OnApplicationQuit();
-    }
 
+        File.Delete(Path.Combine(cryptoFilePath, PlayFabManager.Instance.PlayFabID + "Local.json"));
+
+        PlayFabManager.Instance.SendStatisticToServer(userData.winScore, "WinScore");
+    }
 }

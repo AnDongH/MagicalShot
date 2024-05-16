@@ -37,10 +37,12 @@ public class RegisterUI : UI_PopUp
     }
 
     private void OnOkBtnClicked(PointerEventData data) {
+        SoundManager.Instance.PlaySFXSound("ButtonClick");
         PlayFabManager.Instance.Register(GetInputField((int)InputFields.ID_Input), GetInputField((int)InputFields.PW_Input), GetInputField((int)InputFields.AccountNameInput));
     }
 
     private void OnExitBtnClicked(PointerEventData data) {
+        SoundManager.Instance.PlaySFXSound("ButtonClick");
         ClosePopUpUI();
     }
 }

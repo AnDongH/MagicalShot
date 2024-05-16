@@ -42,6 +42,12 @@ public class InGameManager : NormalSingletonPun<InGameManager>, IPunObservable
 
     public int curCost = 6;
 
+    public bool gameEnd = false;
+
+
+    [SerializeField] private GameObject[] mapArray;
+
+
     protected override void Awake() {
         base.Awake();
         CurMyMarbles = new List<GameObject>();
@@ -52,6 +58,13 @@ public class InGameManager : NormalSingletonPun<InGameManager>, IPunObservable
         // 호스트와 클라이언트의 아이디 초기화
         if (PhotonNetwork.IsMasterClient) HostID = PhotonNetwork.LocalPlayer.ActorNumber;
         else GuestID = PhotonNetwork.LocalPlayer.ActorNumber;
+
+        // 맵 설정
+        foreach (GameObject obj in mapArray) {
+            obj.SetActive(false);
+        }
+        mapArray[DataManager.Instance.mapIndex].SetActive(true);
+        SoundManager.Instance.PlayBackGroundSound(mapArray[DataManager.Instance.mapIndex].name);
 
         // 시작 턴 설정, 턴에 따라서 기물 생성
 
@@ -94,13 +107,12 @@ public class InGameManager : NormalSingletonPun<InGameManager>, IPunObservable
         yield return StartCoroutine(TurnManager.Instance.StartGameCo());
 
         photonView.RPC("CountReady", RpcTarget.All);
-
-        if (readyCnt >= 2) photonView.RPC("InitMarbleList", RpcTarget.All);
     }
 
     [PunRPC]
     private void CountReady() {
         readyCnt++;
+        if (readyCnt >= 2) photonView.RPC("InitMarbleList", RpcTarget.All);
     }
 
     [PunRPC]
@@ -141,6 +153,12 @@ public class InGameManager : NormalSingletonPun<InGameManager>, IPunObservable
 
     [PunRPC]
     private void WinTheGame() {
+
+        if (gameEnd) return;
+        else gameEnd = true;
+
+        SoundManager.Instance.BackGroundSoundStop();
+        SoundManager.Instance.PlaySFXSound("WinTheGame");
         StartCoroutine(TurnManager.Instance.WinTheGameCo());
         DataManager.Instance.userData.winCnt++;
         DataManager.Instance.userData.winScore += 10;
@@ -150,10 +168,18 @@ public class InGameManager : NormalSingletonPun<InGameManager>, IPunObservable
         DataManager.Instance.SaveData();
     }
 
+    public void OtherPlayerEscape() => WinTheGame();
+
     private void LoseTheGame() {
+
+        if (gameEnd) return;
+        else gameEnd = true;
+
+        SoundManager.Instance.BackGroundSoundStop();
+        SoundManager.Instance.PlaySFXSound("LoseTheGame");
         StartCoroutine(TurnManager.Instance.LoseTheGameCo());
         DataManager.Instance.userData.loseCnt++;
-        DataManager.Instance.userData.winScore = (DataManager.Instance.userData.winScore - 5) >= 0 ? DataManager.Instance.userData.winScore - 5 : 0;
+        DataManager.Instance.userData.winScore = (DataManager.Instance.userData.winScore - 10) >= 0 ? DataManager.Instance.userData.winScore - 10 : 0;
         DataManager.Instance.userData.money += 20;
         PlayFabManager.Instance.SendStatisticToServer(DataManager.Instance.userData.winScore, "WinScore");
 

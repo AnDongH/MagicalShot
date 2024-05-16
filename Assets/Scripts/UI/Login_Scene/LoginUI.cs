@@ -35,10 +35,12 @@ public class LoginUI : UI_PopUp
     }
 
     private void OnLoginBtnClicked(PointerEventData data) {
+        SoundManager.Instance.PlaySFXSound("ButtonClick");
         PlayFabManager.Instance.Login(GetInputField((int)InputFields.ID_Input), GetInputField((int)InputFields.PW_Input));
     }
 
     private void OnRegisterBtnClicked(PointerEventData data) {
+        SoundManager.Instance.PlaySFXSound("ButtonClick");
         UI_Manager.Instance.ShowPopupUI<UI_PopUp>("RegisterCanvas");
     }
 

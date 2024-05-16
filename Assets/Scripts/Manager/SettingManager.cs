@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Collections.LowLevel.Unsafe;
 using UnityEngine;
 using UnityEngine.UI;
 using WebSocketSharp;
@@ -28,20 +29,24 @@ public class SettingManager : DontDestroySingleton<SettingManager>
 
     public string SetPos(Image image) {
         if (Marble == null || Marble.id.IsNullOrEmpty()) {
+            SoundManager.Instance.PlaySFXSound("Warning");
             print("선택된 기물이 없습니다.");
             return "선택된 기물이 없습니다.";
         }
 
         if (!DataManager.Instance.userData.marbleDeck[SelectedMarblePos].IsNullOrEmpty()) {
+            SoundManager.Instance.PlaySFXSound("Warning");
             print("기물이 이미 존재합니다.");
             return "기물이 이미 존재합니다.";
         }
 
         if (!Array.Find(DataManager.Instance.userData.marbleDeck, x => x == Marble.id).IsNullOrEmpty()) {
+            SoundManager.Instance.PlaySFXSound("Warning");
             print("이미 해당 유닛이 존재합니다.");
             return "이미 해당 유닛이 존재합니다.";
         }
 
+        SoundManager.Instance.PlaySFXSound("Select");
         DataManager.Instance.userData.marbleDeck[SelectedMarblePos] = Marble.id;
         PosImgSet(true, image, Marble.id);
         return null;
@@ -49,9 +54,12 @@ public class SettingManager : DontDestroySingleton<SettingManager>
 
     public string DelPos(Image image) {
         if (SelectedMarblePos == -1 || DataManager.Instance.userData.marbleDeck[SelectedMarblePos].IsNullOrEmpty()) {
+            SoundManager.Instance.PlaySFXSound("Warning");
             print("제거할 기물이 없습니다.");
             return "제거할 기물이 없습니다.";
         }
+
+        SoundManager.Instance.PlaySFXSound("Delete");
         DataManager.Instance.userData.marbleDeck[SelectedMarblePos] = null;
         PosImgSet(false, image);
         return null;

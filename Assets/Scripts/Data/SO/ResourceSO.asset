@@ -59,11 +59,18 @@ MonoBehaviour:
   - id: AP02
     name: "\uB85C\uC6E8\uC778"
     Type: 3
-    explain: "\uC624\uD06C \uBD80\uC871\uC758 \uC2E0\uC131\uD55C \uC218\uB140. \uC2E0\uC758
-      \uC0AC\uC790\uB77C\uACE0\uB3C4 \uBD88\uB9AC\uC6B4\uB2E4."
+    explain: "\uC624\uD06C \uBD80\uC871\uC758 \uC2E0\uC131\uD55C \uC218\uB140. \uADF8\uB140\uB294
+      \uC138\uC0C1\uC744 \uAD6C\uD558\uAE30 \uC704\uD574 \uACE0\uAD70\uBD84\uD22C\uC911\uC774\uB2E4."
     hp: 100
     damage: 10
   runes: []
+  maps:
+  - mapName: "\uC5F0\uC2B5\uC7A5"
+    mapImage: {fileID: 21300000, guid: 7454f7d2574055d4aadd3df3f9f67c97, type: 3}
+  - mapName: "\uAC80\uC740 \uB3D9\uAD74"
+    mapImage: {fileID: 21300000, guid: db628fe68bf0a6248af27eb332c17514, type: 3}
+  - mapName: "\uBC84\uB824\uC9C4 \uC2E0\uC804"
+    mapImage: {fileID: 21300000, guid: f524012350318844e907175948bbe4d3, type: 3}
   images:
   - {fileID: -818304863, guid: 6a4d9e93f7fe83e418fde081aa79d9c2, type: 3}
   - {fileID: -264728295, guid: 7dad5a5f4f990ab4885b2adab4af1153, type: 3}

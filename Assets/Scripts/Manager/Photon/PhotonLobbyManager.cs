@@ -157,4 +157,9 @@ public class PhotonLobbyManager : NormalSingletonPunCallbacks<PhotonLobbyManager
             print("¿¬°áµÆ´ÂÁö? : " + PhotonNetwork.IsConnected);
         }
     }
+
+    protected override void OnApplicationQuit() {
+        DataManager.Instance.LocalSaveData();
+        base.OnApplicationQuit();
+    }
 }
