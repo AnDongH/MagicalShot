@@ -68,7 +68,7 @@ public class SettingManager : DontDestroySingleton<SettingManager>
     public void PosImgSet(bool flag, Image posImg, string id = null) {
         posImg.enabled = flag;
         if (flag) {
-            Sprite sprite = DataManager.Instance.Resource.images.Find(x => x.name == id + "_image");
+            Sprite sprite = DataManager.Instance.Resource.marbleImages.Find(x => x.name == id + "_image");
             posImg.sprite = sprite;
         }
         else posImg.sprite = null;

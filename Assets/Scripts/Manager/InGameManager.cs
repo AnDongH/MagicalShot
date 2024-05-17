@@ -69,7 +69,6 @@ public class InGameManager : NormalSingletonPun<InGameManager>, IPunObservable
         // 시작 턴 설정, 턴에 따라서 기물 생성
 
         StartCoroutine(StartGame());
-
     }
 
     private void Update() {

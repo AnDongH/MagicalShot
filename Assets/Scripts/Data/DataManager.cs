@@ -31,9 +31,13 @@ public class DataManager : DontDestroySingleton<DataManager> {
     public readonly string marbleDataRange = "A2:F";
     public readonly string marbleDataSheetId = "0";
 
-  // public readonly string runeDataAddress = "https://docs.google.com/spreadsheets/d/1T3KSbYhJyFOvNvwhQ4lzWU6QVlIGxxpKeEhmQgYuA10";
-  // public readonly string runeDataRange = "A2:F";
-  // public readonly string runeDataSheetId = "2022585265";
+    public readonly string runeDataAddress = "https://docs.google.com/spreadsheets/d/1T3KSbYhJyFOvNvwhQ4lzWU6QVlIGxxpKeEhmQgYuA10";
+    public readonly string runeDataRange = "A2:F";
+    public readonly string runeDataSheetId = "2022585265";
+
+    public readonly string mapDataAddress = "https://docs.google.com/spreadsheets/d/1T3KSbYhJyFOvNvwhQ4lzWU6QVlIGxxpKeEhmQgYuA10";
+    public readonly string mapDataRange = "A2:B";
+    public readonly string mapDataSheetId = "431664827";
 
     public string NoticeString { get; private set; }
 
@@ -44,7 +48,8 @@ public class DataManager : DontDestroySingleton<DataManager> {
     protected override void Awake() {
         base.Awake();
         sheetDatas.Add(typeof(MarbleData), GetTSVAddress(marbleDataAddress, marbleDataRange, marbleDataSheetId));
-        //sheetDatas.Add(typeof(RuneData), GetTSVAddress(runeDataAddress, runeDataRange, runeDataSheetId));
+        sheetDatas.Add(typeof(RuneData), GetTSVAddress(runeDataAddress, runeDataRange, runeDataSheetId));
+        sheetDatas.Add(typeof(MapData), GetTSVAddress(mapDataAddress, mapDataRange, mapDataSheetId));
     }
 
     private void Start() {
@@ -67,7 +72,8 @@ public class DataManager : DontDestroySingleton<DataManager> {
             sheetDatas[type] = www.downloadHandler.text;
 
             if (type == typeof(MarbleData)) Resource.marbles = GetDatas<MarbleData>(sheetDatas[type]);
-            //if (type == typeof(RuneData)) Resource.runes = GetDatas<RuneData>(sheetDatas[type]);
+            if (type == typeof(RuneData)) Resource.runes = GetDatas<RuneData>(sheetDatas[type]);
+            if (type == typeof(MapData)) Resource.maps = GetDatas<MapData>(sheetDatas[type]);
         }
     }
 

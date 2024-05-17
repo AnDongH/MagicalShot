@@ -152,7 +152,7 @@ public class MarbleUI : UI_PopUp
             Button btn = btnObj.GetComponentInChildren<Button>();
             Image image = btnObj.GetComponentsInChildren<Image>()[1];
             marbleBtns.Add(btnObj);
-            image.sprite = DataManager.Instance.Resource.images.Find(x => x.name == id + "_image");
+            image.sprite = DataManager.Instance.Resource.marbleImages.Find(x => x.name == id + "_image");
 
             // 버튼에 함수 등록
             btn.onClick.AddListener(() => SetMarbleSelect(userMarble, GetImage((int)Images.MarbleImg), GetText((int)Texts.ExplainText)));
@@ -162,7 +162,7 @@ public class MarbleUI : UI_PopUp
     private void SetMarbleSelect(MarbleData userMarble, Image marbleImg, Text explain) {
         SoundManager.Instance.PlaySFXSound("ButtonClick");
         marbleImg.enabled = true;
-        marbleImg.sprite = DataManager.Instance.Resource.images.Find(x => x.name == userMarble.id + "_image");
+        marbleImg.sprite = DataManager.Instance.Resource.marbleImages.Find(x => x.name == userMarble.id + "_image");
         explain.text = userMarble.explain;
 
         GetObject((int)Objects.Identify_UI).SetActive(false);

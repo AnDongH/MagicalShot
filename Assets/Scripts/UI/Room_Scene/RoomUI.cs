@@ -52,8 +52,8 @@ public class RoomUI : UI_Scene
         GetButton((int)Buttons.NextMapBtn).gameObject.BindEvent((data) => OnMapBtnClicked(data, true));
         GetButton((int)Buttons.PrevMapBtn).gameObject.BindEvent((data) => OnMapBtnClicked(data, false));
 
-        GetImage((int)Images.MapImage).sprite = DataManager.Instance.Resource.maps[DataManager.Instance.mapIndex].mapImage;
-        GetText((int)Texts.MapNameText).text = DataManager.Instance.Resource.maps[DataManager.Instance.mapIndex].mapName;
+        GetImage((int)Images.MapImage).sprite = DataManager.Instance.Resource.mapImages.Find(x => x.name == DataManager.Instance.Resource.maps[DataManager.Instance.mapIndex].id + "_image");
+        GetText((int)Texts.MapNameText).text = DataManager.Instance.Resource.maps[DataManager.Instance.mapIndex].name;
     }
 
     private void Start() {
@@ -132,8 +132,8 @@ public class RoomUI : UI_Scene
     }
 
     private void OnMapUpdated() {
-        GetImage((int)Images.MapImage).sprite = DataManager.Instance.Resource.maps[DataManager.Instance.mapIndex].mapImage;
-        GetText((int)Texts.MapNameText).text = DataManager.Instance.Resource.maps[DataManager.Instance.mapIndex].mapName;
+        GetImage((int)Images.MapImage).sprite = DataManager.Instance.Resource.mapImages.Find(x => x.name == DataManager.Instance.Resource.maps[DataManager.Instance.mapIndex].id + "_image"); ;
+        GetText((int)Texts.MapNameText).text = DataManager.Instance.Resource.maps[DataManager.Instance.mapIndex].name;
     }
 
     private void OnReady() {

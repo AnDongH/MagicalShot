@@ -11,6 +11,7 @@ public class TurnManager : NormalSingletonPun<TurnManager> {
     public float defaultTurnTime { get; private set; } = 120f;
     public float curTurnTime { get; private set; } = 120f;
 
+    public int startCardCount = 6;
 
     [Header("Develop")]
     [SerializeField][Tooltip("시작 전 턴 모드를 정합니다.")] ETurnMode eTurnMode;
@@ -18,12 +19,14 @@ public class TurnManager : NormalSingletonPun<TurnManager> {
     public bool IsLoading { get; private set; }
     public bool IsHostTurn { get; private set; }
 
-    private bool myTurn;
+    public bool MyTurn { get; private set; }
 
     [SerializeField] private NotificationPanel notificationPanel;
 
 
     public static event Action<bool> OnTurnChanged;
+    public static event Action OnTurnEnded;
+    public static event Action OnAddRune;
 
     enum ETurnMode { Random, Host, Other }
 
@@ -32,7 +35,7 @@ public class TurnManager : NormalSingletonPun<TurnManager> {
     WaitForSeconds delay07 = new WaitForSeconds(0.7f);
 
     private void Update() {
-        if (myTurn) {
+        if (MyTurn) {
             curTurnTime -= Time.deltaTime;
             if (curTurnTime <= 0) {
                 EndTurn();
@@ -70,6 +73,13 @@ public class TurnManager : NormalSingletonPun<TurnManager> {
 
         yield return delay07;
         InGameManager.Instance.InitMarbles(IsHostTurn);
+
+        for (int i = 0; i < startCardCount; i++) {
+            // 카드가 추가될 때의 이벤트 발생
+            yield return new WaitForSeconds(0.2f);
+            OnAddRune?.Invoke();
+        }
+
         StartCoroutine(StartTurnCo());
     }
 
@@ -85,13 +95,21 @@ public class TurnManager : NormalSingletonPun<TurnManager> {
             notificationPanel.TurnShow(PhotonNetwork.IsMasterClient ? "상대의 턴!" : "나의 턴!");
         }
         yield return delay20;
+
+        for (int i = 0; i < startCardCount; i++) {
+            // 카드가 추가될 때의 이벤트 발생
+            yield return new WaitForSeconds(0.2f);
+            OnAddRune?.Invoke();
+        }
+
+
         IsLoading = false;
 
         if (IsHostTurn) {
-            myTurn = PhotonNetwork.IsMasterClient ? true : false;
+            MyTurn = PhotonNetwork.IsMasterClient ? true : false;
         }
         else {
-            myTurn = PhotonNetwork.IsMasterClient ? false : true;
+            MyTurn = PhotonNetwork.IsMasterClient ? false : true;
         }
     }
 
@@ -111,12 +129,13 @@ public class TurnManager : NormalSingletonPun<TurnManager> {
 
     [PunRPC]
     private void TurnChange() {
+        OnTurnEnded?.Invoke();
         IsHostTurn = !IsHostTurn;
         StartCoroutine(StartTurnCo());
     }
 
     public void EndTurn() {
-        myTurn = false;
+        MyTurn = false;
         curTurnTime = defaultTurnTime;
         photonView.RPC("TurnChange", RpcTarget.All);
     }

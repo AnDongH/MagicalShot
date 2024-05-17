@@ -105,7 +105,7 @@ namespace Photon.Chat.Demo
                 "\t\\<color=#E07B00>msg</color> <color=green><username></color> <color=green><message></color>\n" +
                 "\n" +
                 "To change status:\n" +
-                "\t\\<color=#E07B00>state</color> <color=green><stateIndex></color> <color=green><message></color>\n" +
+                "\t\\<color=#E07B00>State</color> <color=green><stateIndex></color> <color=green><message></color>\n" +
                 "<color=green>0</color> = Offline " +
                 "<color=green>1</color> = Invisible " +
                 "<color=green>2</color> = Online " +
@@ -262,13 +262,13 @@ namespace Photon.Chat.Demo
                 {
                     this.PostHelpToCurrentChannel();
                 }
-                if (tokens[0].Equals("\\state"))
+                if (tokens[0].Equals("\\State"))
                 {
                     int newState = 0;
 
 
                     List<string> messages = new List<string>();
-                    messages.Add ("i am state " + newState);
+                    messages.Add ("i am State " + newState);
                     string[] subtokens = tokens[1].Split(new char[] {' ', ','});
 
                     if (subtokens.Length > 0)
