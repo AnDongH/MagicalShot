@@ -13,16 +13,14 @@ public class MenuPanelUI : UI_PopUp {
 
     protected override void Init() {
         base.Init();
+    }
 
+    private void Start() {
         Bind<Button>(typeof(Buttons));
 
         GetButton((int)Buttons.OptionBtn).gameObject.BindEvent(OnOptionBtnCliked);
         GetButton((int)Buttons.GiveUpBtn).gameObject.BindEvent(OnGiveUpBtnCliked);
         GetButton((int)Buttons.ExitBtn).gameObject.BindEvent(OnExitBtnClicked);
-    }
-
-    private void Start() {
-        Init();
     }
 
     private void OnEnable() {

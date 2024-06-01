@@ -15,16 +15,14 @@ public class ExitPanelUI : UI_PopUp
 
     protected override void Init() {
         base.Init();
+    }
 
+    private void Start() {
         Bind<Button>(typeof(Buttons));
 
         GetButton((int)Buttons.ServerExitBtn).gameObject.BindEvent(OnServerExitBtnClicked);
         GetButton((int)Buttons.GameExitBtn).gameObject.BindEvent(OnGameExitBtnClicked);
         GetButton((int)Buttons.ExitBtn).gameObject.BindEvent(OnExitBtnClicked);
-    }
-
-    private void Start() {
-        Init();
     }
 
     private void OnEnable() {

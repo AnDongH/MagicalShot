@@ -125,14 +125,14 @@ public class TurnManager : NormalSingletonPun<TurnManager> {
         IsLoading = true;
         notificationPanel.TurnShow("½Â¸®!");
         yield return delay20;
-        PhotonInGameManager.Instance.LeaveRoom();
+        UI_Manager.Instance.ShowPopupUI<UI_PopUp>("ResultCanvas");
     }
 
     public IEnumerator LoseTheGameCo() {
         IsLoading = true;
         notificationPanel.TurnShow("ÆÐ¹è");
         yield return delay20;
-        PhotonInGameManager.Instance.LeaveRoom();
+        UI_Manager.Instance.ShowPopupUI<UI_PopUp>("ResultCanvas");
     }
 
     [PunRPC]

@@ -1,6 +1,5 @@
 using Photon.Pun;
 using Photon.Realtime;
-using PlayFab.ClientModels;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -41,6 +40,9 @@ public class RoomUI : UI_Scene
 
     protected override void Init() {
         base.Init();
+    }
+
+    private void Start() {
         Bind<Button>(typeof(Buttons));
         Bind<InputField>(typeof(InputFields));
         Bind<Text>(typeof(Texts));
@@ -54,9 +56,7 @@ public class RoomUI : UI_Scene
 
         GetImage((int)Images.MapImage).sprite = DataManager.Instance.Resource.mapImages.Find(x => x.name == DataManager.Instance.Resource.maps[DataManager.Instance.mapIndex].id + "_image");
         GetText((int)Texts.MapNameText).text = DataManager.Instance.Resource.maps[DataManager.Instance.mapIndex].name;
-    }
 
-    private void Start() {
         PhotonRoomManager.Instance.isReady = false;
         GetText((int)Texts.RoomNameText).text = PhotonNetwork.CurrentRoom.Name;
 

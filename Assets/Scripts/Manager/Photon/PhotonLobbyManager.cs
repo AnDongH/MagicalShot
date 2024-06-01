@@ -23,11 +23,13 @@ public class PhotonLobbyManager : NormalSingletonPunCallbacks<PhotonLobbyManager
     /// 접속 끊기
     /// </summary>
     public void Disconnect() {
+        GameManager.ShowLoadingUI();
         DataManager.Instance.SaveData();
         PhotonNetwork.Disconnect();
     }
 
     public override void OnDisconnected(DisconnectCause cause) {
+        GameManager.CloseLoadingUI();
         print("연결끊김");
         PlayFabManager.Instance.Logout();
         SceneManager.LoadScene("01Login");
@@ -60,6 +62,7 @@ public class PhotonLobbyManager : NormalSingletonPunCallbacks<PhotonLobbyManager
             return LobbyErrorCode.NULL_MARBLE;
         }
 
+        GameManager.ShowLoadingUI();
         PhotonNetwork.CreateRoom(roomName == "" ? "Room" + Random.Range(0, 100) : roomName, new RoomOptions { MaxPlayers = 2 });
 
         return LobbyErrorCode.NONE_ERROR;
@@ -84,6 +87,8 @@ public class PhotonLobbyManager : NormalSingletonPunCallbacks<PhotonLobbyManager
 
         if (!PhotonNetwork.JoinRoom(roomName)) return LobbyErrorCode.NULL_NAME_ROOM;
 
+        GameManager.ShowLoadingUI();
+
         return LobbyErrorCode.NONE_ERROR;
     }
 
@@ -99,6 +104,7 @@ public class PhotonLobbyManager : NormalSingletonPunCallbacks<PhotonLobbyManager
             return LobbyErrorCode.NULL_MARBLE;
         }
 
+        GameManager.ShowLoadingUI();
         PhotonNetwork.JoinOrCreateRoom(roomName, new RoomOptions { MaxPlayers = 2 }, null);
 
         return LobbyErrorCode.NONE_ERROR;
@@ -115,25 +121,35 @@ public class PhotonLobbyManager : NormalSingletonPunCallbacks<PhotonLobbyManager
         }
 
         if (!PhotonNetwork.JoinRandomRoom()) return LobbyErrorCode.NULL_ROOM;
+        GameManager.ShowLoadingUI();
 
         return LobbyErrorCode.NONE_ERROR;
     }
 
-    public override void OnCreatedRoom() => print("방만들기완료");
+    public override void OnCreatedRoom() {
+        GameManager.CloseLoadingUI();
+        print("방만들기완료");
+    }
 
     public override void OnJoinedRoom() {
+        GameManager.CloseLoadingUI();
         print("방참가완료");
         SceneManager.LoadScene("03Room");
     }
 
     public override void OnCreateRoomFailed(short returnCode, string message) {
+        GameManager.CloseLoadingUI();
         print("방만들기실패");
         CreateRoom("");
     }
 
-    public override void OnJoinRoomFailed(short returnCode, string message) => print("방참가실패");
+    public override void OnJoinRoomFailed(short returnCode, string message) {
+        GameManager.CloseLoadingUI();
+        print("방참가실패");
+    }
 
     public override void OnJoinRandomFailed(short returnCode, string message) {
+        GameManager.CloseLoadingUI();
         print("방랜덤참가실패");
         CreateRoom("");
     }

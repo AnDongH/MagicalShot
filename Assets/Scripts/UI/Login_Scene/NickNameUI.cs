@@ -19,15 +19,14 @@ public class NickNameUI : UI_PopUp
     }
     protected override void Init() {
         base.Init();
+    }
+
+    private void Start() {
         Bind<Button>(typeof(Buttons));
         Bind<InputField>(typeof(InputFields));
         Bind<Text>(typeof(Texts));
 
         GetButton((int)Buttons.OkBtn).gameObject.BindEvent(OnOkBtnClicked);
-    }
-
-    private void Start() {
-        Init();
     }
 
     private void OnEnable() {

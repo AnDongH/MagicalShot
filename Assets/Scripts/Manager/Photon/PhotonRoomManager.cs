@@ -34,6 +34,7 @@ public class PhotonRoomManager : NormalSingletonPunCallbacks<PhotonRoomManager> 
     /// 방 나가기
     /// </summary>
     public void LeaveRoom() {
+        GameManager.ShowLoadingUI();
         PhotonNetwork.LeaveRoom();
     }
 
@@ -48,6 +49,7 @@ public class PhotonRoomManager : NormalSingletonPunCallbacks<PhotonRoomManager> 
     }
 
     public override void OnJoinedLobby() {
+        GameManager.CloseLoadingUI();
         SceneManager.LoadScene("02Lobby");
         print("로비접속완료");
     }

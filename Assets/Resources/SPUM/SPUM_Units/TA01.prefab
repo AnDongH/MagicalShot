@@ -2292,7 +2292,6 @@ MonoBehaviour:
     basicHp: 0
     basicDamage: 0
     basicMass: 0
-  registeredRunes: []
   typeBasicSkillID: TYPE_TA_RUNE
   marbleBasicSkillID: TA01_RUNE
   typeSkillStartTime: 0

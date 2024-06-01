@@ -46,7 +46,9 @@ public class MarbleUI : UI_PopUp
 
     protected override void Init() {
         base.Init();
+    }
 
+    private void Start() {
         Bind<Button>(typeof(Buttons));
         Bind<Dropdown>(typeof(Dropdowns));
         Bind<Text>(typeof(Texts));
@@ -67,17 +69,13 @@ public class MarbleUI : UI_PopUp
 
         GetObject((int)Objects.Identify_UI).gameObject.SetActive(false);
         GetObject((int)Objects.WarningGRP).gameObject.SetActive(false);
-    }
-
-    private void Start() {
-        Init();
 
         GetDropdown((int)Dropdowns.MarbleDropdown).value = 0;
         SetMarbleButton(0);
 
         for (int i = 0; i < DataManager.Instance.userData.marbleDeck.Length; i++) {
             if (!DataManager.Instance.userData.marbleDeck[i].IsNullOrEmpty())
-                SettingManager.Instance.PosImgSet(true, GetImage(i), DataManager.Instance.userData.marbleDeck[i]);
+                SettingManager.Instance.MarblePosImgSet(true, GetImage(i), DataManager.Instance.userData.marbleDeck[i]);
         }
     }
 
@@ -98,7 +96,7 @@ public class MarbleUI : UI_PopUp
     }
 
     private void OnSetBtnCliked(PointerEventData data) {
-        string text = SettingManager.Instance.SetPos(GetImage(SettingManager.Instance.SelectedMarblePos));
+        string text = SettingManager.Instance.SetMarblePos(GetImage(SettingManager.Instance.SelectedMarblePos));
 
         if (text != null) {
             GetObject((int)Objects.WarningGRP).SetActive(true);
@@ -109,7 +107,7 @@ public class MarbleUI : UI_PopUp
     }
 
     private void OnDelBtnCliked(PointerEventData data) {
-        string text = SettingManager.Instance.DelPos(GetImage(SettingManager.Instance.SelectedMarblePos));
+        string text = SettingManager.Instance.DelMarblePos(GetImage(SettingManager.Instance.SelectedMarblePos));
 
         if (text != null) {
             GetObject((int)Objects.WarningGRP).SetActive(true);

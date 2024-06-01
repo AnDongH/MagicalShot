@@ -8,8 +8,14 @@ public static class GlobalEnum
         TA, DD, AD, AP
     }
 
-    public enum RuneType {
+    public enum BaseRuneType {
         Active,
         Passive
+    }
+
+    public enum RuneType {
+        Direct,
+        Bound,
+        Building
     }
 }

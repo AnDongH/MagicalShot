@@ -27,6 +27,7 @@ public class MarbleManager : MonoBehaviour
     public void MarbleMouseEnter(ShotComponent shot, BasicMarble marble) {
         // TODO 마블 정보 UI에 보여주기
         if (isMyMarbleDrag) return;
+        if (InGameManager.Instance.gameEnd) return;
 
         OnMarbleEnter?.Invoke(marble);
 
@@ -38,6 +39,7 @@ public class MarbleManager : MonoBehaviour
 
     public void MarbleMouseExit(ShotComponent shot, BasicMarble marble) {
         // TODO 마블 정보 UI에서 없애기
+        if (InGameManager.Instance.gameEnd) return;
 
         OnMarbleExit?.Invoke(marble);
 
@@ -49,6 +51,7 @@ public class MarbleManager : MonoBehaviour
 
     public void MarbleMouseDown(ShotComponent shot, BasicMarble marble) {
 
+        if (InGameManager.Instance.gameEnd) return;
         if (!shot.ActCondition) return;
 
         OnMarbleDown?.Invoke(marble);
@@ -62,6 +65,7 @@ public class MarbleManager : MonoBehaviour
 
     public void MarbleMouseUp(ShotComponent shot, BasicMarble marble) {
 
+        if (InGameManager.Instance.gameEnd) return;
         if (!shot.ActCondition) return;
 
         isMyMarbleDrag = false;

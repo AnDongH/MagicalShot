@@ -31,7 +31,8 @@ public class CommonMarbleData {
 public class RuneData {
 
     public string id;
-    public GlobalEnum.RuneType Type;
+    public GlobalEnum.BaseRuneType BaseType;
+    public GlobalEnum.RuneType RuneType;
     public string name;
     public int cost;
     public List<int> value;

@@ -133,11 +133,11 @@ MonoBehaviour:
       m_Image: {fileID: 0}
     - m_Text: "\uB3CC\uACA9"
       m_Image: {fileID: 0}
-    - m_Text: "\uC804\uC0AC"
+    - m_Text: "\uACF5\uACA9"
       m_Image: {fileID: 0}
-    - m_Text: "\uAD81\uC218"
+    - m_Text: "\uC800\uACA9"
       m_Image: {fileID: 0}
-    - m_Text: "\uB9C8\uBC95\uC0AC"
+    - m_Text: "\uB9C8\uBC95"
       m_Image: {fileID: 0}
   m_OnValueChanged:
     m_PersistentCalls:

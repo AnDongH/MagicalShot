@@ -74,7 +74,9 @@ public class InGameUI : UI_Scene
 
     protected override void Init() {
         base.Init();
+    }
 
+    private void Start() {
         Bind<Text>(typeof(Texts));
         Bind<Button>(typeof(Buttons));
         Bind<Image>(typeof(Images));
@@ -88,10 +90,6 @@ public class InGameUI : UI_Scene
 
         GetButton((int)Buttons.RuneFreezerBtn).gameObject.BindEvent(OnRuneFreezerBtnClicked);
         GetButton((int)Buttons.RuneFreezePanelExitBtn).gameObject.BindEvent(OnRuneFreezePanelExitBtnClicked);
-    }
-
-    private void Start() {
-        Init();
 
         timer = GetObject((int)Objects.TimerBar).GetComponentsInChildren<RectTransform>()[1];
 

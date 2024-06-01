@@ -32,6 +32,9 @@ public class LoginUI : UI_PopUp
 
     protected override void Init() {
         base.Init();
+    }
+
+    private void Start() {
         Bind<Button>(typeof(Buttons));
         Bind<InputField>(typeof(InputFields));
         Bind<Text>(typeof(Texts));
@@ -43,10 +46,6 @@ public class LoginUI : UI_PopUp
         GetButton((int)Buttons.FindPassWordBtn).gameObject.BindEvent(OnFindPassWordBtnClicked);
 
         GetObject((int)Objects.WarningGRP).SetActive(false);
-    }
-
-    private void Start() {
-        Init();
 
         PlayFabManager.OnLoginFailed += OnLoginFailed;
     }

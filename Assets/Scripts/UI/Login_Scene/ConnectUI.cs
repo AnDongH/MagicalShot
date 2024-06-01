@@ -16,16 +16,15 @@ public class ConnectUI : UI_PopUp
 
     protected override void Init() {
         base.Init();
+    }
+
+    private void Start() {
+        loginManager = PhotonLoginManager.Instance;
         Bind<Button>(typeof(Buttons));
         Bind<Text>(typeof(Texts));
 
         GetButton((int)Buttons.SrvConnectBtn).gameObject.BindEvent(OnSrvConnectBtnClicked);
         GetText((int)Texts.NickName_Text).text = PlayFabManager.Instance.NickName + "님 환영합니다!";
-    }
-
-    private void Start() {
-        loginManager = PhotonLoginManager.Instance;
-        Init();
     }
 
     private void OnEnable() {

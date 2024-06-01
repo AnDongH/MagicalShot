@@ -11,6 +11,7 @@ public class PhotonInGameManager : NormalSingletonPunCallbacks<PhotonInGameManag
     /// 방 나가기
     /// </summary>
     public void LeaveRoom() {
+        GameManager.ShowLoadingUI();
         PhotonNetwork.LeaveRoom();
     }
 
@@ -29,15 +30,24 @@ public class PhotonInGameManager : NormalSingletonPunCallbacks<PhotonInGameManag
     }
 
     public override void OnJoinedLobby() {
+        GameManager.CloseLoadingUI();
         SceneManager.LoadScene("02Lobby");
         print("로비접속완료");
     }
 
     protected override void OnApplicationQuit() {
-        DataManager.Instance.userData.loseCnt++;
-        DataManager.Instance.userData.winScore = (DataManager.Instance.userData.winScore - 5) >= 0 ? DataManager.Instance.userData.winScore - 5 : 0;
-        DataManager.Instance.userData.money += 20;
-        DataManager.Instance.LocalSaveData();
+        if (!InGameManager.Instance.IsWin) {
+            DataManager.Instance.userData.loseCnt++;
+            DataManager.Instance.userData.winScore = (DataManager.Instance.userData.winScore - InGameManager.Instance.BasicWinScore) >= 0 ? DataManager.Instance.userData.winScore - InGameManager.Instance.BasicWinScore : 0;
+            DataManager.Instance.userData.money += InGameManager.Instance.BasicLoseGold;
+            DataManager.Instance.LocalSaveData();
+        }
+        else {
+            DataManager.Instance.userData.winCnt++;
+            DataManager.Instance.userData.winScore += InGameManager.Instance.BasicWinScore;
+            DataManager.Instance.userData.money += InGameManager.Instance.BasicWinGold;
+            DataManager.Instance.LocalSaveData();
+        }
         base.OnApplicationQuit();
     }
 }

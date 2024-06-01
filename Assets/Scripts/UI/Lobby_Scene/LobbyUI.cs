@@ -50,6 +50,10 @@ public class LobbyUI : UI_Scene
 
     protected override void Init() {
         base.Init();
+    }
+
+    private void Start() {
+        lobbyManager = PhotonLobbyManager.Instance;
 
         Bind<Button>(typeof(Buttons));
         Bind<InputField>(typeof(InputFields));
@@ -80,13 +84,7 @@ public class LobbyUI : UI_Scene
         cellBtns[1] = GetButton((int)Buttons.RoomCell2);
         cellBtns[2] = GetButton((int)Buttons.RoomCell3);
         cellBtns[3] = GetButton((int)Buttons.RoomCell4);
-    }
 
-    private void Start() {
-        lobbyManager = PhotonLobbyManager.Instance;
-
-        Init();
-        
         // 이름 초기화
         GetText((int)Texts.PlayerNameText).text = PhotonNetwork.LocalPlayer.NickName;
         GetText((int)Texts.ScoreText).text = "승점: " + DataManager.Instance.userData.winScore.ToString();

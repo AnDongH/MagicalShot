@@ -78,10 +78,10 @@ public class DataManager : DontDestroySingleton<DataManager> {
             sheetDatas[type] = www.downloadHandler.text;
 
             if (type == typeof(MarbleData)) Resource.marbles = GetDatas<MarbleData>(sheetDatas[type]);
-            if (type == typeof(RuneData)) Resource.runes = GetDatas<RuneData>(sheetDatas[type]).FindAll(x => x.Type == GlobalEnum.RuneType.Active);
+            if (type == typeof(RuneData)) Resource.runes = GetDatas<RuneData>(sheetDatas[type]).FindAll(x => x.BaseType == GlobalEnum.BaseRuneType.Active);
             if (type == typeof(MapData)) Resource.maps = GetDatas<MapData>(sheetDatas[type]);
             if (type == typeof(CommonMarbleData)) Resource.commonMalbles = GetDatas<CommonMarbleData>(sheetDatas[type]);
-            if (type == typeof(RuneData)) Resource.basicRunes = GetDatas<RuneData>(sheetDatas[type]).FindAll(x => x.Type == GlobalEnum.RuneType.Passive);
+            if (type == typeof(RuneData)) Resource.basicRunes = GetDatas<RuneData>(sheetDatas[type]).FindAll(x => x.BaseType == GlobalEnum.BaseRuneType.Passive);
         }
     }
 

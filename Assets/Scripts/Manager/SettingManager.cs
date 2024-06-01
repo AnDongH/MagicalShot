@@ -16,6 +16,7 @@ public class SettingManager : DontDestroySingleton<SettingManager>
     public int SelectedMarblePos { get; set; } = -1;
 
     public MarbleData Marble { get; set; } = null;
+    public RuneData Rune { get; set; } = null;
 
     private void Update() {
         if (Input.GetKeyDown(KeyCode.A)) {
@@ -27,7 +28,7 @@ public class SettingManager : DontDestroySingleton<SettingManager>
     }
 
 
-    public string SetPos(Image image) {
+    public string SetMarblePos(Image image) {
         if (Marble == null || Marble.id.IsNullOrEmpty()) {
             SoundManager.Instance.PlaySFXSound("Warning");
             print("선택된 기물이 없습니다.");
@@ -48,11 +49,11 @@ public class SettingManager : DontDestroySingleton<SettingManager>
 
         SoundManager.Instance.PlaySFXSound("Select");
         DataManager.Instance.userData.marbleDeck[SelectedMarblePos] = Marble.id;
-        PosImgSet(true, image, Marble.id);
+        MarblePosImgSet(true, image, Marble.id);
         return null;
     }
 
-    public string DelPos(Image image) {
+    public string DelMarblePos(Image image) {
         if (SelectedMarblePos == -1 || DataManager.Instance.userData.marbleDeck[SelectedMarblePos].IsNullOrEmpty()) {
             SoundManager.Instance.PlaySFXSound("Warning");
             print("제거할 기물이 없습니다.");
@@ -61,11 +62,11 @@ public class SettingManager : DontDestroySingleton<SettingManager>
 
         SoundManager.Instance.PlaySFXSound("Delete");
         DataManager.Instance.userData.marbleDeck[SelectedMarblePos] = null;
-        PosImgSet(false, image);
+        MarblePosImgSet(false, image);
         return null;
     }
 
-    public void PosImgSet(bool flag, Image posImg, string id = null) {
+    public void MarblePosImgSet(bool flag, Image posImg, string id = null) {
         posImg.enabled = flag;
         if (flag) {
             Sprite sprite = DataManager.Instance.Resource.marbleImages.Find(x => x.name == id + "_image");
@@ -74,8 +75,16 @@ public class SettingManager : DontDestroySingleton<SettingManager>
         else posImg.sprite = null;
     }
 
-
-    // 기물 선택 함수
-
     // 룬 선택 함수
+
+    public string SetRuneOnDeck() {
+
+        if (DataManager.Instance.userData.runesDeck.Count == 20) return "룬은 20개까지만 등록이 가능합니다.";
+
+        if (DataManager.Instance.userData.runesDeck.Contains(Rune.id)) return "이미 해당 룬이 등록되어있습니다.";
+
+        DataManager.Instance.userData.runesDeck.Add(Rune.id);
+
+        return null;
+    }
 }

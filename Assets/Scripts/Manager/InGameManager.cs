@@ -44,6 +44,11 @@ public class InGameManager : NormalSingletonPun<InGameManager>, IPunObservable
 
     public bool gameEnd = false;
 
+    public int BasicWinScore { get; private set; } = 10;
+    public int BasicWinGold { get; private set; } = 100;
+    public int BasicLoseGold { get; private set; } = 20;
+    public bool IsWin { get; private set; } = false;
+
 
     [SerializeField] private GameObject[] mapArray;
 
@@ -153,6 +158,8 @@ public class InGameManager : NormalSingletonPun<InGameManager>, IPunObservable
     [PunRPC]
     private void WinTheGame() {
 
+        IsWin = true;
+
         if (gameEnd) return;
         else gameEnd = true;
 
@@ -160,8 +167,8 @@ public class InGameManager : NormalSingletonPun<InGameManager>, IPunObservable
         SoundManager.Instance.PlaySFXSound("WinTheGame");
         StartCoroutine(TurnManager.Instance.WinTheGameCo());
         DataManager.Instance.userData.winCnt++;
-        DataManager.Instance.userData.winScore += 10;
-        DataManager.Instance.userData.money += 100;
+        DataManager.Instance.userData.winScore += BasicWinScore;
+        DataManager.Instance.userData.money += BasicWinGold;
         PlayFabManager.Instance.SendStatisticToServer(DataManager.Instance.userData.winScore, "WinScore");
 
         DataManager.Instance.SaveData();
@@ -171,6 +178,8 @@ public class InGameManager : NormalSingletonPun<InGameManager>, IPunObservable
 
     private void LoseTheGame() {
 
+        IsWin = false;
+
         if (gameEnd) return;
         else gameEnd = true;
 
@@ -178,8 +187,8 @@ public class InGameManager : NormalSingletonPun<InGameManager>, IPunObservable
         SoundManager.Instance.PlaySFXSound("LoseTheGame");
         StartCoroutine(TurnManager.Instance.LoseTheGameCo());
         DataManager.Instance.userData.loseCnt++;
-        DataManager.Instance.userData.winScore = (DataManager.Instance.userData.winScore - 10) >= 0 ? DataManager.Instance.userData.winScore - 10 : 0;
-        DataManager.Instance.userData.money += 20;
+        DataManager.Instance.userData.winScore = (DataManager.Instance.userData.winScore - BasicWinScore) >= 0 ? DataManager.Instance.userData.winScore - BasicWinScore : 0;
+        DataManager.Instance.userData.money += BasicLoseGold;
         PlayFabManager.Instance.SendStatisticToServer(DataManager.Instance.userData.winScore, "WinScore");
 
         DataManager.Instance.SaveData();

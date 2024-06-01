@@ -13,10 +13,12 @@ public class PhotonLoginManager : NormalSingletonPunCallbacks<PhotonLoginManager
     /// 立加
     /// </summary>
     public void Connect() {
+        GameManager.ShowLoadingUI();
         PhotonNetwork.ConnectUsingSettings();
     }
 
     public override void OnConnectedToMaster() {
+        GameManager.CloseLoadingUI();
         print("辑滚立加肯丰");
         PhotonNetwork.LocalPlayer.NickName = PlayFabManager.Instance.NickName;
         PhotonNetwork.JoinLobby();

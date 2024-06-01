@@ -26,7 +26,9 @@ public class OptionUI : UI_PopUp
 
     protected override void Init() {
         base.Init();
+    }
 
+    private void Start() {
         Bind<Button>(typeof(Buttons));
         Bind<Dropdown>(typeof(Dropdowns));
         Bind<Toggle>(typeof(Toggles));
@@ -46,10 +48,6 @@ public class OptionUI : UI_PopUp
 
         GetSlider((int)Sliders.BackSoundSlider).value = SoundManager.Instance.backSource.volume;
         GetSlider((int)Sliders.SFXSoundSlider).value = SoundManager.Instance.sfxSource.volume;
-    }
-
-    private void Start() {
-        Init();
     }
 
     private void OnEnable() {

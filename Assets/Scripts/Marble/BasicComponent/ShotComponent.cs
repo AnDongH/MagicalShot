@@ -77,6 +77,7 @@ public class ShotComponent : MonoBehaviourPun
 
     private void OnMouseDrag() {
 
+        if (InGameManager.Instance.gameEnd) return;
         if (!ActCondition) return;
         if (!MarbleManager.Instance.isMyMarbleDrag) return;
 

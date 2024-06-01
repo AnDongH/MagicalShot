@@ -31,6 +31,9 @@ public class RegisterUI : UI_PopUp
 
     protected override void Init() {
         base.Init();
+    }
+
+    private void Start() {
         Bind<Button>(typeof(Buttons));
         Bind<InputField>(typeof(InputFields));
         Bind<Text>(typeof(Texts));
@@ -41,10 +44,6 @@ public class RegisterUI : UI_PopUp
         GetButton((int)Buttons.WarningOkBtn).gameObject.BindEvent(OnWarningOkBtnClicked);
 
         GetObject((int)Objects.WarningGRP).SetActive(false);
-    }
-
-    private void Start() {
-        Init();
 
         PlayFabManager.OnRegisterFailed += OnRegisterFailed;
     }

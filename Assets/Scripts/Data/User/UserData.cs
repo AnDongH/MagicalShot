@@ -15,7 +15,7 @@ public class UserData {
     public List<string> curMarblesId;
     public string[] marbleDeck;
     public List<string> curRunesId;
-    public string[] runesDeck;
+    public List<string> runesDeck;
     public int winScore;
     public int winCnt;
     public int loseCnt;
@@ -24,7 +24,7 @@ public class UserData {
 
     public UserData() {
         marbleDeck = new string[4];
-        runesDeck = new string[20];
+        runesDeck = new List<string>(20);
         curMarblesId = new List<string>() { "TA01", "TA02", "DD01", "DD02", "AD01", "AD02", "AP01", "AP02" };
     }
 

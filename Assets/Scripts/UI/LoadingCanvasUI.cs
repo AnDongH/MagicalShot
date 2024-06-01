@@ -14,12 +14,11 @@ public class LoadingCanvasUI : UI_PopUp
 
     protected override void Init() {
         base.Init();
-        Bind<Text>(typeof(Texts));
 
     }
 
     private void Start() {
-        Init();     
+        Bind<Text>(typeof(Texts));
     }
 
     private void OnEnable() {

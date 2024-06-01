@@ -12,15 +12,13 @@ public class MainMenuUI : UI_Scene
 
     protected override void Init() {
         base.Init();
+    }
 
+    private void Start() {
         Bind<Button>(typeof(Buttons));
         GetButton((int)Buttons.ExitGameBtn).gameObject.BindEvent(OnExitGameBtnClicked);
 
         UI_Manager.Instance.ShowPopupUI<UI_PopUp>("LoginCanvas");
-    }
-
-    private void Start() {
-        Init();
     }
 
     private void OnEnable() {

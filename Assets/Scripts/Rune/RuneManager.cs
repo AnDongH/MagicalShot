@@ -162,7 +162,7 @@ public class RuneManager : NormalSingletonPun<RuneManager>
     }
 
     public void RuneMouseEnter(Rune rune) {
-
+        if (InGameManager.Instance.gameEnd) return;
         if (eRuneState == ERuneState.Nothing) return;
         if (isMyRuneDrag) return;
 
@@ -170,7 +170,7 @@ public class RuneManager : NormalSingletonPun<RuneManager>
     }
 
     public void RuneMouseOver(Rune rune) {
-
+        if (InGameManager.Instance.gameEnd) return;
         if (eRuneState == ERuneState.Nothing) return;
 
         selectedRune = rune;
@@ -179,6 +179,7 @@ public class RuneManager : NormalSingletonPun<RuneManager>
 
 
     public void RuneMouseExit(Rune rune) {
+        if (InGameManager.Instance.gameEnd) return;
         EnLargeRune(false, rune);
 
         OnRuneExit?.Invoke(rune);
@@ -186,7 +187,7 @@ public class RuneManager : NormalSingletonPun<RuneManager>
 
 
     public void RuneMouseDown() {
-
+        if (InGameManager.Instance.gameEnd) return;
         if (eRuneState != ERuneState.CanMouseDrag) return;
         if (selectedRune.IsFreeze) return;
 
@@ -197,7 +198,7 @@ public class RuneManager : NormalSingletonPun<RuneManager>
 
 
     public void RuneMouseUp() {
-
+        if (InGameManager.Instance.gameEnd) return;
         isMyRuneDrag = false;
 
         if (eRuneState != ERuneState.CanMouseDrag) return;
@@ -210,7 +211,7 @@ public class RuneManager : NormalSingletonPun<RuneManager>
     }
 
     private void RuneDrag() {
-
+        if (InGameManager.Instance.gameEnd) return;
         if (eRuneState != ERuneState.CanMouseDrag) return;
 
         selectedRune.MoveTransform(new PRS(Utils.MousePos, Utils.QI, selectedRune.originPRS.scale), false);
