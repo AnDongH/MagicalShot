@@ -81,6 +81,10 @@ public class MarbleUI : UI_PopUp
         }
     }
 
+    private void OnEnable() {
+        Init();
+    }
+
     private void OnExitBtnClicked(PointerEventData data) {
         SoundManager.Instance.PlaySFXSound("ButtonClick");
         ClosePopUpUI();

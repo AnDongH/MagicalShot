@@ -96,14 +96,13 @@ GameObject:
   m_Component:
   - component: {fileID: 3606578755294992430}
   - component: {fileID: 8850738198373277977}
-  - component: {fileID: -6478104750674514864}
   - component: {fileID: 4916148376425650312}
   - component: {fileID: -6183783479972134425}
-  - component: {fileID: 8659334286021700938}
   - component: {fileID: 371236955704836534}
   - component: {fileID: -5728622432206726567}
-  - component: {fileID: -5597917036687648952}
   - component: {fileID: -1154172306394024753}
+  - component: {fileID: -1210559341612564841}
+  - component: {fileID: -3398117796883714863}
   m_Layer: 8
   m_Name: AP02
   m_TagString: Marble
@@ -154,29 +153,6 @@ MonoBehaviour:
   UnitTypeChanged:
     m_PersistentCalls:
       m_Calls: []
---- !u!114 &-6478104750674514864
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 465667734200470732}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ObservedComponentsFoldoutOpen: 1
-  Group: 0
-  prefixField: -1
-  Synchronization: 2
-  OwnershipTransfer: 1
-  observableSearch: 2
-  ObservedComponents:
-  - {fileID: 8659334286021700938}
-  sceneViewId: 0
-  InstantiationId: 0
-  isRuntimeInstantiated: 0
 --- !u!50 &4916148376425650312
 Rigidbody2D:
   serializedVersion: 4
@@ -239,22 +215,6 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0.3}
   serializedVersion: 2
   m_Radius: 0.3
---- !u!114 &8659334286021700938
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 465667734200470732}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0e7cb724808c322458aa4d15f5035fa9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_SynchronizeVelocity: 1
-  m_SynchronizeAngularVelocity: 0
-  m_TeleportEnabled: 0
-  m_TeleportIfDistanceGreaterThan: 3
 --- !u!114 &371236955704836534
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -270,6 +230,7 @@ MonoBehaviour:
   rigid: {fileID: 0}
   speed: 0
   dir: {x: 0, y: 0}
+  marble: {fileID: 0}
 --- !u!114 &-5728622432206726567
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -283,19 +244,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   <IsHost>k__BackingField: 0
---- !u!114 &-5597917036687648952
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 465667734200470732}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 88cfcd94ad43b84439c49e0a35bbc9f7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  dmg: 30
 --- !u!114 &-1154172306394024753
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -308,7 +256,60 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 429129bc74efd544a97b555f83f9e2c8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hp: 100
+--- !u!114 &-1210559341612564841
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 465667734200470732}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e68cbe1ae3294b14ebc2d2585ad72131, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  marbleData:
+    id: 
+    name: 
+    Type: 0
+    explain: 
+    additionalHp: 0
+    additionalDamage: 0
+  commonData:
+    Type: 0
+    basicHp: 0
+    basicDamage: 0
+    basicMass: 0
+  typeBasicSkillID: TYPE_AP_RUNE
+  marbleBasicSkillID: AP02_RUNE
+  typeSkillStartTime: 0
+  marbleSkillStartTime: 1
+  <FinalCurHp>k__BackingField: 0
+  <FinalMaxHp>k__BackingField: 0
+  <FinalDmg>k__BackingField: 0
+  <AdditionalSpeed>k__BackingField: 0
+--- !u!114 &-3398117796883714863
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 465667734200470732}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 2
+  OwnershipTransfer: 1
+  observableSearch: 2
+  ObservedComponents: []
+  sceneViewId: 0
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
 --- !u!1 &666819786261726622
 GameObject:
   m_ObjectHideFlags: 0

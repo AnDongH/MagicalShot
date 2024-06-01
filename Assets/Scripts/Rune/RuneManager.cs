@@ -1,59 +1,87 @@
 using DG.Tweening;
-using System;
+using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
-using System.ComponentModel;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
-public class RuneManager : NormalSingleton<RuneManager>
+public class RuneManager : NormalSingletonPun<RuneManager>
 {
-    [SerializeField] GameObject runePrefab;
-    [SerializeField] List<Rune> myRunes;
-    [SerializeField] Transform runeSpawnPoint;
-    [SerializeField] ERuneState eRuneState;
-    [SerializeField] List<PRS> originCardPRSs;
+    public delegate void OnRuneDownHandler(Rune rune);
+    public delegate void OnRuneUpHandler(Rune rune);
+    public delegate void OnRuneEnterHandler(Rune rune);
+    public delegate void OnRuneExitHandler(Rune rune);
 
-    List<RuneData> itemBuffer;
-    Rune selectRune;
-    bool isMyRuneDrag;
-    bool onMyRuneArea;
-    int myPutCount;
+    public static event OnRuneDownHandler OnRuneDown;
+    public static event OnRuneUpHandler OnRuneUp;
+    public static event OnRuneEnterHandler OnRuneEnter;
+    public static event OnRuneExitHandler OnRuneExit;
+
+
+    [SerializeField] private GameObject runePrefab;
+    [SerializeField] private List<Rune> myRunes;
+    [SerializeField] private Transform runeSpawnPoint;
+    [SerializeField] private Transform runeGravePoint;
+    [SerializeField] private ERuneState eRuneState;
+    [SerializeField] private List<PRS> originCardPRSs;
+
+    public IReadOnlyList<Rune> MyRunes => myRunes;
+
+    [field: SerializeField] public GameObject RuneEffect { get; private set; }
+    [field: SerializeField] public RuneBorder RuneBorder { get; private set; }
+
+    private List<RuneData> itemBuffer;
+    private List<RuneData> graveBuffer = new List<RuneData>(20);
+
+    private Rune selectedRune;
+    private BasicMarble aimedMarble;
+    private bool isMyRuneDrag;
+    private bool onMyMarbleArea;
+
+    public IReadOnlyList<RuneData> ItemBuffer => itemBuffer;
+    public IReadOnlyList<RuneData> GraveBuffer => graveBuffer;
+
     enum ERuneState { Nothing, CanMouseOver, CanMouseDrag }
 
     protected override void Awake() {
         base.Awake();
         SetUpItemBuffer();
-        TurnManager.OnAddRune += AddRune;
-        TurnManager.OnTurnChanged += OnTurnStarted;
         TurnManager.OnTurnEnded += OnTurnEnded;
     }
 
     void Update() {
         if (isMyRuneDrag) {
-            CardDrag();
+            RuneDrag();
         }
-        DetectCardArea();
-        SetECardState();
+        DetectMarble();
+        SetERuneState();
     }
 
     void OnDestroy() {
-        TurnManager.OnAddRune -= AddRune;
-        TurnManager.OnTurnChanged -= OnTurnStarted;
         TurnManager.OnTurnEnded -= OnTurnEnded;
     }
 
-    void OnTurnStarted(bool myTurn) {
-        // 턴이 시작했을 때
-        if (myTurn)
-            myPutCount = 0;
+    private void OnTurnEnded(bool myTurn) {
+        if (myTurn) StartCoroutine(RuneGoToGrave());
     }
 
-    void OnTurnEnded() {
+    // 임시
+    private IEnumerator RuneGoToGrave() {
+        PRS t = new PRS(runeGravePoint.position, Quaternion.identity, new Vector3(1.5f, 1.5f, 1f));
         foreach (var rune in myRunes) {
+            if (rune.IsFreeze) continue;
+            rune.MoveTransform(t, true, 0.2f);
+        }
+        yield return new WaitForSeconds(0.2f);
+        foreach (var rune in myRunes) {
+            if (rune.IsFreeze) continue;
+            graveBuffer.Add(rune.data);
             Destroy(rune.gameObject);
         }
-        myRunes.Clear();
+
+        yield return null;
+
+        myRunes.RemoveAll(rune => rune == null);
     }
 
     public RuneData PopItem() {
@@ -72,8 +100,9 @@ public class RuneManager : NormalSingleton<RuneManager>
     void SetUpItemBuffer() {
 
         // 덱 구성하기
+        graveBuffer.Clear();
         itemBuffer = new List<RuneData>(20);
-        for (int i = 0; i < DataManager.Instance.Resource.runes.Count; i++) {
+        for (int i = 0; i < 20; i++) {                      // 변경 필요
             RuneData item = DataManager.Instance.Resource.runes[i];
             itemBuffer.Add(item);
         }
@@ -87,7 +116,7 @@ public class RuneManager : NormalSingleton<RuneManager>
         }
     }
 
-    void AddRune() {
+    public void AddRune() {
 
         if (myRunes.Count == 6) return;
 
@@ -95,16 +124,13 @@ public class RuneManager : NormalSingleton<RuneManager>
         var runeObject = Instantiate(runePrefab, runeSpawnPoint.position, Utils.QI);
         var rune = runeObject.GetComponent<Rune>();
 
-        // 뽑은 카드 정보 넣기
         rune.SetUp(PopItem());
-
-        // 내 패인지, 적 패인지
         myRunes.Add(rune);
 
-        CardAlignment();
+        RuneAlignment();
     }
 
-    void CardAlignment() {
+    private void RuneAlignment() {
         for (int i = 0; i < myRunes.Count; i++) {
             var targetCard = myRunes[i];
 
@@ -113,43 +139,60 @@ public class RuneManager : NormalSingleton<RuneManager>
         }
     }
 
-    public bool TryUseRune() {
+    public bool TryUseRune(BasicMarble marble) {
 
-        // 내 차례면 내가 선택한 카드, 상대 차례면 랜덤 선택
-        Rune rune = selectRune;
-        var dropPos = Utils.MousePos;
-        var targetCards = myRunes;
+        if (InGameManager.Instance.curCost < selectedRune.data.cost) return false;
 
-        targetCards.Remove(rune);
+        Rune rune = selectedRune;
+        var targetRunes = myRunes;
+
+        PhotonNetwork.Instantiate(SettingManager.Instance.prefab_envPath + "RuneRegisterEffect", marble.transform.position + new Vector3(0, 0.3f, 0), Quaternion.identity);
+        marble.RegisterRune(rune.data);
+
+        targetRunes.Remove(rune);
         rune.transform.DOKill();
+        graveBuffer.Add(rune.data);
         DestroyImmediate(rune.gameObject); // Destroy는 호출 후 한프레임이 지난 후에 파괴되기에 아래쪽에 null을 넣는다 해도 미씽이 뜨게 된다.
-        selectRune = null;
-        myPutCount++;
-        CardAlignment();
+        selectedRune = null;
+        RuneAlignment();
+
+        InGameManager.Instance.UpdateCost(false, rune.data.cost);
 
         return true;
+    }
+
+    public void RuneMouseEnter(Rune rune) {
+
+        if (eRuneState == ERuneState.Nothing) return;
+        if (isMyRuneDrag) return;
+
+        OnRuneEnter?.Invoke(rune);
     }
 
     public void RuneMouseOver(Rune rune) {
 
         if (eRuneState == ERuneState.Nothing) return;
 
-        selectRune = rune;
-        EnLargeCard(true, rune);
+        selectedRune = rune;
+        EnLargeRune(true, rune);
     }
 
 
     public void RuneMouseExit(Rune rune) {
-        EnLargeCard(false, rune);
+        EnLargeRune(false, rune);
+
+        OnRuneExit?.Invoke(rune);
     }
 
 
     public void RuneMouseDown() {
 
-
         if (eRuneState != ERuneState.CanMouseDrag) return;
+        if (selectedRune.IsFreeze) return;
 
         isMyRuneDrag = true;
+        OnRuneDown?.Invoke(selectedRune);
+        RuneBorder.SetCollider(true);
     }
 
 
@@ -159,43 +202,46 @@ public class RuneManager : NormalSingleton<RuneManager>
 
         if (eRuneState != ERuneState.CanMouseDrag) return;
 
-        TryUseRune();
+        if (onMyMarbleArea) TryUseRune(aimedMarble);
+        else selectedRune.MoveTransform(selectedRune.originPRS, false);
+
+        OnRuneUp?.Invoke(selectedRune);
+        RuneBorder.SetCollider(false);
     }
 
-    // 카드 드래그 메서드
-    void CardDrag() {
+    private void RuneDrag() {
 
         if (eRuneState != ERuneState.CanMouseDrag) return;
 
-        if (!onMyRuneArea) {
-            selectRune.MoveTransform(new PRS(Utils.MousePos, Utils.QI, selectRune.originPRS.scale), false);
-        }
+        selectedRune.MoveTransform(new PRS(Utils.MousePos, Utils.QI, selectedRune.originPRS.scale), false);
     }
 
-    void DetectCardArea() {
-        RaycastHit2D[] hits = Physics2D.RaycastAll(Utils.MousePos, Vector3.forward);
-        int layer = LayerMask.NameToLayer("MyCardArea");
-        onMyRuneArea = Array.Exists(hits, x => x.collider.gameObject.layer == layer);
+    private void DetectMarble() {
+        int layerMarble = LayerMask.GetMask("Marble");
+        RaycastHit2D hit = Physics2D.Raycast(Utils.MousePos, Vector3.forward, 200f,layerMarble);
+        onMyMarbleArea = (hit.collider != null && hit.collider.GetComponent<ShotComponent>().ActCondition);
+        if (onMyMarbleArea) aimedMarble = hit.collider.GetComponent<BasicMarble>();
+        else aimedMarble = null;
     }
 
     // 카드 크기 조절
-    void EnLargeCard(bool isEnLarge, Rune rune) {
+    void EnLargeRune(bool isEnLarge, Rune rune) {
         if (isEnLarge) {
-            Vector3 enlargePos = new Vector3(rune.originPRS.pos.x, -4.8f, -100f);
-            rune.MoveTransform(new PRS(enlargePos, Utils.QI, Vector3.one * 3.5f), false);
+            rune.MoveTransform(new PRS(rune.originPRS.pos + new Vector3(0,0,-50f), Utils.QI, rune.originPRS.scale * 1.5f), false);
+            
         }
         else
             rune.MoveTransform(rune.originPRS, false);
     }
 
     // 나의 카드 선택 상태 머신
-    void SetECardState() {
+    void SetERuneState() {
         // 로딩중이면 아무것도 못함
         if (TurnManager.Instance.IsLoading)
             eRuneState = ERuneState.Nothing;
-        else if (!TurnManager.Instance.MyTurn || myPutCount == 1)
+        else if (!TurnManager.Instance.MyTurn || InGameManager.Instance.curCost <= 0)
             eRuneState = ERuneState.CanMouseOver;
-        else if (TurnManager.Instance.MyTurn && myPutCount == 0)
+        else if (TurnManager.Instance.MyTurn && InGameManager.Instance.curCost >= 1)
             eRuneState = ERuneState.CanMouseDrag;
     }
 }

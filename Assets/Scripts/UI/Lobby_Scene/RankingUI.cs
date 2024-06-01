@@ -32,6 +32,10 @@ public class RankingUI : UI_PopUp
         PlayFabManager.OnRankGet += OnLeaderboardGet;
     }
 
+    private void OnEnable() {
+        Init();
+    }
+
     private void OnDestroy() {
         PlayFabManager.OnRankGet -= OnLeaderboardGet;
     }

@@ -25,6 +25,10 @@ public class MenuPanelUI : UI_PopUp {
         Init();
     }
 
+    private void OnEnable() {
+        Init();
+    }
+
     private void OnOptionBtnCliked(PointerEventData data) {
         SoundManager.Instance.PlaySFXSound("ButtonClick");
         UI_Manager.Instance.ShowPopupUI<UI_PopUp>("OptionCanvas");

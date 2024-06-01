@@ -4,5 +4,5 @@ using UnityEngine;
 
 public interface IHitable
 {
-    void OnHit(float dmg);
+    void OnHit(int dmg);
 }

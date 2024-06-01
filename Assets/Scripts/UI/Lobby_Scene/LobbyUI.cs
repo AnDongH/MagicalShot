@@ -98,6 +98,10 @@ public class LobbyUI : UI_Scene
         SoundManager.Instance.PlayBackGroundSound("MainTheme");
     }
 
+    private void OnEnable() {
+        Init();
+    }
+
     private void OnOptionBtnClicked(PointerEventData data) {
         SoundManager.Instance.PlaySFXSound("MenuBar");
         UI_Manager.Instance.ShowPopupUI<UI_PopUp>("OptionCanvas");

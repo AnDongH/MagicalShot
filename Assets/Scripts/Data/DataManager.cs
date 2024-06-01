@@ -5,6 +5,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
+using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.Networking;
 
@@ -26,16 +27,17 @@ public class DataManager : DontDestroySingleton<DataManager> {
     [field: SerializeField] public ResourceSO Resource { get; private set; }
 
     public readonly string noticeInfoURL = "https://docs.google.com/document/d/1CdYdTts1HVUbZjSOrLS5o_bJDZnsnulGj1XcLPUsNto/export?format=txt";
+    public readonly string sheetURL = "https://docs.google.com/spreadsheets/d/1T3KSbYhJyFOvNvwhQ4lzWU6QVlIGxxpKeEhmQgYuA10";
 
-    public readonly string marbleDataAddress = "https://docs.google.com/spreadsheets/d/1T3KSbYhJyFOvNvwhQ4lzWU6QVlIGxxpKeEhmQgYuA10";
     public readonly string marbleDataRange = "A2:F";
     public readonly string marbleDataSheetId = "0";
 
-    public readonly string runeDataAddress = "https://docs.google.com/spreadsheets/d/1T3KSbYhJyFOvNvwhQ4lzWU6QVlIGxxpKeEhmQgYuA10";
-    public readonly string runeDataRange = "A2:F";
+    public readonly string commonMarbleDataRange = "A2:D";
+    public readonly string commonMarbleDataSheetId = "1732538507";
+
+    public readonly string runeDataRange = "A2:I";
     public readonly string runeDataSheetId = "2022585265";
 
-    public readonly string mapDataAddress = "https://docs.google.com/spreadsheets/d/1T3KSbYhJyFOvNvwhQ4lzWU6QVlIGxxpKeEhmQgYuA10";
     public readonly string mapDataRange = "A2:B";
     public readonly string mapDataSheetId = "431664827";
 
@@ -47,14 +49,18 @@ public class DataManager : DontDestroySingleton<DataManager> {
 
     protected override void Awake() {
         base.Awake();
-        sheetDatas.Add(typeof(MarbleData), GetTSVAddress(marbleDataAddress, marbleDataRange, marbleDataSheetId));
-        sheetDatas.Add(typeof(RuneData), GetTSVAddress(runeDataAddress, runeDataRange, runeDataSheetId));
-        sheetDatas.Add(typeof(MapData), GetTSVAddress(mapDataAddress, mapDataRange, mapDataSheetId));
+        sheetDatas.Add(typeof(MarbleData), GetTSVAddress(sheetURL, marbleDataRange, marbleDataSheetId));
+        sheetDatas.Add(typeof(RuneData), GetTSVAddress(sheetURL, runeDataRange, runeDataSheetId));
+        sheetDatas.Add(typeof(MapData), GetTSVAddress(sheetURL, mapDataRange, mapDataSheetId));
+        sheetDatas.Add(typeof(CommonMarbleData), GetTSVAddress(sheetURL, commonMarbleDataRange, commonMarbleDataSheetId));
     }
 
     private void Start() {
         StartCoroutine(GetNoticeData());
         StartCoroutine(GetSheetData());
+
+        Resource.runeSkills.ForEach(x => x.runeData = Resource.runes.Find(y => y.id + "_Skill" == x.name));
+        Resource.basicRuneSkills.ForEach(x => x.runeData = Resource.basicRunes.Find(y => y.id + "_Skill" == x.name));
 
         userData = new UserData();
 
@@ -72,8 +78,10 @@ public class DataManager : DontDestroySingleton<DataManager> {
             sheetDatas[type] = www.downloadHandler.text;
 
             if (type == typeof(MarbleData)) Resource.marbles = GetDatas<MarbleData>(sheetDatas[type]);
-            if (type == typeof(RuneData)) Resource.runes = GetDatas<RuneData>(sheetDatas[type]);
+            if (type == typeof(RuneData)) Resource.runes = GetDatas<RuneData>(sheetDatas[type]).FindAll(x => x.Type == GlobalEnum.RuneType.Active);
             if (type == typeof(MapData)) Resource.maps = GetDatas<MapData>(sheetDatas[type]);
+            if (type == typeof(CommonMarbleData)) Resource.commonMalbles = GetDatas<CommonMarbleData>(sheetDatas[type]);
+            if (type == typeof(RuneData)) Resource.basicRunes = GetDatas<RuneData>(sheetDatas[type]).FindAll(x => x.Type == GlobalEnum.RuneType.Passive);
         }
     }
 
@@ -137,6 +145,13 @@ public class DataManager : DontDestroySingleton<DataManager> {
                 else if (type == typeof(string))
                     fields[i].SetValue(data, datas[i]);
 
+                else if (type == typeof(List<int>)) { 
+                    List<int> list = new List<int>();
+                    string[] splitedData = datas[i].Split(',');
+                    foreach (string s in splitedData) list.Add(int.Parse(s));
+                    fields[i].SetValue(data, list);
+                }
+
                 else
                     fields[i].SetValue(data, Enum.Parse(type, datas[i]));
             }
@@ -177,16 +192,23 @@ public class DataManager : DontDestroySingleton<DataManager> {
 
     }
 
-    public void LocalLoadData() {
+    public async void LocalLoadData() {
+        GameManager.ShowLoadingUI();
+        await AsyncLoad();
+        GameManager.CloseLoadingUI();
+    }
 
+    private async Task AsyncLoad() {
         if (!File.Exists(Path.Combine(cryptoFilePath, PlayFabManager.Instance.PlayFabID + "Local.json"))) {
             Debug.Log("경로가 없습니다.");
             return;
         }
 
-        byte[] bytes = File.ReadAllBytes(Path.Combine(cryptoFilePath, PlayFabManager.Instance.PlayFabID + "Local.json"));
-        byte[] DecryptBytes = AES.Cipher(bytes, "1234", AES.mode.DECRYPT);
-        jsonData = System.Text.Encoding.UTF8.GetString(DecryptBytes);
+        await Task.Run(() => {
+            byte[] bytes = File.ReadAllBytes(Path.Combine(cryptoFilePath, PlayFabManager.Instance.PlayFabID + "Local.json"));
+            byte[] DecryptBytes = AES.Cipher(bytes, "1234", AES.mode.DECRYPT);
+            jsonData = System.Text.Encoding.UTF8.GetString(DecryptBytes);
+        });
 
         //// 오브젝트 디시리얼라이즈
         UserData data = JsonUtility.FromJson<UserData>(jsonData);
@@ -197,5 +219,7 @@ public class DataManager : DontDestroySingleton<DataManager> {
         File.Delete(Path.Combine(cryptoFilePath, PlayFabManager.Instance.PlayFabID + "Local.json"));
 
         PlayFabManager.Instance.SendStatisticToServer(userData.winScore, "WinScore");
+
+
     }
 }

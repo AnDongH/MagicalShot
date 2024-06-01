@@ -19,8 +19,8 @@ public class InGameManager : NormalSingletonPun<InGameManager>, IPunObservable
     public static event OnCostUpdatedHandler OnCostUpdated;
     #endregion
 
-    public List<GameObject> CurMyMarbles { get; private set; }
-    public List<GameObject> CurOtherMarbles { get; private set; }
+    [field: SerializeField] public List<GameObject> CurMyMarbles { get; private set; }
+    [field: SerializeField] public List<GameObject> CurOtherMarbles { get; private set; }
     public GameObject[] curMarbles { get; private set; }
 
     [SerializeField] private Transform[] hostMarblesPos;
@@ -111,7 +111,7 @@ public class InGameManager : NormalSingletonPun<InGameManager>, IPunObservable
     [PunRPC]
     private void CountReady() {
         readyCnt++;
-        if (readyCnt >= 2) photonView.RPC("InitMarbleList", RpcTarget.All);
+        if (readyCnt >= 2) InitMarbleList();
     }
 
     [PunRPC]

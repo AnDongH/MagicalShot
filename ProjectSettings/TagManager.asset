@@ -5,6 +5,7 @@ TagManager:
   serializedVersion: 2
   tags:
   - Marble
+  - Rune
   layers:
   - Default
   - TransparentFX
@@ -16,7 +17,7 @@ TagManager:
   - Obstacle
   - Marble
   - Rune
-  - 
+  - RuneArea
   - 
   - 
   - 

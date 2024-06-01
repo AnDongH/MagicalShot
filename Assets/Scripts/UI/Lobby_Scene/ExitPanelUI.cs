@@ -27,6 +27,10 @@ public class ExitPanelUI : UI_PopUp
         Init();
     }
 
+    private void OnEnable() {
+        Init();
+    }
+
     private void OnServerExitBtnClicked(PointerEventData data) {
         SoundManager.Instance.PlaySFXSound("ButtonClick");
         DataManager.Instance.SaveData(DisconectCallBack);

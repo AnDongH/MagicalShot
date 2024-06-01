@@ -8,8 +8,10 @@ using Random = UnityEngine.Random;
 
 public class TurnManager : NormalSingletonPun<TurnManager> {
 
-    public float defaultTurnTime { get; private set; } = 120f;
-    public float curTurnTime { get; private set; } = 120f;
+    public float DefaultTurnTime { get; private set; } = 120f;
+    public float CurTurnTime { get; private set; } = 120f;
+
+    public int CurTurnNumber { get; private set; } = 0;
 
     public int startCardCount = 6;
 
@@ -25,8 +27,8 @@ public class TurnManager : NormalSingletonPun<TurnManager> {
 
 
     public static event Action<bool> OnTurnChanged;
-    public static event Action OnTurnEnded;
-    public static event Action OnAddRune;
+    public static event Action <bool>OnTurnEnded;
+    public static event Action <bool>OnTurnStarted;
 
     enum ETurnMode { Random, Host, Other }
 
@@ -36,8 +38,8 @@ public class TurnManager : NormalSingletonPun<TurnManager> {
 
     private void Update() {
         if (MyTurn) {
-            curTurnTime -= Time.deltaTime;
-            if (curTurnTime <= 0) {
+            CurTurnTime -= Time.deltaTime;
+            if (CurTurnTime <= 0) {
                 EndTurn();
             }
            
@@ -77,13 +79,16 @@ public class TurnManager : NormalSingletonPun<TurnManager> {
         for (int i = 0; i < startCardCount; i++) {
             // 카드가 추가될 때의 이벤트 발생
             yield return new WaitForSeconds(0.2f);
-            OnAddRune?.Invoke();
+            RuneManager.Instance.AddRune();
         }
 
         StartCoroutine(StartTurnCo());
     }
 
     IEnumerator StartTurnCo() {
+
+        CurTurnNumber++;
+
         IsLoading = true;
 
         InGameManager.Instance.UpdateCost(true, 6);
@@ -96,12 +101,13 @@ public class TurnManager : NormalSingletonPun<TurnManager> {
         }
         yield return delay20;
 
-        for (int i = 0; i < startCardCount; i++) {
-            // 카드가 추가될 때의 이벤트 발생
-            yield return new WaitForSeconds(0.2f);
-            OnAddRune?.Invoke();
+        if (MyTurn) {
+            for (int i = 0; i < startCardCount; i++) {
+                // 카드가 추가될 때의 이벤트 발생
+                yield return new WaitForSeconds(0.2f);
+                RuneManager.Instance.AddRune();
+            }
         }
-
 
         IsLoading = false;
 
@@ -111,6 +117,8 @@ public class TurnManager : NormalSingletonPun<TurnManager> {
         else {
             MyTurn = PhotonNetwork.IsMasterClient ? false : true;
         }
+
+        OnTurnStarted?.Invoke(MyTurn);
     }
 
     public IEnumerator WinTheGameCo() {
@@ -129,14 +137,13 @@ public class TurnManager : NormalSingletonPun<TurnManager> {
 
     [PunRPC]
     private void TurnChange() {
-        OnTurnEnded?.Invoke();
+        OnTurnEnded?.Invoke(MyTurn);
         IsHostTurn = !IsHostTurn;
         StartCoroutine(StartTurnCo());
     }
 
     public void EndTurn() {
-        MyTurn = false;
-        curTurnTime = defaultTurnTime;
+        CurTurnTime = DefaultTurnTime;
         photonView.RPC("TurnChange", RpcTarget.All);
     }
 

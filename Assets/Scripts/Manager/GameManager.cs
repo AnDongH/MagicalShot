@@ -12,4 +12,12 @@ public class GameManager : DontDestroySingleton<GameManager>
         Application.Quit(); // 어플리케이션 종료
 #endif
     }
+
+    public static void ShowLoadingUI() {
+        UI_Manager.Instance.ShowPopupUI<UI_PopUp>("LoadingCanvas");
+    }
+
+    public static void CloseLoadingUI() {
+        UI_Manager.Instance.ClosePopupUI();
+    }
 }

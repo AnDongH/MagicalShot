@@ -10,26 +10,33 @@ using UnityEditor;
 [System.Serializable]
 public class MarbleData {
 
-    public enum MarbleType {
-        TA, DD, AD, AP
-    }
-
     public string id;
     public string name;
-    public MarbleType Type;
+    public GlobalEnum.MarbleType Type;
     public string explain;
-    public int hp;
-    public int damage;
+    public int additionalHp;
+    public int additionalDamage;
+}
+
+[System.Serializable]
+public class CommonMarbleData {
+
+    public GlobalEnum.MarbleType Type;
+    public int basicHp;
+    public int basicDamage;
+    public float basicMass;
 }
 
 [System.Serializable]
 public class RuneData {
 
     public string id;
+    public GlobalEnum.RuneType Type;
     public string name;
-    public int value;
-    public int percent;
+    public int cost;
+    public List<int> value;
     public int count;
+    public int boundCount;
     public string explain;
 
 }
@@ -44,57 +51,80 @@ public class MapData {
 [CreateAssetMenu(fileName = "ResourceSO", menuName = "Scriptable Object/ResourceSO")]
 public class ResourceSO : ScriptableObject
 {
+    [Header("인게임 DB")]
     public List<MarbleData> marbles;
     public List<RuneData> runes;
+    public List<RuneData> basicRunes;
     public List<MapData> maps;
+    public List<CommonMarbleData> commonMalbles;
 
-
+    [Header("아트 리소스 DB")]
     public List<Sprite> marbleImages;
     public List<Sprite> runeImages;
     public List<Sprite> mapImages;
+
+    [Header("스킬 리소스 DB")]
+    public List<BaseRuneSkill> runeSkills;
+    public List<BaseRuneSkill> basicRuneSkills;
 
 #if UNITY_EDITOR
     [SerializeField] private string marbleImagePath;
     [SerializeField] private string runeImagePath;
     [SerializeField] private string mapImagePath;
+    [SerializeField] private string runeSkillsPath;
+    [SerializeField] private string basicRuneSkillsPath;
 
     [ContextMenu("Load Marble Images from Custom Path")]
     private void LoadMarbleImagesFromCustomPath() {
         string path = marbleImagePath;
-        marbleImages = LoadSpritesFromPath(path);
+        marbleImages = LoadAssetsFromPath<Sprite>(path);
         Debug.Log("Marble images loaded from custom path. Count: " + marbleImages.Count);
     }
 
     [ContextMenu("Load Rune Images from Custom Path")]
     private void LoadRuneImagesFromCustomPath() {
         string path = runeImagePath;
-        runeImages = LoadSpritesFromPath(path);
+        runeImages = LoadAssetsFromPath<Sprite>(path);
         Debug.Log("Rune images loaded from custom path. Count: " + runeImages.Count);
     }
 
     [ContextMenu("Load Map Images from Custom Path")]
     private void LoadMapImagesFromCustomPath() {
         string path = mapImagePath;
-        mapImages = LoadSpritesFromPath(path);
+        mapImages = LoadAssetsFromPath<Sprite>(path);
         Debug.Log("Map images loaded from custom path. Count: " + mapImages.Count);
     }
 
-    private List<Sprite> LoadSpritesFromPath(string path) {
-        List<Sprite> sprites = new List<Sprite>();
-        string[] guids = AssetDatabase.FindAssets("t:Sprite", new[] { path });
+    [ContextMenu("Load Rune Skills from Custom Path")]
+    private void LoadRuneSkillsFromCustomPath() {
+        string path = runeSkillsPath;
+        runeSkills = LoadAssetsFromPath<BaseRuneSkill>(path);
+        Debug.Log("Map images loaded from custom path. Count: " + runeSkills.Count);
+    }
+
+    [ContextMenu("Load Basic Rune Skills from Custom Path")]
+    private void LoadBasicRuneSkillsFromCustomPath() {
+        string path = basicRuneSkillsPath;
+        basicRuneSkills = LoadAssetsFromPath<BaseRuneSkill>(path);
+        Debug.Log("Map images loaded from custom path. Count: " + basicRuneSkills.Count);
+    }
+
+    private List<T> LoadAssetsFromPath<T>(string path) where T : UnityEngine.Object {
+        List<T> assets = new List<T>();
+        string[] guids = AssetDatabase.FindAssets($"t:{typeof(T).Name}", new[] { path });
 
         foreach (string guid in guids) {
             string assetPath = AssetDatabase.GUIDToAssetPath(guid);
-            Sprite sprite = AssetDatabase.LoadAssetAtPath<Sprite>(assetPath);
-            if (sprite != null) {
-                sprites.Add(sprite);
+            T asset = AssetDatabase.LoadAssetAtPath<T>(assetPath);
+            if (asset != null) {
+                assets.Add(asset);
             }
         }
 
-        return sprites;
+        return assets;
     }
 
-    [ContextMenu("Append '_image' to Image Resource")]
+    [ContextMenu("Append '_Image' to Image Resource")]
     private void AppendImageSuffixToMapImages() {
         if (runeImages == null || runeImages.Count == 0) {
             Debug.LogWarning("No map images found to rename.");
@@ -104,7 +134,7 @@ public class ResourceSO : ScriptableObject
         foreach (var sprite in runeImages) {
             if (sprite != null) {
                 string assetPath = AssetDatabase.GetAssetPath(sprite);
-                string newName = sprite.name + "_image";
+                string newName = sprite.name + "_Image";
 
                 // Ensure the new name doesn't already exist to avoid duplicates
                 if (!AssetDatabase.LoadAssetAtPath<Sprite>(assetPath.Replace(sprite.name, newName))) {

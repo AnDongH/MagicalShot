@@ -57,8 +57,6 @@ public class RoomUI : UI_Scene
     }
 
     private void Start() {
-        Init();
-        // 방 초기화
         PhotonRoomManager.Instance.isReady = false;
         GetText((int)Texts.RoomNameText).text = PhotonNetwork.CurrentRoom.Name;
 
@@ -94,6 +92,10 @@ public class RoomUI : UI_Scene
 
         RoomSelect.OnMapButtonClicked += OnMapUpdated;
         
+    }
+
+    private void OnEnable() {
+        Init();
     }
 
     private void OnDestroy() {

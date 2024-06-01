@@ -17,177 +17,505 @@ MonoBehaviour:
     name: "\uADF8\uB808\uC774\uC2A4"
     Type: 0
     explain: "\uC655\uAD6D\uC744 \uC218\uD638\uD558\uB294 \uD0F1\uCEE4"
-    hp: 100
-    damage: 10
+    additionalHp: 100
+    additionalDamage: 10
   - id: DD01
     name: "\uB8E8\uBE14"
     Type: 1
     explain: "\uC801\uC744 \uBB34\uCC0C\uB974\uB294 \uC6A9\uC0AC"
-    hp: 100
-    damage: 10
+    additionalHp: 100
+    additionalDamage: 10
   - id: AD01
     name: "\uB77C\uC774"
     Type: 2
     explain: "\uBAA8\uB4E0\uAC78 \uB9DE\uCD94\uB294 \uAD81\uC218"
-    hp: 100
-    damage: 10
+    additionalHp: 100
+    additionalDamage: 10
   - id: AP01
     name: "\uB808\uC778"
     Type: 3
     explain: "\uC801\uC744 \uC12C\uBA78\uD558\uB294 \uB9C8\uBC95\uC0AC "
-    hp: 100
-    damage: 10
+    additionalHp: 100
+    additionalDamage: 10
   - id: TA02
     name: "\uBE0C\uB85D"
     Type: 0
     explain: "\uC624\uD06C \uBD80\uC871\uC758 \uC790\uB791\uC2A4\uB7EC\uC6B4 \uC655"
-    hp: 100
-    damage: 10
+    additionalHp: 100
+    additionalDamage: 10
   - id: DD02
     name: "\uB85C\uC774"
     Type: 1
     explain: "\uC6A9\uB9F9\uD55C \uC624\uD06C \uBD80\uC871\uC758 \uC804\uC0AC"
-    hp: 100
-    damage: 10
+    additionalHp: 100
+    additionalDamage: 10
   - id: AD02
     name: "\uB77C\uAD74\uB8E8\uC2A4"
     Type: 2
     explain: "\uB204\uAD6C\uBCF4\uB2E4 \uBE60\uB978 \uC0AC\uACA9 \uC19C\uC528\uB97C
       \uAC00\uC9C4 \uAD81\uC218"
-    hp: 100
-    damage: 10
+    additionalHp: 100
+    additionalDamage: 10
   - id: AP02
     name: "\uB85C\uC6E8\uC778"
     Type: 3
     explain: "\uC624\uD06C \uBD80\uC871\uC758 \uC2E0\uC131\uD55C \uC218\uB140. \uADF8\uB140\uB294
       \uC138\uC0C1\uC744 \uAD6C\uD558\uAE30 \uC704\uD574 \uACE0\uAD70\uBD84\uD22C\uC911\uC774\uB2E4."
-    hp: 100
-    damage: 10
+    additionalHp: 100
+    additionalDamage: 10
   runes:
-  - id: DwarfSkill_3
-    name: "\uAC15\uD654 \uAC15\uD654!"
-    value: 10
-    percent: 10
+  - id: MAB_BUF01_RUNE
+    Type: 0
+    name: "\uADFC\uB825 \uAC15\uD654 I"
+    cost: 1
+    value: 0a000000
     count: 1
-    explain: "\uAE30\uBB3C\uC758 \uACF5\uACA9\uB825\uC744 \uAC15\uD654\uC2DC\uD0A8\uB2E4.\r"
-  - id: DwarfSkill_20
-    name: "\uC6B4\uC11D \uB3CC\uC9C4"
-    value: 10
-    percent: 10
+    boundCount: 0
+    explain: "\uAE30\uBB3C\uC758 \uC77C\uBC18 \uACF5\uACA9\uB825\uC744 10\uB9CC\uD07C
+      1\uD68C \uAC15\uD654\uC2DC\uD0A8\uB2E4.\r"
+  - id: MAB_BUF02_RUNE
+    Type: 0
+    name: "\uAE30\uB3D9 \uAC15\uD654 I"
+    cost: 1
+    value: 14000000
     count: 1
-    explain: "\uC6B4\uC11D\uC744 \uC3D8\uBA74\uC11C \uB3CC\uC9C4\r"
-  - id: DwarfSkill_23
-    name: "\uB0B4\uBA74\uC758 \uD798"
-    value: 10
-    percent: 10
+    boundCount: 0
+    explain: "\uAE30\uBB3C\uC758 \uC774\uB3D9 \uC18D\uB3C4\uB97C 1\uD134 \uB3D9\uC548
+      20\uB9CC\uD07C \uC62C\uB9B0\uB2E4.\r"
+  - id: MAB_BUF03_RUNE
+    Type: 0
+    name: "\uCD08\uAE09 \uD68C\uBCF5"
+    cost: 1
+    value: 1e000000
     count: 1
-    explain: "\uBC29\uC5B4\uB825\uC744 10 \uC62C\uB9B0\uB2E4.\r"
-  - id: ForestElfSkill_15
-    name: "\uC815\uB839\uC758 \uBC14\uB78C"
-    value: 10
-    percent: 10
+    boundCount: 0
+    explain: "\uAE30\uBB3C\uC758 \uCCB4\uB825\uC744 30\uB9CC\uD07C 1\uD68C \uD68C\uBCF5\uC2DC\uD0A8\uB2E4.\r"
+  - id: MAB_BUF04_RUNE
+    Type: 0
+    name: "\uADFC\uB825 \uAC15\uD654 II"
+    cost: 2
+    value: 1e000000
     count: 1
-    explain: "\uC815\uB839\uC758 \uBC14\uB78C\uC73C\uB85C \uAC10\uC2FC\uB2E4.\r"
-  - id: ForestElfSkill_19
-    name: "\uB9AC\uC800\uB809\uC158"
-    value: 10
-    percent: 10
+    boundCount: 0
+    explain: "\uAE30\uBB3C\uC758 \uC77C\uBC18 \uACF5\uACA9\uB825\uC744 30\uB9CC\uD07C
+      1\uD68C \uAC15\uD654\uC2DC\uD0A8\uB2E4.\r"
+  - id: MAB_BUF05_RUNE
+    Type: 0
+    name: "\uADFC\uB825 \uAC15\uD654 III"
+    cost: 3
+    value: 32000000
     count: 1
-    explain: "\uBD80\uD65C \uB9C8\uBC95\r"
-  - id: ForestElfSkill_25
-    name: "\uBC14\uB78C \uBC29\uD328"
-    value: 10
-    percent: 10
+    boundCount: 0
+    explain: "\uAE30\uBB3C\uC758 \uC77C\uBC18 \uACF5\uACA9\uB825\uC744 50\uB9CC\uD07C
+      1\uD68C \uAC15\uD654\uC2DC\uD0A8\uB2E4.\r"
+  - id: MAB_BUF06_RUNE
+    Type: 0
+    name: "\uAE30\uB3D9 \uAC15\uD654 II "
+    cost: 2
+    value: 1e000000
     count: 1
-    explain: "\uBC14\uB78C\uC758 \uBC29\uD328\uB85C \uACF5\uACA9\uC744 1\uD68C \uB9C9\uB294\uB2E4.\r"
-  - id: illusionSkill_9
-    name: "\uCE68\uBB35\uC758 \uAC00\uBA74"
-    value: 10
-    percent: 10
+    boundCount: 0
+    explain: "\uAE30\uBB3C\uC758 \uC774\uB3D9 \uC18D\uB3C4\uB97C 1\uD134 \uB3D9\uC548
+      30\uB9CC\uD07C \uC62C\uB9B0\uB2E4.\r"
+  - id: MAB_BUF07_RUNE
+    Type: 0
+    name: "\uAE30\uB3D9 \uAC15\uD654 III "
+    cost: 3
+    value: 32000000
     count: 1
-    explain: "\uD574\uB2F9 \uAE30\uBB3C\uC5D0 \uB2FF\uC740 \uAE30\uBB3C\uC740 \uB2E4\uC74C\uD134
-      \uC2A4\uD0AC \uC0AC\uC6A9 \uBD88\uAC00\r"
-  - id: illusionSkill_13
-    name: "\uD658\uC601\uAC80"
-    value: 10
-    percent: 10
+    boundCount: 0
+    explain: "\uAE30\uBB3C\uC758 \uC774\uB3D9 \uC18D\uB3C4\uB97C 1\uD134 \uB3D9\uC548
+      50\uB9CC\uD07C \uC62C\uB9B0\uB2E4.\r"
+  - id: MAB_BUF08_RUNE
+    Type: 0
+    name: "\uC911\uAE09 \uD68C\uBCF5"
+    cost: 2
+    value: 32000000
     count: 1
-    explain: "\uAE30\uBB3C\uC758 \uC8FC\uC704\uC5D0 \uD658\uC601\uC758 \uAC80\uC744
-      \uC5EC\uB7EC\uAC1C \uC0DD\uC131\uD55C\uB2E4.\r"
-  - id: illusionSkill_30
-    name: "\uCD5C\uC801\uC758 \uD328"
-    value: 10
-    percent: 10
+    boundCount: 0
+    explain: "\uAE30\uBB3C\uC758 \uCCB4\uB825\uC744 50\uB9CC\uD07C 1\uD68C \uD68C\uBCF5\uC2DC\uD0A8\uB2E4.\r"
+  - id: MAB_BUF09_RUNE
+    Type: 0
+    name: "\uC0C1\uAE09 \uD68C\uBCF5"
+    cost: 3
+    value: 50000000
     count: 1
-    explain: "\uAE30\uBB3C\uC5D0\uAC8C \uB79C\uB364 \uAC00\uD638\uB97C \uB0B4\uB824\uC900\uB2E4.\r"
-  - id: LightningSkill_1
-    name: "\uBC88\uAC1C"
-    value: 10
-    percent: 10
+    boundCount: 0
+    explain: "\uAE30\uBB3C\uC758 \uCCB4\uB825\uC744 80\uB9CC\uD07C 1\uD68C \uD68C\uBCF5\uC2DC\uD0A8\uB2E4.\r"
+  - id: MAB_BUF10_RUNE
+    Type: 0
+    name: "\uC77C\uB3C4\uC591\uB2E8\uC758 \uC9D1\uC911"
+    cost: 2
+    value: 14000000
     count: 1
-    explain: "\uBC88\uAC1C \uBC1C\uC0AC\r"
-  - id: LightningSkill_4
-    name: "\uBC88\uAC1C \uAD6C\uCCB4"
-    value: 10
-    percent: 10
+    boundCount: 0
+    explain: "\uAE30\uBB3C\uC774 \uC815\uC2E0 \uC9D1\uC911\uC744 \uD55C\uB2E4. \uD574\uB2F9
+      \uAE30\uBB3C\uC758 \uAC80 \uACF5\uACA9\uC5D0 \uB300\uD55C \uB370\uBBF8\uC9C0\uAC00
+      20 \uC99D\uAC00\uD55C\uB2E4.\r"
+  - id: MAB_BUF11_RUNE
+    Type: 0
+    name: "\uCD5C\uACE0\uC2E0\uC758 \uCD95\uBCF5"
+    cost: 5
+    value: 28000000
     count: 1
-    explain: "\uBC88\uAC1C\uC758 \uAD6C\uCCB4\uB97C \uAE30\uBB3C\uC758 \uC8FC\uC704\uC5D0
-      \uC18C\uD658\r"
-  - id: LightningSkill_25
-    name: "\uB77C\uC774\uD2B8\uB2DD \uC774\uD399\uD2B8"
-    value: 10
-    percent: 10
+    boundCount: 0
+    explain: "\uBAA8\uB4E0 \uC544\uAD70 \uAE30\uBB3C\uC758 \uCCB4\uB825\uC744 40
+      1\uD68C \uD68C\uBCF5\uC2DC\uD0A8\uB2E4.\r"
+  - id: MAB_ATK01_RUNE
+    Type: 0
+    name: "\uC5D8\uB9AC\uBA58\uD0C8 \uC2AC\uB798\uC2DC I"
+    cost: 1
+    value: 32000000
     count: 1
-    explain: "\uAC15\uB825\uD55C \uC9C1\uC120\uD615 \uBC88\uAC1C\uB97C \uBC1C\uC0AC\uD55C\uB2E4.\r"
-  - id: LightningSkill_49
-    name: "\uC1FC\uD06C \uC6E8\uC774\uBE0C"
-    value: 10
-    percent: 10
+    boundCount: 0
+    explain: "\uCDA9\uB3CC\uD55C \uC801 \uAE30\uBB3C\uC5D0\uAC8C \uAE30\uBCF8 \uACF5\uACA9\uB825
+      + 50\uC758 \uB370\uBBF8\uC9C0\uB97C 1\uBC88 \uC900\uB2E4.\r"
+  - id: MAB_ATK02_RUNE
+    Type: 0
+    name: "\uC5B4\uC2A4 \uC784\uD329\uD2B8 "
+    cost: 2
+    value: 32000000
+    count: 3
+    boundCount: 0
+    explain: "\uCDA9\uB3CC\uD55C \uC801 \uAE30\uBB3C\uC5D0\uAC8C 50\uC758 \uB370\uBBF8\uC9C0\uB97C
+      3\uBC88 \uC900\uB2E4.\r"
+  - id: MAB_ATK03_RUNE
+    Type: 0
+    name: "\uC1FC\uD06C \uC784\uD329\uD2B8"
+    cost: 1
+    value: 32000000
     count: 1
-    explain: "\uAC15\uB825\uD55C \uBC88\uAC1C\uB85C \uC9C0\uBA74\uC744 \uB0B4\uB824\uCCD0
-      \uC8FC\uC704 \uC801\uC744 \uBC00\uC5B4\uB0B8\uB2E4.\r"
-  - id: NightElfSkill_6
-    name: "\uC774\uD074\uB9BD\uC2A4 I"
-    value: 10
-    percent: 10
+    boundCount: 0
+    explain: "\uCDA9\uB3CC\uD55C \uC801 \uAE30\uBB3C\uC5D0\uAC8C \uAE30\uBCF8 \uACF5\uACA9\uB825
+      + 50\uC758 \uB370\uBBF8\uC9C0\uB97C 1\uBC88 \uC900\uB2E4.\r"
+  - id: MAB_ATK04_RUNE
+    Type: 0
+    name: "\uB9C8\uACF5\uD559 \uB808\uC774\uC838"
+    cost: 3
+    value: 1e000000
     count: 1
-    explain: "\uC138\uC0C1\uC758 \uBA78\uB9DD \uCE74\uC6B4\uD2B81\r"
-  - id: NightElfSkill_7
-    name: "\uC774\uD074\uB9BD\uC2A4 II"
-    value: 10
-    percent: 10
+    boundCount: 3
+    explain: "\uAE30\uBB3C\uC774 3\uBC88 \uCDA9\uB3CC\uC2DC\uC5D0 \uBC1C\uB3D9. 4\uBC29\uD5A5\uC73C\uB85C
+      \uAE30\uBCF8 \uACF5\uACA9\uB825 + 30\uC758 \uB370\uBBF8\uC9C0\uB97C \uC8FC\uB294
+      \uB808\uC774\uC838\uB97C \uBC1C\uC0AC\uD55C\uB2E4.\r"
+  - id: MAB_ATK05_RUNE
+    Type: 0
+    name: "\uC804\uB1CC"
+    cost: 3
+    value: 1400000003000000
     count: 1
-    explain: "\uC138\uC0C1\uC758 \uBA78\uB9DD \uCE74\uC6B4\uD2B8 2\r"
-  - id: NightElfSkill_8
-    name: "\uC774\uD074\uB9BD\uC2A4 III"
-    value: 10
-    percent: 10
+    boundCount: 0
+    explain: "\uAE30\uBB3C\uC744 \uBC88\uAC1C\uC758 \uBC30\uB9AC\uC5B4\uB85C \uAC10\uC2FC\uB2E4.
+      \uD574\uB2F9 \uBC30\uB9AC\uC5B4\uB294 \uC801\uC758 \uACF5\uACA9\uC744 \uB9C9\uC744
+      \uC218\uB294 \uC5C6\uC9C0\uB9CC, \uACF5\uACA9\uC2DC\uC5D0 \uAE30\uBCF8 \uACF5\uACA9\uC5D0
+      20\uC758 \uCD94\uAC00 \uB370\uBBF8\uC9C0\uB97C \uC900\uB2E4. \uD574\uB2F9 \uBC30\uB9AC\uC5B4\uB294
+      \uAE30\uBB3C\uC774 3\uD68C \uCDA9\uB3CC\uD560 \uB54C \uAE4C\uC9C0 \uC720\uC9C0\uB41C\uB2E4.\r"
+  - id: MAB_ATK06_RUNE
+    Type: 0
+    name: "\uB300\uD3ED\uBC1C"
+    cost: 3
+    value: 50000000
     count: 1
-    explain: "\uC138\uC0C1\uC758 \uBA78\uB9DD \uCE74\uC6B4\uD2B83\r"
-  - id: WindSkill_4
-    name: "\uC9C4\uACF5\uC625 I"
-    value: 10
-    percent: 10
+    boundCount: 5
+    explain: "\uAE30\uBB3C\uC774 5\uBC88 \uCDA9\uB3CC\uC2DC\uC5D0 \uBC1C\uB3D9. \uB300\uD3ED\uBC1C\uC744
+      \uC77C\uC73C\uCF1C \uC8FC\uBCC0\uC758 \uC801\uC5D0\uAC8C \uAE30\uBCF8 \uACF5\uACA9\uB825
+      + 80\uC758 \uB370\uBBF8\uC9C0\uB97C 1\uBC88 \uC900\uB2E4.\r"
+  - id: MAB_ATK07_RUNE
+    Type: 0
+    name: "\uD654\uC5FC \uAD6C\uCCB4"
+    cost: 3
+    value: 14000000
     count: 1
-    explain: "\uAC15\uB825\uD55C \uBC14\uB78C \uAD6C\uCCB4\r"
-  - id: WindSkill_5
-    name: "\uC9C4\uACF5\uC625 II"
-    value: 10
-    percent: 10
+    boundCount: 0
+    explain: "\uAE30\uBB3C\uC758 \uC8FC\uBCC0\uC744 \uB0A0\uC544\uB2E4\uB2C8\uB294
+      \uD654\uC5FC \uAD6C\uCCB4\uB97C \uC18C\uD658\uD55C\uB2E4. \uD574\uB2F9 \uAD6C\uCCB4\uB294
+      \uD574\uB2F9 \uD134 \uB3D9\uC548 \uC0B4\uC544\uC788\uC73C\uBA70, \uB2FF\uC740
+      \uAE30\uBB3C\uC740 20\uC758 \uB370\uBBF8\uC9C0\uB97C \uBC1B\uB294\uB2E4.\r"
+  - id: MAB_ATK08_RUNE
+    Type: 0
+    name: "3\uB2E8 \uBCA0\uAE30"
+    cost: 3
+    value: 1e000000
+    count: 3
+    boundCount: 3
+    explain: "\uAE30\uBB3C\uC774 3\uBC88 \uCDA9\uB3CC\uC2DC\uC5D0 \uBC1C\uB3D9\uD55C\uB2E4.
+      \uC8FC\uBCC0\uC758 \uC801\uC744 3\uBC88 \uBCA0\uC5B4\uC11C \uAC01 \uACF5\uACA9\uB9C8\uB2E4
+      30\uC758 \uB370\uBBF8\uC9C0\uB97C \uC900\uB2E4.\r"
+  - id: MAB_ATK09_RUNE
+    Type: 0
+    name: "\uC5D8\uB9AC\uBA58\uD0C8 \uC2AC\uB798\uC2DC II"
+    cost: 2
+    value: 50000000
     count: 1
-    explain: "\uAC15\uB825\uD55C \uBC14\uB78C \uAD6C\uCCB4 2\r"
-  - id: WindSkill_15
-    name: "\uC9C4\uACF5\uC625 III"
-    value: 10
-    percent: 10
+    boundCount: 0
+    explain: "\uCDA9\uB3CC\uD55C \uC801 \uAE30\uBB3C\uC5D0\uAC8C \uAE30\uBCF8 \uACF5\uACA9\uB825
+      + 80\uC758 \uB370\uBBF8\uC9C0\uB97C 1\uBC88 \uC900\uB2E4.\r"
+  - id: MAB_ATK10_RUNE
+    Type: 0
+    name: "\uC5D8\uB9AC\uBA58\uD0C8 \uC2AC\uB798\uC2DC III"
+    cost: 4
+    value: 64000000
     count: 1
-    explain: "\uAC15\uB825\uD55C \uBC14\uB78C \uAD6C\uCCB4 3\r"
-  - id: WindSkill_46
-    name: "\uC5D0\uC5B4\uB85C \uBE14\uB77C\uC2A4\uD2B8"
-    value: 10
-    percent: 10
+    boundCount: 0
+    explain: "\uCDA9\uB3CC\uD55C \uC801 \uAE30\uBB3C\uC5D0\uAC8C \uAE30\uBCF8 \uACF5\uACA9\uB825
+      + 100\uC758 \uB370\uBBF8\uC9C0\uB97C 1\uBC88 \uC900\uB2E4.\r"
+  - id: MAB_DEF01_RUNE
+    Type: 0
+    name: "\uD48D\uBCBD "
+    cost: 1
+    value: 01000000
     count: 1
-    explain: "\uAC15\uB825\uD55C \uBC14\uB78C\uC758 \uB300\uD3EC"
+    boundCount: 0
+    explain: "\uBC14\uB78C\uC758 \uBC30\uB9AC\uC5B4\uB97C \uB9CC\uB4E0\uB2E4. \uC801
+      \uAE30\uBB3C\uC758 \uACF5\uACA9\uC744 1\uD68C \uB9C9\uB294\uB2E4.\r"
+  - id: MAB_DEF02_RUNE
+    Type: 0
+    name: "\uAC00\uC2DC \uAC11\uC637"
+    cost: 1
+    value: 0a00000002000000
+    count: 1
+    boundCount: 0
+    explain: "\uC801\uC758 \uACF5\uACA9\uC744 \uBC1B\uC744 \uB54C \uC801\uC5D0\uAC8C
+      30\uC758 \uB370\uBBF8\uC9C0\uB97C \uBC18\uC0AC\uD55C\uB2E4. \uD574\uB2F9 \uBC30\uB9AC\uC5B4\uB294
+      2\uBC88 \uCD1D\uB3CC\uC2DC \uAE68\uC9C4\uB2E4.\r"
+  - id: MAB_DEF03_RUNE
+    Type: 0
+    name: "\uC784\uC2DC \uBC29\uBCBD"
+    cost: 1
+    value: 14000000
+    count: 1
+    boundCount: 0
+    explain: "\uAE30\uBB3C\uC5D0\uAC8C \uC784\uC2DC \uCD94\uAC00 \uCCB4\uB825 20\uC744
+      \uC900\uB2E4. \uD574\uB2F9 \uCCB4\uB825\uC740 \uD134\uC774 \uC885\uB8CC\uB418\uBA74
+      \uC5C6\uC5B4\uC9C4\uB2E4.\r"
+  - id: MAB_DEF04_RUNE
+    Type: 0
+    name: "\uC811\uADFC \uC81C\uD55C \uB9C8\uACF5\uD559 \uBC29\uBCBD"
+    cost: 2
+    value: 32000000
+    count: 1
+    boundCount: 0
+    explain: "\uB113\uAC8C \uBC29\uBCBD\uC744 \uD3BC\uCCD0 \uC801\uACFC \uCDA9\uB3CC\uD558\uC9C0
+      \uBABB\uD558\uB3C4\uB85D \uD55C\uB2E4. 50 \uC774\uC0C1\uC758 \uB370\uBBF8\uC9C0\uAC00
+      \uB4E4\uC5B4\uAC00\uBA74 \uAE68\uC9C4\uB2E4.\r"
+  - id: OBJ_WALL01_RUNE
+    Type: 0
+    name: "\uAE34 \uBCBD \uC0DD\uC131"
+    cost: 1
+    value: 32000000
+    count: 1
+    boundCount: 0
+    explain: "\uB9F5\uC5D0 \uAE34 \uBCBD\uC744 \uC124\uCE58\uD55C\uB2E4.\r"
+  - id: OBJ_WALL02_RUNE
+    Type: 0
+    name: "\uC815\uC0AC\uAC01\uD615 \uBCBD \uC0DD\uC131"
+    cost: 1
+    value: 32000000
+    count: 1
+    boundCount: 0
+    explain: "\uB9F5\uC5D0 \uC791\uC740 \uC815\uC0AC\uAC01\uD615 \uBAA8\uC591\uC758
+      \uBCBD\uC744 \uC124\uCE58\uD55C\uB2E4.\r"
+  - id: OBJ_TRAP01_RUNE
+    Type: 0
+    name: "\uD654\uC5FC \uD2B8\uB7A9"
+    cost: 2
+    value: 32000000
+    count: 1
+    boundCount: 0
+    explain: "\uBC1F\uC73C\uBA74 \uBD88\uB85C \uD0DC\uC6B0\uB294 \uD2B8\uB7A9\uC744
+      \uC124\uCE58\uD55C\uB2E4. \uD574\uB2F9 \uD2B8\uB7A9\uC740 \uBC1F\uC740 \uC720\uB2DB\uC5D0\uAC8C
+      50\uC758 \uB370\uBBF8\uC9C0\uB97C \uC900\uB2E4. \uC544\uAD70 \uC720\uB2DB\uC5D0\uAC8C\uB3C4
+      \uB3D9\uC77C\uD558\uAC8C \uC801\uC6A9\uB41C\uB2E4.\r"
+  - id: OBJ_TRAP02_RUNE
+    Type: 0
+    name: "\uD3ED\uBC1C \uD2B8\uB7A9"
+    cost: 2
+    value: 32000000
+    count: 1
+    boundCount: 0
+    explain: "\uBC1F\uC73C\uBA74 \uD3ED\uBC1C\uD558\uB294 \uD2B8\uB7A9\uC744 \uC124\uCE58\uD55C\uB2E4.
+      \uD2B8\uB7A9\uC744 \uBC1F\uC740 \uC720\uB2DB\uC740 50\uC758 \uB370\uBBF8\uC9C0\uB97C
+      \uC785\uB294\uB2E4. \uC544\uAD70 \uC720\uB2DB\uC5D0\uAC8C\uB3C4 \uB3D9\uC77C\uD558\uAC8C
+      \uB35B\uC6A9\uB41C\uB2E4.\r"
+  - id: OBJ_TRAP03_RUNE
+    Type: 0
+    name: "\uAC10\uC804 \uD2B8\uB7A9"
+    cost: 2
+    value: 32000000
+    count: 1
+    boundCount: 0
+    explain: "\uBC1F\uC73C\uBA74 \uAC10\uC804\uC744 \uB2F9\uD558\uB294 \uD2B8\uB7A9\uC744
+      \uC124\uCE58\uD55C\uB2E4. \uD2B8\uB7A9\uC744 \uBC1F\uC740 \uC720\uB2DB\uC740
+      50\uC758 \uB370\uBBF8\uC9C0\uB97C \uC785\uB294\uB2E4. \uC544\uAD70 \uC720\uB2DB\uC5D0\uAC8C\uB3C4
+      \uB3D9\uC77C\uD558\uAC8C \uC801\uC6A9\uB41C\uB2E4.\r"
+  - id: OBJ_TRAP04_RUNE
+    Type: 0
+    name: "\uD64D\uC218 \uD2B8\uB7A9"
+    cost: 3
+    value: 3c000000
+    count: 1
+    boundCount: 0
+    explain: "\uBC1F\uC73C\uBA74 \uC720\uB2DB\uC744 \uBC00\uC5B4\uB0B4\uBA74\uC11C
+      60\uC758 \uB370\uBBF8\uC9C0\uB97C \uC8FC\uB294 \uD2B8\uB7A9\uC744 \uC124\uCE58\uD55C\uB2E4.
+      \uC544\uAD70 \uC720\uB2DB\uC5D0\uAC8C\uB3C4 \uB3D9\uC77C\uD558\uAC8C \uC801\uC6A9\uB41C\uB2E4.\r"
+  - id: OBJ_TURRET01_RUNE
+    Type: 0
+    name: "\uC790\uB3D9 \uD654\uC0B4 \uBC1C\uC0AC\uAE30"
+    cost: 2
+    value: 14000000
+    count: 1
+    boundCount: 0
+    explain: "\uC790\uB3D9\uC73C\uB85C \uD654\uC0B4\uC744 \uBC1C\uC0AC\uD558\uB294
+      \uD3EC\uD0D1\uC744 \uC124\uCE58\uD55C\uB2E4. \uD574\uB2F9 \uD3EC\uD0D1\uC740
+      20\uC758 \uB370\uBBF8\uC9C0\uB97C \uC8FC\uACE0, \uD134\uC774 \uB05D\uB098\uBA74
+      \uC0AC\uB77C\uC9C4\uB2E4.\r"
+  - id: OBJ_TURRET02_RUNE
+    Type: 0
+    name: "\uC790\uB3D9 \uD654\uC5FC \uBC29\uC0AC\uAE30"
+    cost: 2
+    value: 14000000
+    count: 1
+    boundCount: 0
+    explain: "\uC790\uB3D9\uC73C\uB85C \uD654\uC5FC\uC744 \uBC29\uC0AC\uD558\uB294
+      \uD3EC\uD0D1\uC744 \uC124\uCE58\uD55C\uB2E4. \uD574\uB2F9 \uD3EC\uD0D1\uC740
+      20\uC758 \uB370\uBBF8\uC9C0\uB97C \uC8FC\uACE0, \uD134\uC774 \uB05D\uB098\uBA74
+      \uC0AC\uB77C\uC9C4\uB2E4.\r"
+  - id: OBJ_TURRET03_RUNE
+    Type: 0
+    name: "\uC790\uB3D9 \uB9C8\uACF5\uD559 \uB808\uC774\uC838"
+    cost: 2
+    value: 14000000
+    count: 1
+    boundCount: 0
+    explain: "\uC790\uB3D9\uC73C\uB85C \uB808\uC774\uC838\uB97C \uBC1C\uC0AC\uD558\uB294
+      \uD3EC\uD0D1\uC744 \uC124\uCE58\uD55C\uB2E4. \uD574\uB2F9 \uD3EC\uD0D1\uC740
+      20\uC758 \uB370\uBBF8\uC9C0\uB97C \uC8FC\uACE0, \uD134\uC774 \uB05D\uB098\uBA74
+      \uC0AC\uB77C\uC9C4\uB2E4.\r"
+  - id: OBJ_TURRET04_RUNE
+    Type: 0
+    name: "\uB9C8\uACF5\uD559 \uB77C\uC774\uD2B8\uB2DD \uBCFC"
+    cost: 2
+    value: 14000000
+    count: 1
+    boundCount: 0
+    explain: "\uC790\uB3D9\uC73C\uB85C \uD68C\uC804\uD558\uB294 \uC804\uAE30 \uAD6C\uCCB4\uB97C
+      \uC0DD\uC131\uD55C\uB2E4. \uD574\uB2F9 \uAD6C\uCCB4\uB294 20\uC758 \uB370\uBBF8\uC9C0\uB97C
+      \uC8FC\uACE0, \uD134\uC774 \uB05D\uB098\uBA74 \uC0AC\uB77C\uC9C4\uB2E4.\r"
+  basicRunes:
+  - id: TYPE_TA_RUNE
+    Type: 1
+    name: "\uB3CC\uACA9 \uC720\uB2DB \uD2B9\uC131"
+    cost: 0
+    value: 01000000
+    count: 1
+    boundCount: 0
+    explain: "\uB9E4 \uD134\uC774 \uB05D\uB0A0\uB54C\uB9C8\uB2E4, 1\uBC88 \uC77C\uC815
+      \uBC94\uC704\uC758 \uBC29\uBCBD\uC744 \uC0DD\uC131\uD55C\uB2E4.\r"
+  - id: TYPE_DD_RUNE
+    Type: 1
+    name: "\uACF5\uACA9 \uC720\uB2DB \uD2B9\uC131"
+    cost: 0
+    value: 0100000005000000
+    count: 1
+    boundCount: 0
+    explain: "\uB9E4 \uD134\uC774 \uC2DC\uC791\uD560 \uB54C\uB9C8\uB2E4 \uB2E8 \uD55C\uBC88
+      \uC774\uB3D9 \uCF54\uC2A4\uD2B8\uC758 \uC18C\uBAA8\uB97C 1 \uC801\uAC8C \uD560
+      \uC218 \uC788\uB2E4. \uB610\uD55C \uACF5\uACA9\uB825\uC774 5 \uAC15\uD654\uB41C\uB2E4.
+      \r"
+  - id: TYPE_AD_RUNE
+    Type: 1
+    name: "\uC800\uACA9 \uC720\uB2DB \uD2B9\uC131"
+    cost: 0
+    value: 01000000
+    count: 1
+    boundCount: 0
+    explain: "\uB9E4 \uD134\uC774 \uB05D\uB0A0\uB54C\uB9C8\uB2E4, \uD55C\uBC88  \uC0C1\uB300
+      \uAE30\uBB3C\uB4E4 \uCABD\uC73C\uB85C \uB370\uBBF8\uC9C0 30\uC758 \uC6D0\uAC70\uB9AC
+      \uACF5\uACA9\uC744 \uB0A0\uB9B0\uB2E4.\r"
+  - id: TYPE_AP_RUNE
+    Type: 1
+    name: "\uB9C8\uBC95 \uC720\uB2DB \uD2B9\uC131"
+    cost: 0
+    value: 0100000014000000
+    count: 1
+    boundCount: 0
+    explain: "\uB8EC \uACF5\uACA9\uC774 30% \uAC15\uD574\uC9C4\uB2E4. \uB9E4 \uD134\uC774
+      \uC2DC\uC791\uD560 \uB54C \uB2E8 \uD55C\uBC88 \uB8EC \uCF54\uC2A4\uD2B8\uC758
+      \uC18C\uBAA8\uB97C 1 \uC801\uAC8C \uD560 \uC218 \uC788\uB2E4. \uB9E4 \uD134
+      \uB2E8 \uD55C\uBC88 20\uC758 hp\uB97C \uD68C\uBCF5\uD55C\uB2E4.\r"
+  - id: TA01_RUNE
+    Type: 1
+    name: "\uC655\uAD6D\uC758 \uC218\uD638\uC790"
+    cost: 0
+    value: 05000000
+    count: 1
+    boundCount: 0
+    explain: "\uD574\uB2F9 \uAE30\uBB3C\uC758 \uC8FC\uBCC0\uC758 \uC544\uAD70\uB4E4\uC740
+      \uB370\uBBF8\uC9C0\uB97C 5 \uC801\uAC8C \uBC1B\uC2B5\uB2C8\uB2E4.\r"
+  - id: TA02_RUNE
+    Type: 1
+    name: "\uC655\uC758 \uD328\uAE30"
+    cost: 0
+    value: 0a000000
+    count: 1
+    boundCount: 0
+    explain: "\uD574\uB2F9 \uAE30\uBB3C \uC8FC\uBCC0\uC758 \uC801 \uAE30\uBB3C\uB4E4\uC740
+      \uC18D\uB3C4\uAC00 10 \uAC10\uC18C\uD569\uB2C8\uB2E4.\r"
+  - id: DD01_RUNE
+    Type: 1
+    name: "\uC6A9\uD638\uC0C1\uBC15"
+    cost: 0
+    value: 1e000000
+    count: 1
+    boundCount: 0
+    explain: "\uCC98\uC74C \uCDA9\uB3CC\uD558\uB294 \uC801\uC5D0\uAC8C 30\uC758 \uCD94\uAC00
+      \uB370\uBBF8\uC9C0\uB97C \uC785\uD799\uB2C8\uB2E4.\r"
+  - id: DD02_RUNE
+    Type: 1
+    name: "\uB9C8\uC9C0\uB9C9 \uC800\uB825"
+    cost: 0
+    value: 1e000000
+    count: 1
+    boundCount: 0
+    explain: "\uAE30\uBB3C\uC774 \uC8FD\uB294 \uC21C\uAC04 \uC8FC\uBCC0\uC758 \uC801\uC5D0\uAC8C
+      30\uC758 \uB370\uBBF8\uC9C0\uB97C \uC785\uD799\uB2C8\uB2E4.\r"
+  - id: AD01_RUNE
+    Type: 1
+    name: "\uC800\uACA9\uC655"
+    cost: 0
+    value: 0a000000
+    count: 1
+    boundCount: 0
+    explain: "\uAE30\uBB3C\uC774 \uC0AC\uC6A9\uD558\uB294 \uC6D0\uAC70\uB9AC \uACF5\uACA9\uC774
+      10\uC758 \uCD94\uAC00 \uB370\uBBF8\uC9C0\uB97C \uC785\uD799\uB2C8\uB2E4.\r"
+  - id: AD02_RUNE
+    Type: 1
+    name: "\uBE44\uC5F4\uD55C \uACF5\uACA9\uC790"
+    cost: 0
+    value: 1e0000000a000000
+    count: 1
+    boundCount: 0
+    explain: "\uCCB4\uB825\uC774 30% \uC774\uD558\uC778 \uC801\uC5D0\uAC8C 10\uC758
+      \uCD94\uAC00 \uB370\uBBF8\uC9C0\uB97C \uC785\uD799\uB2C8\uB2E4.\r"
+  - id: AP01_RUNE
+    Type: 1
+    name: "\uD658\uC601 \uB9C8\uBC95"
+    cost: 0
+    value: 1e00000032000000
+    count: 1
+    boundCount: 0
+    explain: "\uD574\uB2F9 \uAE30\uBB3C\uC740 \uCCB4\uB825\uC774 30% \uC774\uD558\uC77C
+      \uB54C, 50\uC758 \uB370\uBBF8\uC9C0\uB97C \uD761\uC218\uD558\uB294 \uBC29\uC5B4\uB9C9\uC744
+      \uC0DD\uC131\uD569\uB2C8\uB2E4.\r"
+  - id: AP02_RUNE
+    Type: 1
+    name: "\uC131\uC9C1\uC790\uC758 \uAE30\uB3C4"
+    cost: 0
+    value: 0a000000
+    count: 1
+    boundCount: 0
+    explain: "\uD574\uB2F9 \uAE30\uBB3C\uC740 \uD68C\uBCF5 \uC2A4\uD0AC\uC758 \uD6A8\uB2A5\uC774
+      10% \uC99D\uAC00\uD569\uB2C8\uB2E4."
   maps:
   - id: TestMap
     name: "\uC5F0\uC2B5\uC7A5\r"
@@ -195,6 +523,23 @@ MonoBehaviour:
     name: "\uAC80\uC740 \uB3D9\uAD74\r"
   - id: Map2
     name: "\uC232\uC18D\uC758 \uC720\uC801"
+  commonMalbles:
+  - Type: 0
+    basicHp: 200
+    basicDamage: 8
+    basicMass: 60
+  - Type: 1
+    basicHp: 150
+    basicDamage: 15
+    basicMass: 30
+  - Type: 2
+    basicHp: 130
+    basicDamage: 10
+    basicMass: 20
+  - Type: 3
+    basicHp: 100
+    basicDamage: 10
+    basicMass: 20
   marbleImages:
   - {fileID: 1566880218, guid: 3fadac0c52b3f2443a1e78008817f847, type: 3}
   - {fileID: 916480230, guid: 56f9b9577e8132e4489e07e84cc7cdb6, type: 3}
@@ -205,310 +550,67 @@ MonoBehaviour:
   - {fileID: -818304863, guid: 6a4d9e93f7fe83e418fde081aa79d9c2, type: 3}
   - {fileID: -264728295, guid: 7dad5a5f4f990ab4885b2adab4af1153, type: 3}
   runeImages:
-  - {fileID: 21300000, guid: 9c0aa1a548ac64d428640175f0c956f7, type: 3}
-  - {fileID: 21300000, guid: 80c1c28d2d136a94e960103202483e20, type: 3}
-  - {fileID: 21300000, guid: 637272be58b6df944a1e70f9deadd4bc, type: 3}
-  - {fileID: 21300000, guid: d2bc52779b9834f4eb41c31655a742cf, type: 3}
-  - {fileID: 21300000, guid: 44f4b231ca48d924999bb9f4b655d762, type: 3}
-  - {fileID: 21300000, guid: 2932045ebbfcf5043a6a2097550222a3, type: 3}
-  - {fileID: 21300000, guid: a50685e6189498d4aa1992cbd3796645, type: 3}
-  - {fileID: 21300000, guid: e121c96553d30f04bb889ee7e2fba3c1, type: 3}
-  - {fileID: 21300000, guid: 2787ceff14fcf1043bbde156874a7a5d, type: 3}
-  - {fileID: 21300000, guid: c727dcd05e9aa9f42b5b18ea6b27515d, type: 3}
-  - {fileID: 21300000, guid: 3a217d2192b8f9c4095cafaaf06fa31e, type: 3}
-  - {fileID: 21300000, guid: 69e9001a4094ca249891682ccb10c9d3, type: 3}
-  - {fileID: 21300000, guid: 74bf863a27b39c344884d82bf53eb26d, type: 3}
-  - {fileID: 21300000, guid: 9b917985472ee2a44ac2f8137156663e, type: 3}
-  - {fileID: 21300000, guid: 6b4ada4496e10fb4588d69a5d2da79cc, type: 3}
-  - {fileID: 21300000, guid: bfff1ae4957da0542aa3cd58d92a9068, type: 3}
-  - {fileID: 21300000, guid: 6aaf78fac0ba91b48a7e0efb1e432f6f, type: 3}
-  - {fileID: 21300000, guid: df60be9938f05f14bb2bd7b4c04d5d72, type: 3}
-  - {fileID: 21300000, guid: a709d18006558ff42a4fbcf97b3882a1, type: 3}
-  - {fileID: 21300000, guid: e6672df3e6f431e4ba3dd4c8febb7a9a, type: 3}
-  - {fileID: 21300000, guid: 1c26bfa6266b84744b5dc70e52c35bf8, type: 3}
-  - {fileID: 21300000, guid: ecedaa9f82c3cc94b8f9982f178e330f, type: 3}
-  - {fileID: 21300000, guid: 09fa929c9ec921d4f9463f3a26475e98, type: 3}
-  - {fileID: 21300000, guid: f75ed32d7071b5a44932a2a79e2e2350, type: 3}
-  - {fileID: 21300000, guid: 743988b9d6481f843a0b9ae4d6f64467, type: 3}
-  - {fileID: 21300000, guid: 99729955b0cc14c4ba18c004250b283e, type: 3}
-  - {fileID: 21300000, guid: f38f3da8b7e75964492c8b40ac8c439d, type: 3}
-  - {fileID: 21300000, guid: f2b90bda35762064faa4a52a8f682085, type: 3}
-  - {fileID: 21300000, guid: 1315b9733cd72a74fa7a5eec2a1155ea, type: 3}
-  - {fileID: 21300000, guid: f629774c91411964398c7a3ddc4d865d, type: 3}
-  - {fileID: 21300000, guid: 7ddb31d891ec6e14a8bd576c53f0ddc6, type: 3}
-  - {fileID: 21300000, guid: 05e1fa466e27f92479a67ba9425616fd, type: 3}
-  - {fileID: 21300000, guid: 8ed19beee7fa9d64d987dc259785be9e, type: 3}
-  - {fileID: 21300000, guid: 216a67dd834740d44b7bc7775121c48a, type: 3}
-  - {fileID: 21300000, guid: 4dbf32081b3769c4bbfa08922cf24b8e, type: 3}
-  - {fileID: 21300000, guid: ba341eaae0913384ba0faa5c22347285, type: 3}
-  - {fileID: 21300000, guid: f7922cb636b05384a8d38aa72a09ed0f, type: 3}
-  - {fileID: 21300000, guid: 60db76d9fd8ea3e42b2dfc44f0afee43, type: 3}
-  - {fileID: 21300000, guid: da0178c49aeb5de4194bab09ae10cef0, type: 3}
-  - {fileID: 21300000, guid: 331210dabe00ce241b617f4c619896b5, type: 3}
-  - {fileID: 21300000, guid: e8f4ec5fc04505b4192b44ee2944803d, type: 3}
-  - {fileID: 21300000, guid: 7a2942ff173eae042817fc1632b3fa5d, type: 3}
-  - {fileID: 21300000, guid: c9352e6c169f68147b4ec35ea535dfe4, type: 3}
-  - {fileID: 21300000, guid: e2a3253397016cd44ba2d74aed370f94, type: 3}
-  - {fileID: 21300000, guid: 9ff3c05ee5ec51844b07c0c0721d638f, type: 3}
-  - {fileID: 21300000, guid: ba2b89c4937afc14689ca4c26095b0ab, type: 3}
-  - {fileID: 21300000, guid: 81a870ac330f25043b7a15e70edc0aff, type: 3}
-  - {fileID: 21300000, guid: db9cc65705d9e4c41b221709d5be40a5, type: 3}
-  - {fileID: 21300000, guid: 6cdc05bba05466d4cb5e476cc71801be, type: 3}
-  - {fileID: 21300000, guid: bce24fe88e5fc6f4989de1c098367294, type: 3}
-  - {fileID: 21300000, guid: 13697337009305f4b96ac020dadfdf3a, type: 3}
-  - {fileID: 21300000, guid: 7f39ec9661858984ba8536bfcba3f622, type: 3}
-  - {fileID: 21300000, guid: 125c575ab69e37c43bfae7cb00694856, type: 3}
-  - {fileID: 21300000, guid: 9ad568f560c5a9243a51cdfd53f8f99c, type: 3}
-  - {fileID: 21300000, guid: ad37bfca42a35e442b858ec139bafdaa, type: 3}
-  - {fileID: 21300000, guid: 4b55032a3238e524cac22b48046a3a29, type: 3}
-  - {fileID: 21300000, guid: f917762a3148b12498e26e5743e590ad, type: 3}
-  - {fileID: 21300000, guid: 0f725e2ef96d4c944903fbf44f966ba5, type: 3}
-  - {fileID: 21300000, guid: d2d597a0c216ab14b9d687de9abda0a3, type: 3}
-  - {fileID: 21300000, guid: ac1651669205f43439b246c758c19026, type: 3}
-  - {fileID: 21300000, guid: 49181907b1ec2384fa154fe2f10232cd, type: 3}
-  - {fileID: 21300000, guid: cebd9ab20b4476d479bb3c6cb245f773, type: 3}
-  - {fileID: 21300000, guid: 904979da298980c4b89383a2ec94fdf6, type: 3}
-  - {fileID: 21300000, guid: 8b4a587f75181944485e1f6e1fec5096, type: 3}
-  - {fileID: 21300000, guid: 4712ed4006caed242a47ebb2aa45213d, type: 3}
-  - {fileID: 21300000, guid: 054d980125991ec45a0ceebf2abbc437, type: 3}
-  - {fileID: 21300000, guid: 70eff5cedbd423947a4659e27621b426, type: 3}
-  - {fileID: 21300000, guid: 2c5ff98e80a6335449e8929d229e153d, type: 3}
-  - {fileID: 21300000, guid: 67fc701b6da361e4c85ab20044f0a07d, type: 3}
-  - {fileID: 21300000, guid: 7c7a0ac2907082a478c2c9b06db22892, type: 3}
-  - {fileID: 21300000, guid: adb9b24607d019f4fb1889be92df5c37, type: 3}
-  - {fileID: 21300000, guid: 611c830f9e43da145a9ae85bc5206547, type: 3}
-  - {fileID: 21300000, guid: 83c15c983e7cf6b47affe811629c48d9, type: 3}
-  - {fileID: 21300000, guid: 40e3a51e413d8184395b5d30aa94bc89, type: 3}
-  - {fileID: 21300000, guid: 8d7ec1ed086a724478c598cba72205af, type: 3}
-  - {fileID: 21300000, guid: 64c30d91b57642a4dbab0a58c22eef8e, type: 3}
-  - {fileID: 21300000, guid: 4413d4db2d0b1124b9865f2848ebd880, type: 3}
-  - {fileID: 21300000, guid: fdc38ef787ea34a4ba83e6955c56b646, type: 3}
-  - {fileID: 21300000, guid: 65a04bb184a178543a2bbaa1ba175bb2, type: 3}
-  - {fileID: 21300000, guid: 50b4c3b5a3dcb8a4ebbdaf53a534e7e3, type: 3}
-  - {fileID: 21300000, guid: d40820c57eca1e247bd3a0a6ad1bef14, type: 3}
-  - {fileID: 21300000, guid: 7f64cfe3755e1854cab37343dcb046d2, type: 3}
-  - {fileID: 21300000, guid: a0448863a7db8834cbd005620b275220, type: 3}
-  - {fileID: 21300000, guid: 8212175eedefa4b43a571a6d32f8442a, type: 3}
-  - {fileID: 21300000, guid: 8505dc6895135da428599fc84b5c46c2, type: 3}
-  - {fileID: 21300000, guid: ad113dc79a6df114da4306deccea3b26, type: 3}
-  - {fileID: 21300000, guid: 3e03e25c46063034382ed4b67637626c, type: 3}
-  - {fileID: 21300000, guid: d33c4f05f22d4ed4d8d18976e6d3439b, type: 3}
-  - {fileID: 21300000, guid: 77b73c135a726b44a952a67c1dce822c, type: 3}
-  - {fileID: 21300000, guid: c93a736054130494283711c6f7251174, type: 3}
-  - {fileID: 21300000, guid: d63f724cb994f6e47937e87a4bedbdfa, type: 3}
-  - {fileID: 21300000, guid: f5b2f8cbcbc7e824fa5b72e66a452263, type: 3}
-  - {fileID: 21300000, guid: 7d4115c325176df47abf99bf81eaa65e, type: 3}
-  - {fileID: 21300000, guid: 3427c64cc07d7e84ba0f57284dac2fac, type: 3}
-  - {fileID: 21300000, guid: dfb447c16d0d5dd4da2f35672b1b3644, type: 3}
-  - {fileID: 21300000, guid: d3753c4dbcb57654e8cb507bcdbf9522, type: 3}
-  - {fileID: 21300000, guid: 5f7c69861dcb887459d217c9312b31f3, type: 3}
-  - {fileID: 21300000, guid: 3bfd6b2f825c26d428b7427756f26c4d, type: 3}
-  - {fileID: 21300000, guid: 0e30f492bcd47ae42ab74f368746b9cc, type: 3}
-  - {fileID: 21300000, guid: 30b044e777aa59f409d5074b94c3c987, type: 3}
-  - {fileID: 21300000, guid: 8109634f907e1204e928e8fe73c03bef, type: 3}
-  - {fileID: 21300000, guid: c8b353546d2267f40b2773fca69b2003, type: 3}
-  - {fileID: 21300000, guid: a394bce46d8dcab43a570804147102b0, type: 3}
-  - {fileID: 21300000, guid: 6d933184887700c488e1203d51e9dbc8, type: 3}
-  - {fileID: 21300000, guid: 8799240df79221049a806afea5cec2f5, type: 3}
-  - {fileID: 21300000, guid: c72dccea5ccc8964fb76844ad1f4a380, type: 3}
-  - {fileID: 21300000, guid: 9393bd5f501fe5447bce9a82958039a2, type: 3}
-  - {fileID: 21300000, guid: 4e1b8a44d07ff694c846b6bcb146142c, type: 3}
-  - {fileID: 21300000, guid: c09260a4b23ef3b4da43726a704ce9c6, type: 3}
-  - {fileID: 21300000, guid: 4c85f09f35927d5439b88ea04da3ec0b, type: 3}
-  - {fileID: 21300000, guid: 95e35753dee099f41bf53ce8f4624311, type: 3}
-  - {fileID: 21300000, guid: 2c6a9440d778f5e4a9e64aa7b07e48dc, type: 3}
-  - {fileID: 21300000, guid: 0776f446de1c9564a9826c2c914bc7d3, type: 3}
-  - {fileID: 21300000, guid: 767593a148bb57a4da7bdb54ed4e5c1e, type: 3}
-  - {fileID: 21300000, guid: 2809f8079bc879d449368ce2fb573064, type: 3}
-  - {fileID: 21300000, guid: 7d136a3a0c533774d9e903a508a3a9ef, type: 3}
-  - {fileID: 21300000, guid: 4896cfeadb90711478d7fc4f42f7cb75, type: 3}
-  - {fileID: 21300000, guid: 1647d8136e868a94cb29a711f4bfa936, type: 3}
-  - {fileID: 21300000, guid: df301761511bf2242b799bcc3eb96fe7, type: 3}
-  - {fileID: 21300000, guid: d06414e0efede5f48917bfea860c34be, type: 3}
-  - {fileID: 21300000, guid: 872a8497680d56049a9416ef19415a7d, type: 3}
-  - {fileID: 21300000, guid: f671d968aa0e16d4590091426f46ac79, type: 3}
-  - {fileID: 21300000, guid: ae2d85e1995949e438b1bd58255201fe, type: 3}
-  - {fileID: 21300000, guid: 65a104d5f13a7454e8ae72858b4474bf, type: 3}
-  - {fileID: 21300000, guid: 83d522273ec23694583db59f09c27ead, type: 3}
-  - {fileID: 21300000, guid: a455458debc868e439e8709100184856, type: 3}
-  - {fileID: 21300000, guid: baf37940214856b4cbcc181522c3598d, type: 3}
-  - {fileID: 21300000, guid: bbf3d791a7f28954b84185c32b87f42e, type: 3}
-  - {fileID: 21300000, guid: e04e5c22567222e4cb8427cf4d58c749, type: 3}
-  - {fileID: 21300000, guid: 0742a0eb766c20441bba111c194b5381, type: 3}
-  - {fileID: 21300000, guid: 48d1dc1bcc0417f4a8c9a44bb4c0b155, type: 3}
-  - {fileID: 21300000, guid: 8189edb269f2df14f9c9581bd32de682, type: 3}
-  - {fileID: 21300000, guid: a5e6f5443d4a5cb4eb55bbe1745734d3, type: 3}
-  - {fileID: 21300000, guid: e0e4eec8b51c4b248bd38c5e9b1734b3, type: 3}
-  - {fileID: 21300000, guid: b9bd29bf14f980746a0022c3142e90c8, type: 3}
-  - {fileID: 21300000, guid: 4a4c3c6c6db6bdb4b94fe1380fea2974, type: 3}
-  - {fileID: 21300000, guid: fbfefcf32fe0d1043a78352c9333a926, type: 3}
-  - {fileID: 21300000, guid: 2b7474c3541a6454ebc239444b284d66, type: 3}
-  - {fileID: 21300000, guid: d59079c67014a404bba72d4bf8c476bc, type: 3}
-  - {fileID: 21300000, guid: e68875e20e5cd64448fc263d49d7e41a, type: 3}
+  - {fileID: 21300000, guid: 210bc3908ee1dcf4c86e120d70e78c45, type: 3}
+  - {fileID: 21300000, guid: 61d6aeb447b1f7b45a412a6a4ef4c5f7, type: 3}
   - {fileID: 21300000, guid: f094ee28b30291d45b7a1d2e231b0700, type: 3}
-  - {fileID: 21300000, guid: e6e899fc26c2d7442b779bfee7e08d21, type: 3}
-  - {fileID: 21300000, guid: cb118ce499dcbce438a5a879a70342b3, type: 3}
-  - {fileID: 21300000, guid: ff1f8d67c7ba7ee479eec0b202216486, type: 3}
-  - {fileID: 21300000, guid: 59c0e91cf55274e4088dcc1349b748a3, type: 3}
-  - {fileID: 21300000, guid: d0fd6b45176e9854f95656f481e8e5fd, type: 3}
-  - {fileID: 21300000, guid: 28dd2599e4e6a6d4caa9b65841e3d167, type: 3}
-  - {fileID: 21300000, guid: 7b07f55e5e185fe40ae416ff4394323e, type: 3}
-  - {fileID: 21300000, guid: df87e537c8dd8e140966aeb7fb1dd51d, type: 3}
-  - {fileID: 21300000, guid: b1e28eafd3969ac4fb0cb84531e5179a, type: 3}
-  - {fileID: 21300000, guid: fbbb473b6b4e69046b20864de0a5ebfd, type: 3}
-  - {fileID: 21300000, guid: 1f870a1f59a9b014ba35ddb8b212207f, type: 3}
-  - {fileID: 21300000, guid: 441d9dada2075864d94e16bce19295a6, type: 3}
-  - {fileID: 21300000, guid: 8b363bc7bda4f29418e0b1386a3378c2, type: 3}
-  - {fileID: 21300000, guid: 203e6f0fbd6b1344f9fb778c67c6db9c, type: 3}
-  - {fileID: 21300000, guid: 3660d87055ad4a0488a146a79e620545, type: 3}
-  - {fileID: 21300000, guid: 56f9b5e3ec25e7646b70d16ae551f40b, type: 3}
-  - {fileID: 21300000, guid: 3998a13c780f00d4d9773976fe6a0068, type: 3}
-  - {fileID: 21300000, guid: c7b73662068add541abb34d37fb8ab17, type: 3}
-  - {fileID: 21300000, guid: eec5c546392ad4d4fbd4ade738f96c49, type: 3}
-  - {fileID: 21300000, guid: 05c7bfaf9326ec04486fd8283d718217, type: 3}
-  - {fileID: 21300000, guid: 982a48a7327715c4c89fb0c3de2c954d, type: 3}
-  - {fileID: 21300000, guid: a2b479623bf59f0498c0657fbedf697f, type: 3}
-  - {fileID: 21300000, guid: eef0522299e661b439ce4369db1639d8, type: 3}
-  - {fileID: 21300000, guid: 1b56f080b57a9d04c92c28fcbd5b7012, type: 3}
-  - {fileID: 21300000, guid: 64ab011017bd4444cbddafa11ad36178, type: 3}
-  - {fileID: 21300000, guid: 7108bbde87f8fe849974f7bdea18c09a, type: 3}
-  - {fileID: 21300000, guid: 9000ac21b7c6f6441bee378813c67ab7, type: 3}
-  - {fileID: 21300000, guid: 80f591807b6e4664e991b8f6f341045d, type: 3}
-  - {fileID: 21300000, guid: 11e2a099068232b4698ebd9eaea259ae, type: 3}
-  - {fileID: 21300000, guid: c910f74ee36b6324693d4abc18d5e029, type: 3}
-  - {fileID: 21300000, guid: 716253453d14f694f9ffce37d6bf3546, type: 3}
-  - {fileID: 21300000, guid: f7d0ebc47632dd64e897e0ddc1069046, type: 3}
-  - {fileID: 21300000, guid: 3ff77ec3867153043a785bacef7d0a31, type: 3}
+  - {fileID: 21300000, guid: 97e7de69046160444b1a47648b0541a6, type: 3}
+  - {fileID: 21300000, guid: 2e0ba9944f7bd50448df4325228aa017, type: 3}
+  - {fileID: 21300000, guid: c1b2126bdc99e9b489cb799ba588e774, type: 3}
+  - {fileID: 21300000, guid: 09fa929c9ec921d4f9463f3a26475e98, type: 3}
+  - {fileID: 21300000, guid: 4dbf32081b3769c4bbfa08922cf24b8e, type: 3}
+  - {fileID: 21300000, guid: 8900deffeca9705458e255c2b2989e89, type: 3}
   - {fileID: 21300000, guid: 52ef71e949221674db9c550066576b1a, type: 3}
   - {fileID: 21300000, guid: bd879c951b6823b42bbad1b78d04c69c, type: 3}
-  - {fileID: 21300000, guid: 87916df7b6773404a9568f0dfde01a8b, type: 3}
-  - {fileID: 21300000, guid: 6ace5965d09095645b30c681021583d8, type: 3}
-  - {fileID: 21300000, guid: c206a83786c34994085521ebee7b00f3, type: 3}
-  - {fileID: 21300000, guid: 24a3ea244332f5e4584726a36e8126f1, type: 3}
-  - {fileID: 21300000, guid: a65c1286e4d989f4c9dc7c05afbe6f51, type: 3}
-  - {fileID: 21300000, guid: 42f58a9dfcb3e5947ab44d07cd32cdd3, type: 3}
-  - {fileID: 21300000, guid: ac964da5e57fa6a42aa02bab9084440f, type: 3}
-  - {fileID: 21300000, guid: eb285121de8eefa418de80053b7eba77, type: 3}
-  - {fileID: 21300000, guid: 715073ffa864f1041aa4c8d1589424da, type: 3}
-  - {fileID: 21300000, guid: 29793bfaf8605224090f7f2caf3ba348, type: 3}
-  - {fileID: 21300000, guid: 8900deffeca9705458e255c2b2989e89, type: 3}
-  - {fileID: 21300000, guid: 802a7751a826f1f47b9454f216669f7c, type: 3}
-  - {fileID: 21300000, guid: ad6af9e64f8f2d34a836f8f42300bc80, type: 3}
-  - {fileID: 21300000, guid: eb72f6bbcf7b07245a016dce2df5aac8, type: 3}
-  - {fileID: 21300000, guid: 853b04c14d1dbbb48868c9742d803b27, type: 3}
-  - {fileID: 21300000, guid: 805c86a21d08bf94e9c338357a4085f8, type: 3}
-  - {fileID: 21300000, guid: 6dc825c9a7003ae449ccacfc18c273e2, type: 3}
-  - {fileID: 21300000, guid: dd94b7e2458f49249b129fa92afeb0e3, type: 3}
-  - {fileID: 21300000, guid: bf813cdfca06a544eb206b6dde65d73d, type: 3}
-  - {fileID: 21300000, guid: 4d1e8a40dd6fd154abb1b048f1646ad0, type: 3}
-  - {fileID: 21300000, guid: 8b0df29d12be2324fa79c5e8dca13381, type: 3}
-  - {fileID: 21300000, guid: 58985d06de5d3b647b78aec69191fcf1, type: 3}
-  - {fileID: 21300000, guid: a9c6bfdd782249f45a8f1436c2987ea2, type: 3}
-  - {fileID: 21300000, guid: 1fed93ff823c32241b11348720984b69, type: 3}
-  - {fileID: 21300000, guid: cc2039726d4dfbe4b977052606179998, type: 3}
-  - {fileID: 21300000, guid: 4f760da41c9405f4b93dab5a10c3708f, type: 3}
-  - {fileID: 21300000, guid: bdd55b34c5f62b344bed87a76a5a85a2, type: 3}
-  - {fileID: 21300000, guid: aba44d9be3e5eda46b3c5fc8c4fd96f9, type: 3}
-  - {fileID: 21300000, guid: 90167d13978e9284cb7a60a78e9946d7, type: 3}
-  - {fileID: 21300000, guid: c78ab218276a9f04581776709e761d5f, type: 3}
-  - {fileID: 21300000, guid: 7b4605c2f3195da4d84835af8cf31e6c, type: 3}
-  - {fileID: 21300000, guid: 732182eba3140ad468891ceccd4ed7b7, type: 3}
-  - {fileID: 21300000, guid: bf96285d42aeb6b449af0e50652ebcff, type: 3}
-  - {fileID: 21300000, guid: a5fd01d69d2b132429f0d5d6a283062e, type: 3}
-  - {fileID: 21300000, guid: 24f451758bfa2dd4bbaa55d21b67a779, type: 3}
-  - {fileID: 21300000, guid: 7cded97f32f63e14eb4fb5838079d40c, type: 3}
-  - {fileID: 21300000, guid: a2227cdbba5671f448c55f4dbed4246a, type: 3}
-  - {fileID: 21300000, guid: 25d28cc4c873ad84b9b759bcbbb12f46, type: 3}
   - {fileID: 21300000, guid: 7fd391f63be6588499f8bee18db966a6, type: 3}
-  - {fileID: 21300000, guid: 95df9d51716ea2643971ae72f5a8168b, type: 3}
-  - {fileID: 21300000, guid: 9d2eb936fdcc29d4fb798d72888c2495, type: 3}
-  - {fileID: 21300000, guid: 8901b4d32b704d54f85cde0f73f0e640, type: 3}
-  - {fileID: 21300000, guid: d9220a887f3064846a70d691b155e94f, type: 3}
-  - {fileID: 21300000, guid: 6d648559ad2e28047a3cc6d0b0358d8b, type: 3}
-  - {fileID: 21300000, guid: 94a6ca554f841ce42b35f2c01ef4d529, type: 3}
-  - {fileID: 21300000, guid: 7cc8ab6e2e1fc8446816a66699a0f236, type: 3}
-  - {fileID: 21300000, guid: 3edd9062944f8834abd093f9e81f54ee, type: 3}
-  - {fileID: 21300000, guid: bce6a00bc9e232348a1ad4cd161cd2ea, type: 3}
-  - {fileID: 21300000, guid: 9a203cf5d45fb734f989fbfdc3fb07c6, type: 3}
-  - {fileID: 21300000, guid: 59805e74438b608449ce6ac638c062d7, type: 3}
-  - {fileID: 21300000, guid: c336a3f27ae913d44b12e6ca98fa5709, type: 3}
-  - {fileID: 21300000, guid: 80d661749d3843f4c9820c4697610537, type: 3}
-  - {fileID: 21300000, guid: c703ba2eca303984dae78f41c5bf5275, type: 3}
-  - {fileID: 21300000, guid: 9c3447ccb80cc6a4d92e85599a5383c3, type: 3}
-  - {fileID: 21300000, guid: daa09866826b45248b4b97c86866cc48, type: 3}
-  - {fileID: 21300000, guid: 787048ece35945340ac664ac657c9799, type: 3}
-  - {fileID: 21300000, guid: aa20391ed73f30a48b8740509994df91, type: 3}
-  - {fileID: 21300000, guid: ea902e17d44461e40a9745024840d767, type: 3}
-  - {fileID: 21300000, guid: b4beec8028a511843b53d543f754c009, type: 3}
-  - {fileID: 21300000, guid: 23e8e06ec142cd840895dbd1c146e03e, type: 3}
-  - {fileID: 21300000, guid: 2766696238f2fb1408edf198f497275d, type: 3}
-  - {fileID: 21300000, guid: 163befb1233ca544392da9cdf5455b2a, type: 3}
-  - {fileID: 21300000, guid: b860e5b8bf30c1244be27d0b5318adbc, type: 3}
-  - {fileID: 21300000, guid: e39c273b8b1f2244aa8c4e2e57687d30, type: 3}
-  - {fileID: 21300000, guid: f35974fd72391f040bf94929d1e9cb8c, type: 3}
-  - {fileID: 21300000, guid: 05d519f6eb8650b47934d177d79534d5, type: 3}
-  - {fileID: 21300000, guid: 896b161663a8c924d82e3b4fba80b7f1, type: 3}
-  - {fileID: 21300000, guid: 9f65efc1b0c21964eb8eacb210ec1312, type: 3}
-  - {fileID: 21300000, guid: 845328b01cb52da4f9666ddfecc4287b, type: 3}
-  - {fileID: 21300000, guid: d542151d68a158e49b06ff4a9250b480, type: 3}
-  - {fileID: 21300000, guid: c07885f35e022304082962c1d7640c8d, type: 3}
-  - {fileID: 21300000, guid: 7dcd65d263fbd604e82c51798d1456eb, type: 3}
-  - {fileID: 21300000, guid: bb5f5dbfc3ac2cd438a47b27fe13fe20, type: 3}
-  - {fileID: 21300000, guid: 61118064cb2f9d94abd5ca57c291a34d, type: 3}
-  - {fileID: 21300000, guid: 26c1580a719734a4a9e139ea99984c1b, type: 3}
-  - {fileID: 21300000, guid: 278c5371e90f1c84d941b526f4afead9, type: 3}
-  - {fileID: 21300000, guid: 39b3645b30d58594a8bec5831e3df466, type: 3}
-  - {fileID: 21300000, guid: 1d855f84403c6e44e9c4c77d611fd428, type: 3}
-  - {fileID: 21300000, guid: 1748256150e51a54cb3e69ce4e8d0eb9, type: 3}
-  - {fileID: 21300000, guid: be74d0a31277d7c419170443a7e8245e, type: 3}
-  - {fileID: 21300000, guid: 71559e8cd056a37448e9039f2ccedc20, type: 3}
-  - {fileID: 21300000, guid: 8dfece09b997df84896096d58ef5c223, type: 3}
-  - {fileID: 21300000, guid: 0c35787786903194ca433457cf6c4ab3, type: 3}
-  - {fileID: 21300000, guid: bc2cb6d3ad0ab9649bce677ba7e93e0b, type: 3}
-  - {fileID: 21300000, guid: 5f56cf97631d08944b06b7c66e6009b0, type: 3}
-  - {fileID: 21300000, guid: 1629de08e9e95f44b920e93c63ba7175, type: 3}
-  - {fileID: 21300000, guid: 87383aeb213653a448f19690aa793484, type: 3}
-  - {fileID: 21300000, guid: b26009dae1f5af6429bb2e001cb80694, type: 3}
-  - {fileID: 21300000, guid: 31e6149f93ae87f439dc0d4e4ab6f129, type: 3}
-  - {fileID: 21300000, guid: ab292a75f0913884dbadf7b2fc479564, type: 3}
-  - {fileID: 21300000, guid: 5b1a7ba338b7f1948815d3ebedf4fccc, type: 3}
-  - {fileID: 21300000, guid: 8217258db2b0a98458995718003c597d, type: 3}
-  - {fileID: 21300000, guid: 3c053a76214050c4e837b4253bbc843d, type: 3}
-  - {fileID: 21300000, guid: babdbed1ffbfe5241bf61cd7fdacbdf4, type: 3}
-  - {fileID: 21300000, guid: 6a6ae3ecc97e13b4582d9cfda87f5539, type: 3}
-  - {fileID: 21300000, guid: 742f297aa30d0ce42ac4c2f7127a6ae2, type: 3}
-  - {fileID: 21300000, guid: 9bbbd3325b3028849afa7a15dc9bd8ab, type: 3}
-  - {fileID: 21300000, guid: aa1b22644339f3047adfd95553afb6b2, type: 3}
-  - {fileID: 21300000, guid: e9c06eee6d6637544804afb0759f190f, type: 3}
-  - {fileID: 21300000, guid: f5c929e21553c604c99575f0d5434cbb, type: 3}
-  - {fileID: 21300000, guid: 47690144ee396fe45a6a0540d2d22b03, type: 3}
-  - {fileID: 21300000, guid: 942175118f3d24840839ed6d45122e1d, type: 3}
-  - {fileID: 21300000, guid: 9c4272ebf8a0c0d4fbbcaf12af8f5a77, type: 3}
-  - {fileID: 21300000, guid: 07d400baf603f6c489521cfc99944ed8, type: 3}
-  - {fileID: 21300000, guid: 6f0dc4817e02e50468d5bc3fc67e0cb8, type: 3}
-  - {fileID: 21300000, guid: 71f1e093245791642ae2aca3dd85b8fa, type: 3}
-  - {fileID: 21300000, guid: 5dbc7fe8f0b1ae541a86438fac3856b7, type: 3}
-  - {fileID: 21300000, guid: 8d6c8984fafafc448a6bfc332bcde194, type: 3}
-  - {fileID: 21300000, guid: 17589252a79047b44b8d90999d19eb8d, type: 3}
-  - {fileID: 21300000, guid: 739b6c7c7a84c7d45be28e308ba32662, type: 3}
-  - {fileID: 21300000, guid: 03ad462b076411a4588934d57b69dd5e, type: 3}
-  - {fileID: 21300000, guid: dfc73192e71d64743ad04235923a52ba, type: 3}
-  - {fileID: 21300000, guid: 24fe3033703924b4781d44d13d127dec, type: 3}
-  - {fileID: 21300000, guid: 72cbaa1c295f94e47bc40eeb046f1471, type: 3}
-  - {fileID: 21300000, guid: 4874fb4479a79e74c890fe7931087f33, type: 3}
-  - {fileID: 21300000, guid: aae7397d7bb0b1d4ab3f12533619cfe3, type: 3}
-  - {fileID: 21300000, guid: ba49a6b3f107696408d55e301f1c6e32, type: 3}
-  - {fileID: 21300000, guid: ce4670b7d56e6a8408a749292e5721fc, type: 3}
-  - {fileID: 21300000, guid: ef573cca7b2085b4d81008958b0bf567, type: 3}
-  - {fileID: 21300000, guid: 52b7a1a30edb05946aa984169f336ef3, type: 3}
+  - {fileID: 21300000, guid: c7a2aa25371f2b54c9e70710a1db5cd1, type: 3}
+  - {fileID: 21300000, guid: da6d12655f3a98d4d9d792e52e033108, type: 3}
+  - {fileID: 21300000, guid: 299b0a4424046f44396f8ca2877bf98a, type: 3}
+  - {fileID: 21300000, guid: 8753e747f5570074db87fe8ca2df130d, type: 3}
+  - {fileID: 21300000, guid: 637272be58b6df944a1e70f9deadd4bc, type: 3}
+  - {fileID: 21300000, guid: bfff1ae4957da0542aa3cd58d92a9068, type: 3}
+  - {fileID: 21300000, guid: 67fc701b6da361e4c85ab20044f0a07d, type: 3}
+  - {fileID: 21300000, guid: 2787ceff14fcf1043bbde156874a7a5d, type: 3}
+  - {fileID: 21300000, guid: 743988b9d6481f843a0b9ae4d6f64467, type: 3}
+  - {fileID: 21300000, guid: cb118ce499dcbce438a5a879a70342b3, type: 3}
+  - {fileID: 21300000, guid: cebd9ab20b4476d479bb3c6cb245f773, type: 3}
+  - {fileID: 21300000, guid: 64c30d91b57642a4dbab0a58c22eef8e, type: 3}
+  - {fileID: 21300000, guid: 3427c64cc07d7e84ba0f57284dac2fac, type: 3}
+  - {fileID: 21300000, guid: 90167d13978e9284cb7a60a78e9946d7, type: 3}
+  - {fileID: 21300000, guid: 83c15c983e7cf6b47affe811629c48d9, type: 3}
   - {fileID: 21300000, guid: d46f8110a8d72e24aa93a0bd1ed490f0, type: 3}
-  - {fileID: 21300000, guid: bee4bc3f066481943a9ceef447442a60, type: 3}
-  - {fileID: 21300000, guid: e7e5020e8ac78214d9b368439c9cf160, type: 3}
-  - {fileID: 21300000, guid: 9aa490c2d66ad3e418dc1d6a9924d753, type: 3}
+  - {fileID: 21300000, guid: 19e874b18ba6df04692f2fca3d9ac208, type: 3}
+  - {fileID: 21300000, guid: 3d86efd27a78a41499d6cc56f80b107f, type: 3}
+  - {fileID: 21300000, guid: b3f05fcb132c19741a743a4c1be53051, type: 3}
+  - {fileID: 21300000, guid: e3f5f2b9e3685e541b4a342c9404e3cf, type: 3}
+  - {fileID: 21300000, guid: f16c2c8c1752ad447b3ea0d339e986e3, type: 3}
+  - {fileID: 21300000, guid: 58985d06de5d3b647b78aec69191fcf1, type: 3}
+  - {fileID: 21300000, guid: 0486be2afb90b7349bfe3992a482493f, type: 3}
+  - {fileID: 21300000, guid: 96c5e7d2a2d521f4f9d79f65ebb0912e, type: 3}
+  - {fileID: 21300000, guid: 60ccab25c6fac134fab5f6ae02f4d112, type: 3}
+  - {fileID: 21300000, guid: bb5f5dbfc3ac2cd438a47b27fe13fe20, type: 3}
+  - {fileID: 21300000, guid: 8b363bc7bda4f29418e0b1386a3378c2, type: 3}
+  - {fileID: 21300000, guid: 9141be33b78f46049820eb7a13e35872, type: 3}
+  - {fileID: 21300000, guid: d54981e467881274d97169bc712d344c, type: 3}
+  - {fileID: 21300000, guid: b33c60381f97933428e9c814670387c4, type: 3}
+  - {fileID: 21300000, guid: 1bf916de170a4924e9f8787973cbe65e, type: 3}
+  - {fileID: 21300000, guid: 333bff6c306e13d4c882b322a9c33d1a, type: 3}
+  - {fileID: 21300000, guid: 7c4f6deac958dc3478dcbaa6d2073374, type: 3}
+  - {fileID: 21300000, guid: 9206311d5c71db14a9e2a2d20c92c1db, type: 3}
+  - {fileID: 21300000, guid: f550e63671cc9c84f9d8a2f568461d58, type: 3}
   mapImages:
   - {fileID: 21300000, guid: db628fe68bf0a6248af27eb332c17514, type: 3}
   - {fileID: 21300000, guid: f524012350318844e907175948bbe4d3, type: 3}
   - {fileID: 21300000, guid: 7454f7d2574055d4aadd3df3f9f67c97, type: 3}
+  runeSkills:
+  - {fileID: 11400000, guid: dca9ae7d6e1af3c458e42e060e655625, type: 2}
+  - {fileID: 11400000, guid: 2f4789c0b6de1d04c989c12fbfd9bc0a, type: 2}
+  - {fileID: 11400000, guid: 4fbea231fc225b04a9eba1530885f71f, type: 2}
+  - {fileID: 11400000, guid: 8b65789602ecf9c42b49c9f92c2c0113, type: 2}
+  - {fileID: 11400000, guid: 0f7017342d5cfa44286f75af3b9d7bd8, type: 2}
+  - {fileID: 11400000, guid: 0f0124a5a0139a44d8d52f2d96ca1416, type: 2}
+  basicRuneSkills: []
   marbleImagePath: Assets/ArtResource/Sprite/MarbleImage
   runeImagePath: Assets/ArtResource/Sprite/RuneImage
   mapImagePath: Assets/ArtResource/Sprite/MapImage
+  runeSkillsPath: Assets/RuneSkillSO
+  basicRuneSkillsPath: Assets/RuneSkillSO/BasicRuneSkillSO

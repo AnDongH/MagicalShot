@@ -52,6 +52,10 @@ public class OptionUI : UI_PopUp
         Init();
     }
 
+    private void OnEnable() {
+        Init();
+    }
+
     private void OnExitBtnClicked(PointerEventData data) {
         SoundManager.Instance.PlaySFXSound("ButtonClick");
         ClosePopUpUI();

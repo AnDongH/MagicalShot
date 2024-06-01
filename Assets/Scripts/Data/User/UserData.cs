@@ -10,6 +10,7 @@ using UnityEngine;
  * 그리고 해당 SO 정보를 사용해서 기물 데이타를 사용한다.
  */
 
+[System.Serializable]
 public class UserData {
     public List<string> curMarblesId;
     public string[] marbleDeck;
@@ -31,7 +32,7 @@ public class UserData {
         get {
             int tem = 0;
             foreach (var item in marbleDeck) {
-                if (item != null) tem++;
+                if (!string.IsNullOrEmpty(item)) tem++;
             }
             return tem;
         }

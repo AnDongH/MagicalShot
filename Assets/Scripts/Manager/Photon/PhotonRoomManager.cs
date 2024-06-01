@@ -25,6 +25,11 @@ public class PhotonRoomManager : NormalSingletonPunCallbacks<PhotonRoomManager> 
     public static event OnChatSendHandler OnChatSended;
     #endregion
 
+    private void Start() {
+        PhotonNetwork.SerializationRate = 60;
+        PhotonNetwork.SendRate = 60;
+    }
+
     /// <summary>
     /// 방 나가기
     /// </summary>
