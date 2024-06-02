@@ -136,7 +136,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: TA02_image
+      name: TA02_Image
       rect:
         serializedVersion: 2
         x: 0
@@ -167,7 +167,7 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      TA02_image: -264728295
+      TA02_Image: -264728295
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

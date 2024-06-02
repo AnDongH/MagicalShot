@@ -12,6 +12,8 @@ public class UI_Base : MonoBehaviour
 {
     protected Dictionary<Type, UnityEngine.Object[]> _objects = new Dictionary<Type, UnityEngine.Object[]>();
 
+    protected bool isBinding;
+
     protected void Bind<T>(Type type) where T : UnityEngine.Object {
         string[] names = Enum.GetNames(type);
         UnityEngine.Object[] objects = new UnityEngine.Object[names.Length];

@@ -16,6 +16,7 @@ public class RuneUI : UI_PopUp
     }
 
     enum Texts {
+        NameText,
         ExplainText,
         WarningText
     }
@@ -26,13 +27,26 @@ public class RuneUI : UI_PopUp
 
     enum Objects {
         RuneBox,
-        WarningGRP
+        WarningGRP,
+        CostExplain
     }
 
     [SerializeField] private GameObject btnPrefab;
+    [SerializeField] private GameObject costPrefab;
     [SerializeField] private Transform btnParent;
-    private List<GameObject> runeBtns = new List<GameObject>();
+    private List<RuneBtnContainer> runeBtns = new List<RuneBtnContainer>();
     private List<GameObject> curRunes = new List<GameObject>(20);
+    private List<GameObject> curCosts = new List<GameObject>(6);
+
+    public class RuneBtnContainer {
+        public GameObject btnObj;
+        public RuneData data;
+
+        public RuneBtnContainer(GameObject btnObj, RuneData data) {
+            this.btnObj = btnObj;
+            this.data = data;
+        }
+    }
 
     protected override void Init() {
         base.Init();
@@ -63,12 +77,22 @@ public class RuneUI : UI_PopUp
 
         for (int i = 0; i < curRunes.Count; i++) {
             int idx = i;
-            curRunes[idx].BindEvent((data) => DelRuneOnDeck(data, idx));
+            curRunes[idx].GetComponentInChildren<Button>().gameObject.BindEvent((data) => DelRuneOnDeck(data, idx));
+            curRunes[idx].GetComponentInChildren<Button>().gameObject.BindEvent((data) => ShowRuneInfo(data, idx), Define.UIEvent.Enter);
         }
+
+        RuneSort();
+
+        isBinding = true;
     }
 
     private void OnEnable() {
         Init();
+
+        if (isBinding) {
+            GetDropdown((int)Dropdowns.RuneDropdown).value = 0;
+            SetRuneButton(0);
+        }
     }
 
     private void OnExitBtnClicked(PointerEventData data) {
@@ -86,7 +110,7 @@ public class RuneUI : UI_PopUp
 
         // 생성했던 버튼들 제거
         for (int i = 0; i < runeBtns.Count; i++) {
-            Destroy(runeBtns[i]);
+            Destroy(runeBtns[i].btnObj);
         }
         runeBtns.Clear();
 
@@ -94,6 +118,9 @@ public class RuneUI : UI_PopUp
         GetImage((int)Images.RuneExplainImg).sprite = null;
         GetImage((int)Images.RuneExplainImg).enabled = false;
         GetText((int)Texts.ExplainText).text = "";
+        GetText((int)Texts.NameText).text = "";
+        foreach (var cost in curCosts) Destroy(cost);
+        curCosts.Clear();
         SettingManager.Instance.Rune = null;
 
 
@@ -112,29 +139,80 @@ public class RuneUI : UI_PopUp
             GameObject btnObj = Instantiate(btnPrefab, btnParent);
             Button btn = btnObj.GetComponentInChildren<Button>();
             Image image = btnObj.GetComponentsInChildren<Image>()[1];
-            runeBtns.Add(btnObj);
+            Text text = btnObj.GetComponentInChildren<Text>();
+            RuneBtnContainer container = new RuneBtnContainer(btnObj, userRune);
+
+            text.text = (userRune.maxHasCount - DataManager.Instance.userData.runesDeck.FindAll(x => x == userRune.id).Count).ToString();
+            runeBtns.Add(container);
             image.sprite = DataManager.Instance.Resource.runeImages.Find(x => x.name == id + "_Image");
 
             btn.gameObject.BindEvent((data) => ShowRuneInfo(data, userRune), Define.UIEvent.Enter);
-            btn.gameObject.BindEvent((data) => SetRuneOnDeck(data, userRune), Define.UIEvent.Click);
+            btn.gameObject.BindEvent((data) => SetRuneOnDeck(data, container), Define.UIEvent.Click);
         }
     }
 
     private void ShowRuneInfo(PointerEventData data, RuneData userRune) {
         GetImage((int)Images.RuneExplainImg).enabled = true;
-        GetImage((int)Images.RuneExplainImg).sprite = DataManager.Instance.Resource.runeImages.Find(x => x.name == userRune.id + "_image");
+        GetImage((int)Images.RuneExplainImg).sprite = DataManager.Instance.Resource.runeImages.Find(x => x.name == userRune.id + "_Image");
+        
+        GetText((int)Texts.NameText).text = userRune.name;
         GetText((int)Texts.ExplainText).text = userRune.explain;
+
+        foreach (var cost in curCosts) Destroy(cost);
+        curCosts.Clear();
+
+        for (int i = 0; i < userRune.cost; i++) {
+            curCosts.Add(Instantiate(costPrefab, GetObject((int)Objects.CostExplain).transform));
+        }
+
     }
 
-    private void SetRuneOnDeck(PointerEventData data, RuneData userRune) {
-        SettingManager.Instance.Rune = userRune;
-        SettingManager.Instance.SetRuneOnDeck();
+    private void ShowRuneInfo(PointerEventData data, int idx) {
 
+        if (idx >= DataManager.Instance.userData.runesDeck.Count) return;
+
+        RuneData userRune = DataManager.Instance.Resource.runes.Find(x => x.id == DataManager.Instance.userData.runesDeck[idx]);
+
+        GetImage((int)Images.RuneExplainImg).enabled = true;
+        GetImage((int)Images.RuneExplainImg).sprite = DataManager.Instance.Resource.runeImages.Find(x => x.name == userRune.id + "_Image");
+
+        GetText((int)Texts.NameText).text = userRune.name;
+        GetText((int)Texts.ExplainText).text = userRune.explain;
+
+        foreach (var cost in curCosts) Destroy(cost);
+        curCosts.Clear();
+
+        for (int i = 0; i < userRune.cost; i++) {
+            curCosts.Add(Instantiate(costPrefab, GetObject((int)Objects.CostExplain).transform));
+        }
+
+    }
+
+    private void SetRuneOnDeck(PointerEventData data, RuneBtnContainer container) {
+        SettingManager.Instance.Rune = container.data;
+        string target = SettingManager.Instance.SetRuneOnDeck();
+
+        if (target != null) {
+            GetObject((int)Objects.WarningGRP).SetActive(true);
+            GetText((int)Texts.WarningText).text = target;
+            return;
+        }
+
+        int idx = DataManager.Instance.userData.runesDeck.Count - 1;
+
+        if (idx < 0) return;
+
+        // 넣을 수 있는 룬 개수 계산
+        container.btnObj.GetComponentInChildren<Text>().text = (container.data.maxHasCount - DataManager.Instance.userData.runesDeck.FindAll(x => x == container.data.id).Count).ToString();
+        curRunes[idx].GetComponentsInChildren<Image>()[1].enabled = true;
+        curRunes[idx].GetComponentsInChildren<Image>()[1].sprite = DataManager.Instance.Resource.runeImages.Find(x => x.name == DataManager.Instance.userData.runesDeck[idx] + "_Image");
+        print("룬 추가");
     }
 
     private void RuneSort() {
         for (int i = 0; i < DataManager.Instance.userData.runesDeck.Count; i++) {
-            curRunes[i].GetComponentsInChildren<Image>()[1].sprite = DataManager.Instance.Resource.runeImages.Find(x => x.name == DataManager.Instance.userData.runesDeck[i] + "_image");
+            curRunes[i].GetComponentsInChildren<Image>()[1].enabled = true;
+            curRunes[i].GetComponentsInChildren<Image>()[1].sprite = DataManager.Instance.Resource.runeImages.Find(x => x.name == DataManager.Instance.userData.runesDeck[i] + "_Image");
         }
     }
 
@@ -146,9 +224,11 @@ public class RuneUI : UI_PopUp
             return;
         }
 
+        GameObject g = runeBtns.Find(x => x.data.id == DataManager.Instance.userData.runesDeck[idx]).btnObj;
+        g.GetComponentInChildren<Text>().text = (int.Parse(g.GetComponentInChildren<Text>().text) + 1).ToString();
         DataManager.Instance.userData.runesDeck.RemoveAt(idx);
-        curRunes[idx].GetComponentsInChildren<Image>()[1].sprite = null;
-        curRunes[idx].GetComponentsInChildren<Image>()[1].enabled = false;
+        curRunes[DataManager.Instance.userData.runesDeck.Count].GetComponentsInChildren<Image>()[1].sprite = null;
+        curRunes[DataManager.Instance.userData.runesDeck.Count].GetComponentsInChildren<Image>()[1].enabled = false;
         RuneSort();
     }
 }

@@ -58,7 +58,7 @@ public class ResultCanvasUI : UI_PopUp
         else {
             GetImage((int)Images.ResultImg).sprite = loseImage;
             GetText((int)Texts.WinScoreText).text = "½ÂÁ¡: " + DataManager.Instance.userData.winScore + " (- " + InGameManager.Instance.BasicWinScore + ")";
-            GetText((int)Texts.GoldText).text = "°ñµå: " + DataManager.Instance.userData.money + " (- " + InGameManager.Instance.BasicLoseGold + ")";
+            GetText((int)Texts.GoldText).text = "°ñµå: " + DataManager.Instance.userData.money + " (+ " + InGameManager.Instance.BasicLoseGold + ")";
         }
     }
 }

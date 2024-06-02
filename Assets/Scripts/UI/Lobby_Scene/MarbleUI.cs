@@ -23,7 +23,13 @@ public class MarbleUI : UI_PopUp
     }
 
     enum Texts {
-        ExplainText,
+        MarbleNameText,
+        MarbleExplainText,
+        MarbleTypeText,
+        MarbleHPText,
+        MarbleDamageText,
+        MarbleTypeRuneText,
+        MarbleOriginalRuneText,
         WarningText
     }
 
@@ -77,10 +83,17 @@ public class MarbleUI : UI_PopUp
             if (!DataManager.Instance.userData.marbleDeck[i].IsNullOrEmpty())
                 SettingManager.Instance.MarblePosImgSet(true, GetImage(i), DataManager.Instance.userData.marbleDeck[i]);
         }
+
+        isBinding = true;
     }
 
     private void OnEnable() {
         Init();
+
+        if (isBinding) {
+            GetDropdown((int)Dropdowns.MarbleDropdown).value = 0;
+            SetMarbleButton(0);
+        }
     }
 
     private void OnExitBtnClicked(PointerEventData data) {
@@ -126,7 +139,6 @@ public class MarbleUI : UI_PopUp
 
         // 생성했던 버튼들 제거
         for (int i = 0; i < marbleBtns.Count; i++) {
-            marbleBtns[i].GetComponentInChildren<Button>().onClick.RemoveAllListeners();
             Destroy(marbleBtns[i]);
         }
         marbleBtns.Clear();
@@ -134,7 +146,13 @@ public class MarbleUI : UI_PopUp
         // 기본 UI 정보들 초기화
         GetImage((int)Images.MarbleImg).sprite = null;
         GetImage((int)Images.MarbleImg).enabled = false;
-        GetText((int)Texts.ExplainText).text = "";
+        GetText((int)Texts.MarbleExplainText).text = "";
+        GetText((int)Texts.MarbleNameText).text = "";
+        GetText((int)Texts.MarbleHPText).text = "";
+        GetText((int)Texts.MarbleTypeText).text = "";
+        GetText((int)Texts.MarbleDamageText).text = "";
+        GetText((int)Texts.MarbleTypeRuneText).text = "";
+        GetText((int)Texts.MarbleOriginalRuneText).text = "";
         SettingManager.Instance.Marble = null;
 
 
@@ -154,22 +172,35 @@ public class MarbleUI : UI_PopUp
             Button btn = btnObj.GetComponentInChildren<Button>();
             Image image = btnObj.GetComponentsInChildren<Image>()[1];
             marbleBtns.Add(btnObj);
-            image.sprite = DataManager.Instance.Resource.marbleImages.Find(x => x.name == id + "_image");
+            image.sprite = DataManager.Instance.Resource.marbleImages.Find(x => x.name == id + "_Image");
 
             // 버튼에 함수 등록
-            btn.onClick.AddListener(() => SetMarbleSelect(userMarble, GetImage((int)Images.MarbleImg), GetText((int)Texts.ExplainText)));
+            btn.gameObject.BindEvent((data) => SetMarbleSelect(data, userMarble));
+            btn.gameObject.BindEvent((data) => ShowMarbleData(data, userMarble), Define.UIEvent.Enter);
         }
     }
 
-    private void SetMarbleSelect(MarbleData userMarble, Image marbleImg, Text explain) {
+    private void SetMarbleSelect(PointerEventData data, MarbleData userMarble) {
         SoundManager.Instance.PlaySFXSound("ButtonClick");
-        marbleImg.enabled = true;
-        marbleImg.sprite = DataManager.Instance.Resource.marbleImages.Find(x => x.name == userMarble.id + "_image");
-        explain.text = userMarble.explain;
 
         GetObject((int)Objects.Identify_UI).SetActive(false);
 
         SettingManager.Instance.Marble = userMarble;
+    }
+
+    private void ShowMarbleData(PointerEventData data, MarbleData userMarble) {
+        GetImage((int)Images.MarbleImg).enabled = true;
+        GetImage((int)Images.MarbleImg).sprite = DataManager.Instance.Resource.marbleImages.Find(x => x.name == userMarble.id + "_Image");
+
+        CommonMarbleData commonMarbleData = DataManager.Instance.Resource.commonMalbles.Find(x => x.Type == userMarble.Type);
+
+        GetText((int)Texts.MarbleExplainText).text = userMarble.explain;
+        GetText((int)Texts.MarbleNameText).text = userMarble.name;
+        GetText((int)Texts.MarbleHPText).text = "체력: " + (userMarble.additionalHp + commonMarbleData.basicHp).ToString();
+        GetText((int)Texts.MarbleTypeText).text = "포지션: " + MarbleManager.GetType(userMarble.Type);
+        GetText((int)Texts.MarbleDamageText).text = "공력력: " + (userMarble.additionalDamage + commonMarbleData.basicDamage).ToString();
+        GetText((int)Texts.MarbleTypeRuneText).text = MarbleManager.GetType(userMarble.Type) + " 특성: \n" + DataManager.Instance.Resource.basicRunes.Find(x => x.id == commonMarbleData.typeRuneID).explain;
+        GetText((int)Texts.MarbleOriginalRuneText).text = "개인 특성: \n" + DataManager.Instance.Resource.basicRunes.Find(x => x.id == userMarble.originalRuneID).explain;
     }
 
 }

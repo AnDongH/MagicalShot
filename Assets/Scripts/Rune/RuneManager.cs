@@ -103,7 +103,7 @@ public class RuneManager : NormalSingletonPun<RuneManager>
         graveBuffer.Clear();
         itemBuffer = new List<RuneData>(20);
         for (int i = 0; i < 20; i++) {                      // 변경 필요
-            RuneData item = DataManager.Instance.Resource.runes[i];
+            RuneData item = DataManager.Instance.Resource.runes.Find(x => x.id == DataManager.Instance.userData.runesDeck[i]);
             itemBuffer.Add(item);
         }
 

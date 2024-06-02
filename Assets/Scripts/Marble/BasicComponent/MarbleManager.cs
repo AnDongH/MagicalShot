@@ -85,4 +85,24 @@ public class MarbleManager : MonoBehaviour
         arrow.transform.rotation = Quaternion.Euler(0, 0, angle + 270);
         arrow.transform.localScale = Vector3.one * dis;
     }
+
+    public static string GetType(GlobalEnum.MarbleType type) {
+        string target = "";
+        switch (type) {
+            case GlobalEnum.MarbleType.TA:
+                target = "µ¹°Ý À¯´Ö";
+                break;
+            case GlobalEnum.MarbleType.DD:
+                target = "°ø°Ý À¯´Ö";
+                break;
+            case GlobalEnum.MarbleType.AD:
+                target = "Àú°Ý À¯´Ö";
+                break;
+            case GlobalEnum.MarbleType.AP:
+                target = "¸¶¹ý À¯´Ö";
+                break;
+        }
+
+        return target;
+    }
 }

@@ -12,7 +12,8 @@ public class PhotonLobbyManager : NormalSingletonPunCallbacks<PhotonLobbyManager
         NONE_ERROR,
         NULL_MARBLE,
         NULL_ROOM,
-        NULL_NAME_ROOM
+        NULL_NAME_ROOM,
+        NULL_RUNE
     }
 
     private void Start() {
@@ -62,6 +63,11 @@ public class PhotonLobbyManager : NormalSingletonPunCallbacks<PhotonLobbyManager
             return LobbyErrorCode.NULL_MARBLE;
         }
 
+        if (DataManager.Instance.userData.runesDeck.Count != 20) {
+            print("기물을 20개 선택해야 방에 참가할 수 있습니다.");
+            return LobbyErrorCode.NULL_RUNE;
+        }
+
         GameManager.ShowLoadingUI();
         PhotonNetwork.CreateRoom(roomName == "" ? "Room" + Random.Range(0, 100) : roomName, new RoomOptions { MaxPlayers = 2 });
 
@@ -79,6 +85,11 @@ public class PhotonLobbyManager : NormalSingletonPunCallbacks<PhotonLobbyManager
         if (DataManager.Instance.userData.SelectCount != 4) {
             print("기물을 4개 선택해야 방에 참가할 수 있습니다.");
             return LobbyErrorCode.NULL_MARBLE;
+        }
+
+        if (DataManager.Instance.userData.runesDeck.Count != 20) {
+            print("기물을 20개 선택해야 방에 참가할 수 있습니다.");
+            return LobbyErrorCode.NULL_RUNE;
         }
 
         if (!myList.Exists(x => x.Name == roomName)) {
@@ -104,6 +115,11 @@ public class PhotonLobbyManager : NormalSingletonPunCallbacks<PhotonLobbyManager
             return LobbyErrorCode.NULL_MARBLE;
         }
 
+        if (DataManager.Instance.userData.runesDeck.Count != 20) {
+            print("기물을 20개 선택해야 방에 참가할 수 있습니다.");
+            return LobbyErrorCode.NULL_RUNE;
+        }
+
         GameManager.ShowLoadingUI();
         PhotonNetwork.JoinOrCreateRoom(roomName, new RoomOptions { MaxPlayers = 2 }, null);
 
@@ -118,6 +134,11 @@ public class PhotonLobbyManager : NormalSingletonPunCallbacks<PhotonLobbyManager
         if (DataManager.Instance.userData.SelectCount != 4) {
             print("기물을 4개 선택해야 방에 참가할 수 있습니다.");
             return LobbyErrorCode.NULL_MARBLE;
+        }
+
+        if (DataManager.Instance.userData.runesDeck.Count != 20) {
+            print("기물을 20개 선택해야 방에 참가할 수 있습니다.");
+            return LobbyErrorCode.NULL_RUNE;
         }
 
         if (!PhotonNetwork.JoinRandomRoom()) return LobbyErrorCode.NULL_ROOM;

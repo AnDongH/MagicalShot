@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.Collections.LowLevel.Unsafe;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 using WebSocketSharp;
@@ -69,7 +70,7 @@ public class SettingManager : DontDestroySingleton<SettingManager>
     public void MarblePosImgSet(bool flag, Image posImg, string id = null) {
         posImg.enabled = flag;
         if (flag) {
-            Sprite sprite = DataManager.Instance.Resource.marbleImages.Find(x => x.name == id + "_image");
+            Sprite sprite = DataManager.Instance.Resource.marbleImages.Find(x => x.name == id + "_Image");
             posImg.sprite = sprite;
         }
         else posImg.sprite = null;
@@ -81,7 +82,7 @@ public class SettingManager : DontDestroySingleton<SettingManager>
 
         if (DataManager.Instance.userData.runesDeck.Count == 20) return "룬은 20개까지만 등록이 가능합니다.";
 
-        if (DataManager.Instance.userData.runesDeck.Contains(Rune.id)) return "이미 해당 룬이 등록되어있습니다.";
+        if (DataManager.Instance.userData.runesDeck.FindAll(x => x == Rune.id).Count >= Rune.maxHasCount) return "이미 해당 룬의 최대 소지 개수입니다.";
 
         DataManager.Instance.userData.runesDeck.Add(Rune.id);
 

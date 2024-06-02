@@ -136,7 +136,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: AP01_image
+      name: AP01_Image
       rect:
         serializedVersion: 2
         x: 0
@@ -167,7 +167,7 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      AP01_image: -602589291
+      AP01_Image: -602589291
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

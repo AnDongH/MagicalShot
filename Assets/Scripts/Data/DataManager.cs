@@ -29,13 +29,13 @@ public class DataManager : DontDestroySingleton<DataManager> {
     public readonly string noticeInfoURL = "https://docs.google.com/document/d/1CdYdTts1HVUbZjSOrLS5o_bJDZnsnulGj1XcLPUsNto/export?format=txt";
     public readonly string sheetURL = "https://docs.google.com/spreadsheets/d/1T3KSbYhJyFOvNvwhQ4lzWU6QVlIGxxpKeEhmQgYuA10";
 
-    public readonly string marbleDataRange = "A2:F";
+    public readonly string marbleDataRange = "A2:H";
     public readonly string marbleDataSheetId = "0";
 
-    public readonly string commonMarbleDataRange = "A2:D";
+    public readonly string commonMarbleDataRange = "A2:E";
     public readonly string commonMarbleDataSheetId = "1732538507";
 
-    public readonly string runeDataRange = "A2:I";
+    public readonly string runeDataRange = "A2:K";
     public readonly string runeDataSheetId = "2022585265";
 
     public readonly string mapDataRange = "A2:B";
@@ -83,6 +83,7 @@ public class DataManager : DontDestroySingleton<DataManager> {
             if (type == typeof(CommonMarbleData)) Resource.commonMalbles = GetDatas<CommonMarbleData>(sheetDatas[type]);
             if (type == typeof(RuneData)) Resource.basicRunes = GetDatas<RuneData>(sheetDatas[type]).FindAll(x => x.BaseType == GlobalEnum.BaseRuneType.Passive);
         }
+
     }
 
     public static string GetTSVAddress(string address, string range, string sheetID) {
@@ -92,6 +93,9 @@ public class DataManager : DontDestroySingleton<DataManager> {
     private List<T> GetDatas<T>(string data) {
         List<T> returnList = new List<T>();
         string[] splitedData = data.Split('\n');
+
+        for (int i = 0; i < splitedData.Length; i++)
+            splitedData[i] = splitedData[i].Replace("\r", "");
 
         foreach (string element in splitedData) {
             string[] datas = element.Split('\t');
@@ -104,6 +108,9 @@ public class DataManager : DontDestroySingleton<DataManager> {
     private List<T> GetDatasAsChildren<T>(string data) {
         List<T> returnList = new List<T>();
         string[] splitedData = data.Split('\n');
+
+        for (int i = 0; i < splitedData.Length; i++)
+            splitedData[i] = splitedData[i].Replace("\r", "");
 
         foreach (string element in splitedData) {
             string[] datas = element.Split('\t');

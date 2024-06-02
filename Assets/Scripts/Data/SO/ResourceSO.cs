@@ -16,6 +16,8 @@ public class MarbleData {
     public string explain;
     public int additionalHp;
     public int additionalDamage;
+    public string originalRuneID;
+    public int gold;
 }
 
 [System.Serializable]
@@ -25,6 +27,7 @@ public class CommonMarbleData {
     public int basicHp;
     public int basicDamage;
     public float basicMass;
+    public string typeRuneID;
 }
 
 [System.Serializable]
@@ -38,7 +41,9 @@ public class RuneData {
     public List<int> value;
     public int count;
     public int boundCount;
+    public int maxHasCount;
     public string explain;
+    public int gold;
 
 }
 

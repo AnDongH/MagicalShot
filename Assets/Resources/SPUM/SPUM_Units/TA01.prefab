@@ -2287,11 +2287,14 @@ MonoBehaviour:
     explain: 
     additionalHp: 0
     additionalDamage: 0
+    originalRuneID: 
+    gold: 0
   commonData:
     Type: 0
     basicHp: 0
     basicDamage: 0
     basicMass: 0
+    typeRuneID: 
   typeBasicSkillID: TYPE_TA_RUNE
   marbleBasicSkillID: TA01_RUNE
   typeSkillStartTime: 0

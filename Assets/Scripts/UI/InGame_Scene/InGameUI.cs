@@ -165,9 +165,9 @@ public class InGameUI : UI_Scene
     }
 
     private void ShowMarbleStatus(BasicMarble marble) {
-        GetImage((int)Images.MarbleImg).sprite = DataManager.Instance.Resource.marbleImages.Find(x => x.name == marble.marbleData.id + "_image");
+        GetImage((int)Images.MarbleImg).sprite = DataManager.Instance.Resource.marbleImages.Find(x => x.name == marble.marbleData.id + "_Image");
         GetText((int)Texts.MarbleNameText).text = marble.marbleData.name;
-        GetText((int)Texts.MarbleTypeText).text = "포지션: " + GetType(marble.marbleData.Type);
+        GetText((int)Texts.MarbleTypeText).text = "포지션: " + MarbleManager.GetType(marble.marbleData.Type);
         GetText((int)Texts.MarbleHpText).text = "체력: " + marble.FinalCurHp.ToString() + " / " + marble.FinalMaxHp.ToString();
         GetText((int)Texts.MarbleDmgText).text = "공격력: " + marble.FinalDmg.ToString();
 
@@ -326,25 +326,5 @@ public class InGameUI : UI_Scene
 
         GetButton((int)Buttons.RuneFreezerBtn).GetComponent<UISmoothMove>().TransformScaleMove(false);
         GetObject((int)Objects.RuneFreezePanel).GetComponent<UISmoothMove>().TransformPosMove(false);
-    }
-
-    private string GetType(GlobalEnum.MarbleType type) {
-        string target = "";
-        switch (type) {
-            case GlobalEnum.MarbleType.TA:
-                target = "돌격 유닛";
-                break;
-            case GlobalEnum.MarbleType.DD:
-                target = "공격 유닛";
-                break;
-            case GlobalEnum.MarbleType.AD:
-                target = "저격 유닛";
-                break;
-            case GlobalEnum.MarbleType.AP:
-                target = "마법 유닛";
-                break;
-        }
-
-        return target;
     }
 }

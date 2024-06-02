@@ -65,6 +65,7 @@ public class LobbyUI : UI_Scene
         GetButton((int)Buttons.SelectMarblesBtn).gameObject.BindEvent(OnSelectMarblesBtnClicked);
         GetButton((int)Buttons.DisConnectBtn).gameObject.BindEvent(OnDisConnectBtnClicked);
         GetButton((int)Buttons.RankingBtn).gameObject.BindEvent(RankingBtnClicked);
+        GetButton((int)Buttons.ShopBtn).gameObject.BindEvent(OnShopBtnClicked);
         GetButton((int)Buttons.EnterRoomBtn).gameObject.BindEvent(OnEnterRoomBtnClicked);
         GetButton((int)Buttons.CreateRoomBtn).gameObject.BindEvent(OnCreateRoomBtnClicked);
         GetButton((int)Buttons.EnterRandomBtn).gameObject.BindEvent(OnEnterRandomBtnClicked);
@@ -128,6 +129,11 @@ public class LobbyUI : UI_Scene
         SoundManager.Instance.PlaySFXSound("MenuBar");
         UI_Manager.Instance.ShowPopupUI<UI_PopUp>("RankingUI");
         PlayFabManager.Instance.GetLeaderboard();
+    }
+
+    private void OnShopBtnClicked(PointerEventData data) {
+        SoundManager.Instance.PlaySFXSound("MenuBar");
+        UI_Manager.Instance.ShowPopupUI<UI_PopUp>("ShopCanvas");
     }
 
     // 콜백 필요
@@ -230,6 +236,9 @@ public class LobbyUI : UI_Scene
                 break;
             case PhotonLobbyManager.LobbyErrorCode.NULL_NAME_ROOM:
                 WarningOn("해당 이름 방이 없습니다.");
+                break;
+            case PhotonLobbyManager.LobbyErrorCode.NULL_RUNE:
+                WarningOn("룬을 20개 선택해주세요");
                 break;
         }
     }
